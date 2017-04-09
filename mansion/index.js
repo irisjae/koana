@@ -24,6 +24,7 @@ require ('koa-qs') (new (require ('koa')) ())
 	.use (require ('koa-router') ()
 		.get ('/questions', require ('./questions/get'))
 		.post ('/register', require ('./register/post'))
+		.post ('/login', require ('./login/post'))
 		/*// 
 		.get('/hello/world', function (ctx, next) {
 			ctx .body = 'Hello world!';
