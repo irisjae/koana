@@ -1,0 +1,96 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+			<a href="#home">
+				<component-back-button />
+			</a>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Register</component-page-title>
+		</nav-title>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<register>
+		<label>
+			Please enter your email and create a password
+		</label>
+		<component-spacing height="20px" />
+		<component-field-control type="email" placeholder="Type your email here..." />
+		<component-field-control type="password" placeholder="Type your password here..." />
+		<component-spacing height="40px" />
+		<component-action>
+			<a href="#portal">Create</a>
+		</component-action>
+		
+		
+		<terms-of-agreement>
+			<item>
+				<component-checkbox />
+			</item>
+			<label>
+				I agree with the <a href="#disclaimer">Disclaimers and Terms of Agreement</a>
+			</label>
+		</terms-of-agreement>
+	</register>
+</component-main-content>
+
+<style>
+	@extend [page-layout];
+	
+	register {
+		@extend [padded-layout];
+		
+		> label {
+			color: black;
+			font-weight: bold;
+			font-size: 1.4em;
+		}
+		
+		> component-input-control {
+			padding: 10px;
+		    width: 100%;
+		    display: block;
+		    font-size: 1.5em;
+		    
+		    input {
+				@extend .input;
+			}
+		}
+		
+		> a {
+			&[maybe] {
+		        &:after {
+	        	    border: 2px solid #dbdbdb;
+				    border-radius: 290486px;
+				    border-right-color: transparent;
+				    border-top-color: transparent;
+				    content: "";
+				    display: block;
+				    position: relative;
+				    left: 50%;
+				    top: 50%;
+				    position: absolute !important;
+		            width: 32px;
+		            height: 32px;
+		            margin-left: -16px;
+		            margin-top: -16px;
+		            animation: spinAround 600ms infinite linear;
+		            border: 5px solid #dbdbdb;
+		            border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
+		        }
+			}
+		}
+		> terms-of-agreement {
+			display: flex;
+			> item {
+				flex-basis: 50px;
+				padding: 10px;
+			}
+			> label {
+				flex-grow: 1;
+				padding: 10px;
+			}
+		}
+	}
+</style>

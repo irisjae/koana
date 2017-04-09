@@ -1,0 +1,58 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+			<a href="#portal">
+				<component-back-button />
+			</a>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Courses</component-page-title>
+		</nav-title>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<highscore>
+		<my-highscore>
+			<label>Your score is:</label>
+			<score>29</score>
+		</my-highscore>
+		
+		<highscores>
+			<highscore><label>Champion</label><item>John Huen: 179</item></highscore>
+			<highscore><label>First Runner-up</label><item>John Huen: 169</item></highscore>
+			<highscore><label>Second Runner-up</label><item>John Huen: 168</item></highscore>
+		</highscores>
+	</highscore>
+</component-main-content>
+
+<style>
+	@extend [page-layout];
+	
+	highscore {
+		@extend [padded-layout];
+		
+	    font-family: CONSOLAS, COURIER;
+		
+		> my-highscore {
+			> score {
+				color: #4FABFF;
+				font-weight: bold;
+			    display: block;
+			    font-size: 8em;
+			    text-align: center;
+			}
+		}
+		
+		> highscores {
+		   margin-top: 50px;
+		    
+		    > highscore {
+		    	color: black;
+		    	font-size: 1.15em;
+			    padding: 7px;
+			    justify-content: space-between;
+			    display: flex;
+			}
+		}
+	}
+</style>

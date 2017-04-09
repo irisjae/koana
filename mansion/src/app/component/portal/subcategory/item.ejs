@@ -1,0 +1,17 @@
+<a href="#quiz/subcategory/#{ stringify (my ('name')) }">
+	<img src="https://ibin.co/3I0i4laCon7P.png" >
+</a>
+
+<style>
+	> a {
+		display: block;
+	}
+</style>
+	
+<script>
+	self
+		.establish ('name', dependent (function () {
+			return my (args .subcategory__from);
+		}, self .impressions (args .subcategory__from)))
+	self .impressions (args .subcategory__from) .thru (tap, self .render)
+</script>
