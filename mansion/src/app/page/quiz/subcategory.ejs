@@ -6,32 +6,32 @@
 			</a>
 		</nav-buttons>
 		<nav-title>
-			<component-page-title>Points: 0/20</component-page-title>
+			<component-page-title>Points: { my ('points') }/20</component-page-title>
 		</nav-title>
 	</nav-bar>
 </nav>
 <component-main-content>
 	<question>
 		<number>
-			<label>Q1.</label>
+			<label>Q{ my ('nth') }.</label>
 		</number>
-		<label>What part of the computer is the following image?</label>
+		<label>{ my ('text') }</label>
 		
-		<image-holder></image-holder>
+		<image-holder if={ my ('image') }></image-holder>
 		
 		<component-spacing height="20px" />
 	
 		<guesses>
-			<guess><a>Wrong arnswe</a></guess>
-			<guess><a>Wrong anwers</a></guess>
-			<guess><a>Correct answer</a></guess>
-			<guess><a>Wrong awnser</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (0), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [0] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (1), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [1] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (2), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [2] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (3), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [3] }</a></guess>
 		</guesses>
 	</question>
-	<navigation>
-		<component-prev-button />
-		<component-next-button />
-	</navigation>
+	<!--<navigation>
+		<component-prev-button if={ my ('nth') > 1 } />
+		<component-next-button if={ my ('nth') < 20 } />
+	</navigation>-->
 </component-main-content>
 
 <style>
@@ -73,6 +73,7 @@
 			    min-height: 5em;
 			    margin: 5px 0;
 			    padding: 4px;
+			    word-break: break-all;
 		    	
 				> a {
 				    color: white;
@@ -154,3 +155,79 @@
 		}
 	}
 </style>
+
+<script>
+	self .temp = true;
+	
+	self
+		.remembers ('questions-items')
+
+		.remembers ('category', parse (args .params [0]))
+		.remembers ('points', parse (args .params [1]) || 0)
+		.remembers ('nth', parse (args .params [2]) || 1)
+		
+		.establish ('questions-in-category', dependent (function () {
+			return 	my ('questions-items') .filter (function (item) {
+						return item .category === my ('category')
+					})
+		}, self .impressions ('questions-items')))
+		.establish ('question', dependent (function () {
+			var pool = my ('questions-in-category');
+			return pool [Math .floor (Math .random () * pool .length)] .question
+		}, self .impressions ('questions-in-category')))
+		.establish ('text', dependent (function () {
+			return my ('question') .text
+		}, self .impressions ('question')))
+		.establish ('answer', dependent (function () {
+			return my ('question') .answer
+		}, self .impressions ('question')))
+		.establish ('traps', dependent (function () {
+			return my ('question') .traps
+		}, self .impressions ('question')))
+		.establish ('image', dependent (function () {
+			return my ('question') .image
+		}, self .impressions ('question')))
+		
+		.establish ('guesses', constant (
+			mechanism (function () {
+				var array = [my ('answer')] .concat (my ('traps'));
+			
+				var currentIndex = array .length
+				var temporaryValue
+				var randomIndex;
+				
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+				
+					// Pick a remaining element...
+					randomIndex = Math .floor (Math .random () * currentIndex);
+					currentIndex -= 1;
+					
+					// And swap it with the current element.
+					temporaryValue = array [currentIndex];
+					array [currentIndex] = array [randomIndex];
+					array [randomIndex] = temporaryValue;
+				}
+				
+				return array;
+			}, [self .impressions ('question')])
+				.thru (tap_ (function (guesses) {
+					if (! guesses .hasVal)
+						guesses ([])
+				}))
+		))
+		
+		.remembers ('points-for', function (guess) {
+			return my ('guesses') [guess] === my ('answer') ? 1 : 0
+		})
+		
+	self .impressions ('question') .thru (tap, self .render)
+	
+	self .impressions (args .cycle__from)
+		.thru (tap, function () {
+			self .impressions ('::questions') .init
+				.then (function (state) {
+					self .mention ('questions-items', state .value .item)
+				})
+		})
+</script>

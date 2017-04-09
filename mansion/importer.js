@@ -35,4 +35,7 @@ require ('./kk_index')
     .catch (function (err) {
         console .error ('ERRORED:', err)
     })
+    .then (function () {
+        use_db .driver .close ();
+    })
                     

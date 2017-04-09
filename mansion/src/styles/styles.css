@@ -14244,6 +14244,10 @@ component-modal-holder > item {
   transform: translateX(-50%) translateY(-50%);
 }
 
+component-next-button {
+  transform: scale(0.5);
+}
+
 component-page-title > span {
   color: white;
   font-size: 1.2em;
@@ -14582,6 +14586,10 @@ component-pitch-picker > football-field-map {
 
 component-portal-subcategory-item > a {
   display: block;
+}
+
+component-prev-button {
+  transform: scale(0.5);
 }
 
 component-select-control a {

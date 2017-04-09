@@ -543,6 +543,8 @@ riot.tag2('component-modal-holder', '<item> <yield></yield> </item>', '', '', fu
 
 }) (this, opts, this .my, this .me);
 });
+riot.tag2('component-next-button', '<svg width="94" height="94" viewbox="0 0 94 94" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns"><g id="Canvas" transform="translate(1295 700)" figma:type="canvas"><g id="Group" figma:type="frame"><g id="Vector" figma:type="vector"><use xlink:href="#6ea366ce-4e17-4e17-93d7-f4d7e769eb89" transform="translate(-1294.36 -699.24)" fill="#4FABFF"></use></g><g id="Vector" figma:type="vector"><use xlink:href="#89ff831e-7a6d-4de1-bf1d-4028308a94fe" transform="matrix(-1 0 0 1 -1229.07 -681.69)" fill="#FFFFFF"></use></g></g></g><defs><path id="6ea366ce-4e17-4e17-93d7-f4d7e769eb89" d="M 80.73 4.88281e-05L 12.0001 4.88281e-05C 5.37264 4.88281e-05 5.37109e-05 5.37263 5.37109e-05 12L 5.37109e-05 80.73C 5.37109e-05 87.3574 5.37264 92.73 12.0001 92.73L 80.73 92.73C 87.3575 92.73 92.73 87.3574 92.73 80.73L 92.73 12C 92.73 5.37263 87.3575 4.88281e-05 80.73 4.88281e-05Z"></path><path id="89ff831e-7a6d-4de1-bf1d-4028308a94fe" d="M 29.2 9.76563e-05L 29.2 58.39L 1.95312e-05 29.19L 29.2 9.76563e-05Z"></path></defs></svg>', '', '', function(opts) {
+});
 riot.tag2('component-page-title', '<span><yield></yield></span>', '', '', function(opts) {
 });
 riot.tag2('component-pitch-picker', '<selected-location> <input type="text" placeholder="請選擇球場" riot-value="{my (\'location\')}" disabled readonly><a disabled="{! my (\'location\')}" ref="done"><icon class="fa-check"></icon></a> </selected-location> <football-field-map ref="map"></football-field-map>', '', '', function(opts) {
@@ -602,6 +604,8 @@ riot.tag2('component-portal-subcategory-wrap', '<component-portal-subcategory-it
 	    self .impressions ('item') .thru (tap, self .render)
 
 }) (this, opts, this .my, this .me);
+});
+riot.tag2('component-prev-button', '<svg width="94" height="93" viewbox="0 0 94 93" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns"><title>Group</title><desc>Created using Figma</desc><g id="Canvas" transform="translate(158 699)" figma:type="canvas"><g id="Group" figma:type="frame"><g id="Vector" figma:type="vector"><use xlink:href="#fe2ae1a3-28ca-4124-aaa8-007b41494fe6" transform="translate(-157.365 -698.995)" fill="#4FABFF"></use></g><g id="Vector" figma:type="vector"><use xlink:href="#24ce5aa5-81c0-42f7-97ba-a8180a42d963" transform="translate(-131.275 -681.445)" fill="#FFFFFF"></use></g></g></g><defs><path id="fe2ae1a3-28ca-4124-aaa8-007b41494fe6" d="M 80.73 4.88281e-05L 12.0001 4.88281e-05C 5.37264 4.88281e-05 5.37109e-05 5.37263 5.37109e-05 12L 5.37109e-05 80.73C 5.37109e-05 87.3574 5.37264 92.73 12.0001 92.73L 80.73 92.73C 87.3575 92.73 92.73 87.3574 92.73 80.73L 92.73 12C 92.73 5.37263 87.3575 4.88281e-05 80.73 4.88281e-05Z"></path><path id="24ce5aa5-81c0-42f7-97ba-a8180a42d963" d="M 29.2 9.76563e-05L 29.2 58.39L 1.95312e-05 29.19L 29.2 9.76563e-05Z"></path></defs></svg>', '', '', function(opts) {
 });
 riot.tag2('component-select-control', '<yield></yield>', '', '', function(opts) {
 (function (self, args, my, me) {
@@ -1013,7 +1017,81 @@ riot.tag2('page-portal', '<nav> <nav-bar> <nav-buttons> </nav-buttons> <nav-titl
 
 }) (this, opts, this .my, this .me);
 });
-riot.tag2('page-quiz-subcategory', '<nav> <nav-bar> <nav-buttons> <a href="#portal"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Points: 0/20</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <question> <number> <label>Q1.</label> </number> <label>What part of the computer is the following image?</label> <image-holder></image-holder> <component-spacing height="20px"></component-spacing> <guesses> <guess><a>Wrong arnswe</a></guess> <guess><a>Wrong anwers</a></guess> <guess><a>Correct answer</a></guess> <guess><a>Wrong awnser</a></guess> </guesses> </question> <navigation> <component-prev-button></component-prev-button> <component-next-button></component-next-button> </navigation> </component-main-content>', '', '', function(opts) {
+riot.tag2('page-quiz-subcategory', '<nav> <nav-bar> <nav-buttons> <a href="#portal"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Points: {my (\'points\')}/20</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <question> <number> <label>Q{my (\'nth\')}.</label> </number> <label>{my (\'text\')}</label> <image-holder if="{my (\'image\')}"></image-holder> <component-spacing height="20px"></component-spacing> <guesses> <guess><a href="#quiz/subcategory/#{[ my (\'category\'), my (\'points\') + my (\'points-for\') (0), my (\'nth\') + 1 ] .map (stringify) .join (\'/\')}">{my (\'guesses\') [0]}</a></guess> <guess><a href="#quiz/subcategory/#{[ my (\'category\'), my (\'points\') + my (\'points-for\') (1), my (\'nth\') + 1 ] .map (stringify) .join (\'/\')}">{my (\'guesses\') [1]}</a></guess> <guess><a href="#quiz/subcategory/#{[ my (\'category\'), my (\'points\') + my (\'points-for\') (2), my (\'nth\') + 1 ] .map (stringify) .join (\'/\')}">{my (\'guesses\') [2]}</a></guess> <guess><a href="#quiz/subcategory/#{[ my (\'category\'), my (\'points\') + my (\'points-for\') (3), my (\'nth\') + 1 ] .map (stringify) .join (\'/\')}">{my (\'guesses\') [3]}</a></guess> </guesses> </question> </component-main-content>', '', '', function(opts) {
+(function (self, args, my, me) {
+
+		self .temp = true;
+
+		self
+			.remembers ('questions-items')
+
+			.remembers ('category', parse (args .params [0]))
+			.remembers ('points', parse (args .params [1]) || 0)
+			.remembers ('nth', parse (args .params [2]) || 1)
+
+			.establish ('questions-in-category', dependent (function () {
+				return 	my ('questions-items') .filter (function (item) {
+							return item .category === my ('category')
+						})
+			}, self .impressions ('questions-items')))
+			.establish ('question', dependent (function () {
+				var pool = my ('questions-in-category');
+				return pool [Math .floor (Math .random () * pool .length)] .question
+			}, self .impressions ('questions-in-category')))
+			.establish ('text', dependent (function () {
+				return my ('question') .text
+			}, self .impressions ('question')))
+			.establish ('answer', dependent (function () {
+				return my ('question') .answer
+			}, self .impressions ('question')))
+			.establish ('traps', dependent (function () {
+				return my ('question') .traps
+			}, self .impressions ('question')))
+			.establish ('image', dependent (function () {
+				return my ('question') .image
+			}, self .impressions ('question')))
+
+			.establish ('guesses', constant (
+				mechanism (function () {
+					var array = [my ('answer')] .concat (my ('traps'));
+
+					var currentIndex = array .length
+					var temporaryValue
+					var randomIndex;
+
+					while (0 !== currentIndex) {
+
+						randomIndex = Math .floor (Math .random () * currentIndex);
+						currentIndex -= 1;
+
+						temporaryValue = array [currentIndex];
+						array [currentIndex] = array [randomIndex];
+						array [randomIndex] = temporaryValue;
+					}
+
+					return array;
+				}, [self .impressions ('question')])
+					.thru (tap_ (function (guesses) {
+						if (! guesses .hasVal)
+							guesses ([])
+					}))
+			))
+
+			.remembers ('points-for', function (guess) {
+				return my ('guesses') [guess] === my ('answer') ? 1 : 0
+			})
+
+		self .impressions ('question') .thru (tap, self .render)
+
+		self .impressions (args .cycle__from)
+			.thru (tap, function () {
+				self .impressions ('::questions') .init
+					.then (function (state) {
+						self .mention ('questions-items', state .value .item)
+					})
+			})
+
+}) (this, opts, this .my, this .me);
 });
 riot.tag2('page-register', '<nav> <nav-bar> <nav-buttons> <a href="#home"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Register</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <register> <label> Please enter your email and create a password </label> <component-spacing height="20px"></component-spacing> <component-field-control placeholder="Type your email here..." type="email"></component-field-control> <component-field-control type="password" placeholder="Type your password here..."></component-field-control> <component-spacing height="40px"></component-spacing> <component-action> <a href="#portal">Create</a> </component-action> <terms-of-agreement> <item> <component-checkbox></component-checkbox> </item> <label> I agree with the <a href="#disclaimer">Disclaimers and Terms of Agreement</a> </label> </terms-of-agreement> </register> </component-main-content>', '', '', function(opts) {
 });
