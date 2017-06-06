@@ -58,10 +58,11 @@ var retaining =	function (you) {
 								return i;
 							};
 				};
-var mutate =	function (data) {
-					return	function (x, y) {
-								data [x] = y;
-								return data;
+var mutate =	function (mutator) {
+					return	function (data) {
+								var _data = like (data);
+								mutator (_data);
+								return _data;
 							};
 				};
 var difference =	function (data) {

@@ -24,9 +24,10 @@ var like =	function (baby) {
 				return i;
 			};
 var without =	function (/*you*/) {
+					var our_arguments = arguments
 					return	function (baby) {
 								var i = like (baby);
-								for (var your_laugh of arguments) {
+								for (var your_laugh of our_arguments) {
 									delete i [your_laugh];
 								}
 								return i;
@@ -42,6 +43,15 @@ var with_ =	function (heart, yours) {
 var having =	function (you) {
 					return	function (baby) {
 								var i = like (baby);
+								for (var love in you) {
+									i [love] = you [love];
+								}
+								return i;
+							};
+				};
+var retaining =	function (you) {
+					return	function (baby) {
+								var i = Object .create (baby);
 								for (var love in you) {
 									i [love] = you [love];
 								}
@@ -171,8 +181,32 @@ var stringify =	function (data) {
 var parse =	function (json) {
 				return ! json || json === 'undefined' ? undefined : JSON .parse (json);
 			};
-var capitalize = function (str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-}
+var capitalize =	function (str) {
+					    return str .replace (/\w\S*/g, function (txt) { return txt .charAt (0) .toUpperCase () + txt .substr (1) .toLowerCase (); });
+					}
+var to_uppercase =	function (str) {
+					    return str .toUpperCase ();
+					}
 
 var tap_ = function (fn) { return function (x) { fn .apply (this, arguments); return x; } };
+
+
+var u =	function (x) {
+			return x (x)
+		};
+var Y =	function (f) {
+			return	u (function (x) {
+						return f (function (y) { return (u (x)) (y); });
+					});
+		};
+
+
+var pack =	function (aliases) {
+				return	function (val) {
+							var x = {};
+							aliases .forEach (function (alias) {
+								x [alias] = val;
+							})
+							return x;
+						};
+			};

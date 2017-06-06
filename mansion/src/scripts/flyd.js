@@ -408,10 +408,6 @@ function updateStream(s) {
  * @param {*} value
  */
 function updateStreamValue(s, n) {
-  if (n !== undefined && n !== null && isFunction(n.then)) {
-    n.then(s);
-    return;
-  }
   s.val = n;
   s.hasVal = true;
   markListeners(s, s.listeners);
@@ -421,7 +417,7 @@ function updateStreamValue(s, n) {
  * @private
  */
 function markListeners(s, lists) {
-  lists = lists .slice ();
+  lists = lists .slice (0); //DON'T REMOVE! preserve listeners for this loop, so no higher order effects occur
   var i, list;
   for (i = 0; i < lists.length; ++i) {
     list = lists[i];
@@ -429,7 +425,14 @@ function markListeners(s, lists) {
       if (list.depsChanged !== undefined) {
         list.depsChanged.push(s);
       }
-      updateStream(list)
+      try {
+        updateStream(list)
+      }
+      catch (e) {
+        setTimeout (function () {
+          throw e;
+        }, 0);
+      }
     } else {
       endStream(list);
     }

@@ -16,6 +16,36 @@ var home_path = '#home';
 
 var paper_default_api =	paper (function (self, args, my) {
 							self
+								.establish ('::register', stateful ({
+									key: '::register',
+									per: 'none',
+									request: R .applySpec ({
+												path: constant (backend_path + '/register'),
+												method: constant ('POST'),
+												headers: constant ({ 'Content-Type': 'application/json'}),
+												body: stringify
+											}),
+									error: function (response) {
+										if (! response .json)
+											return {
+												item: 'unsuccessful'
+											}
+									},
+									value: R .compose (
+											R .prop ('json')),
+								}))
+								.establish ('::login', stateful ({
+									key: '::login',
+									per: 'none',
+									request: R .applySpec ({
+												path: constant (backend_path + '/login'),
+												method: constant ('POST'),
+												headers: constant ({ 'Content-Type': 'application/json'}),
+												body: stringify
+											}),
+									value: R .compose (
+											R .prop ('json'))
+								}))
 								.establish ('::questions', stateful ({
 									key: '::questions',
 									per: 'lump',
@@ -31,27 +61,27 @@ var paper_default_api =	paper (function (self, args, my) {
 									key: '::completed-questions',
 									per: 'none',
 									request: R .applySpec ({
-												fetch: constant (function (path, completed) {
-													return completed;
-												}),
 												method: constant ('process'),
 												item: R .identity
 											}),
 									value: R .compose (
-											R .identity)
+											R .identity),
+									fetch: constant (function (path, completed) {
+										return completed;
+									})
 								}))
 								.establish ('::level', stateful ({
 									key: '::level',
 									per: 'none',
 									request: R .applySpec ({
-												fetch: constant (function (path, req) {
-													return req .item;
-												}),
 												method: constant ('process'),
 												item: R .identity
 											}),
 									value: R .compose (
-											R .identity)
+											R .identity),
+									fetch: constant (function (path, req) {
+										return req .item;
+									})
 								}))
 								
 								.establish ('::questions-diff', constant (
@@ -97,3 +127,7 @@ var paper_api =	paper (function (self, args, my) {
 			
 var api = paper_api () .realize ();
 
+
+var valid_email = 	function (email) {
+						return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ .test (email);
+					}

@@ -1,4 +1,4 @@
-/* Riot v3.4.0, @license MIT */
+/* Riot v3.4.2, @license MIT */
 (function (global, factory) {
 	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
 	typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -16,6 +16,7 @@ var LOOP_DIRECTIVE = 'each';
 var LOOP_NO_REORDER_DIRECTIVE = 'no-reorder';
 var SHOW_DIRECTIVE = 'show';
 var HIDE_DIRECTIVE = 'hide';
+var RIOT_EVENTS_KEY = '__riot-events__';
 var T_STRING = 'string';
 var T_OBJECT = 'object';
 var T_UNDEF  = 'undefined';
@@ -25,6 +26,7 @@ var XLINK_REGEX = /^xlink:(\w+)/;
 var WIN = typeof window === T_UNDEF ? undefined : window;
 var RE_SPECIAL_TAGS = /^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?|opt(?:ion|group))$/;
 var RE_SPECIAL_TAGS_NO_OPTION = /^(?:t(?:body|head|foot|[rhd])|caption|col(?:group)?)$/;
+var RE_EVENTS_PREFIX = /^on/;
 var RE_RESERVED_NAMES = /^(?:_(?:item|id|parent)|update|root|(?:un)?mount|mixin|is(?:Mounted|Loop)|tags|refs|parent|opts|trigger|o(?:n|ff|ne))$/;
 var RE_HTML_ATTRS = /([-\w]+) ?= ?(?:"([^"]*)|'([^']*)|({[^}]*}))/g;
 var CASE_SENSITIVE_ATTRIBUTES = { 'viewbox': 'viewBox' };
@@ -587,6 +589,11 @@ var brackets = (function (UNDEF) {
  * tmpl.loopKeys - Get the keys for an 'each' loop (used by `_each`)
  */
 
+    /*
+    window.called = 0;
+    window .eval_ms = 0;
+    //*/
+
 /* istanbul ignore next */
 var tmpl = (function () {
 
@@ -594,6 +601,12 @@ var tmpl = (function () {
 
   function _tmpl (str, data) {
     if (!str) { return str }
+    
+    if (str .indexOf ('{expression:') != -1) {
+      data ._tmpl_cache = data ._tmpl_cache || {};
+      return (data ._tmpl_cache[str] || (data ._tmpl_cache[str] = create_native(str)))(data)
+    }/*
+    data ._item = data;//*/
 
     return (_cache[str] || (_cache[str] = _create(str))).call(data, _logErr)
   }
@@ -626,12 +639,68 @@ var tmpl = (function () {
     }
   }
 
+  var x = function (str) {
+            //console.log('path a');
+            var expression = /expression:([^:]+):(\d+)/.exec(str);
+            var tag_name = expression[1];
+            var n = expression[2];
+            
+            var scope = window .tag_scopes [tag_name];
+            return scope.expressions[n-1]/*/
+            return function(_item){
+              try {return scope.expressions[n-1](_item);} catch (e) {console.error(e)}
+            }//*/
+          }
+  var q = function (x){return function (){return x;}};
+  var create_native = function (str) {
+    //console.log('path', str);
+      var
+        expr,
+        parts = brackets.split(str.replace(RE_DQUOTE, '"'));
+  
+      if (parts.length > 2 || parts[0]) {
+        var i, j, list = [];
+  
+        for (i = j = 0; i < parts.length; ++i) {
+  
+          expr = parts[i];
+  
+          if (expr && (expr = i & 1
+  
+              ? x(expr)
+  
+              : q(expr)
+  
+            )) { list[j++] = expr; }
+  
+        }
+  
+        expr = j < 2 ? list[0]
+             : function (_item) { return list.map(function(x){return x(_item);}).join('')};
+  
+      } else {
+        expr = x(parts[1]);
+      }
+      return expr;/*
+      return function (_item) {
+        window.called++;var start = window.performance.now();
+        var res =  expr(_item);
+        window .eval_ms += window.performance.now() - start; return res; 
+      }//*/
+  }
   function _create (str) {
     var expr = _getTmpl(str);
 
     if (expr.slice(0, 11) !== 'try{return ') { expr = 'return ' + expr; }
 
-    return new Function('E', expr + ';')    // eslint-disable-line no-new-func
+    var intp = new Function('E', expr + ';');// eslint-disable-line no-new-func
+
+    return intp;/*
+    return function () {
+      window.called++;var start = window.performance.now();
+      var res =  intp .apply (this, arguments);
+      window .eval_ms += window.performance.now() - start; return res;
+    }//*/
   }
 
   var
@@ -755,6 +824,7 @@ var tmpl = (function () {
     JS_NOPROPS = /^(?=(\.[$\w]+))\1(?:[^.[(]|$)/;
 
   function _wrapExpr (expr, asText, key) {
+    
     var tb;
 
     expr = expr.replace(JS_VARNAME, function (match, p, mvar, pos, s) {
@@ -1023,8 +1093,6 @@ var settings$1 = extend(Object.create(brackets.settings), {
   skipAnonymousTags: true
 });
 
-var EVENTS_PREFIX_REGEX = /^on/;
-
 /**
  * Trigger DOM events
  * @param   { HTMLElement } dom - dom element target of the event
@@ -1071,19 +1139,15 @@ function setEventHandler(name, handler, dom, tag) {
   var eventName,
     cb = handleEvent.bind(tag, dom, handler);
 
-  // avoid to bind twice the same event
-  dom[name] = null;
-
   // normalize event name
-  eventName = name.replace(EVENTS_PREFIX_REGEX, '');
+  eventName = name.replace(RE_EVENTS_PREFIX, '');
 
-  // cache the callback directly on the DOM node
-  if (!dom._riotEvents) { dom._riotEvents = {}; }
+  // cache the listener into the listeners array
+  if (!contains(tag.__.listeners, dom)) { tag.__.listeners.push(dom); }
+  if (!dom[RIOT_EVENTS_KEY]) { dom[RIOT_EVENTS_KEY] = {}; }
+  if (dom[RIOT_EVENTS_KEY][name]) { dom.removeEventListener(eventName, dom[RIOT_EVENTS_KEY][name]); }
 
-  if (dom._riotEvents[name])
-    { dom.removeEventListener(eventName, dom._riotEvents[name]); }
-
-  dom._riotEvents[name] = cb;
+  dom[RIOT_EVENTS_KEY][name] = cb;
   dom.addEventListener(eventName, cb, false);
 }
 
@@ -1198,6 +1262,12 @@ function updateExpression(expr) {
     }
   }
 
+  // remove original attribute
+  if (expr.attr && (!expr.isAttrRemoved || !value)) {
+    remAttr(dom, expr.attr);
+    expr.isAttrRemoved = true;
+  }
+
   // for the boolean attributes we don't need the value
   // we can convert it to checked=true to checked=checked
   if (expr.bool) { value = value ? attrName : false; }
@@ -1209,7 +1279,9 @@ function updateExpression(expr) {
   expr.wasParsedOnce = true;
 
   // if the value is an object we can not do much more with it
-  if (isObj) { return }
+  if (isObj && !isToggle) { return }
+  // avoid to render undefined/null values
+  if (isBlank(value)) { value = ''; }
 
   // textarea and text nodes have no attribute name
   if (!attrName) {
@@ -1230,11 +1302,6 @@ function updateExpression(expr) {
     return
   }
 
-  // remove original attribute
-  if (!expr.isAttrRemoved || !value) {
-    remAttr(dom, expr.attr);
-    expr.isAttrRemoved = true;
-  }
 
   // event handler
   if (isFunction(value)) {
@@ -1297,8 +1364,9 @@ var IfExpr = {
       unmountAll(this.expressions);
       if (this.current._tag) {
         this.current._tag.unmount();
-      } else if (this.current.parentNode)
-        { this.current.parentNode.removeChild(this.current); }
+      } else if (this.current.parentNode) {
+        this.current.parentNode.removeChild(this.current);
+      }
       this.current = null;
       this.expressions = [];
     }
@@ -1690,8 +1758,6 @@ function parseExpressions(root, expressions, mustIncludeRoot) {
     // If this element had an if-attr, that's the parent for all child elements
     return {parent: parent}
   }, tree);
-
-  return { tree: tree, root: root }
 }
 
 /**
@@ -2018,7 +2084,7 @@ function unregister$1(name) {
   delete __TAG_IMPL[name];
 }
 
-var version$1 = 'v3.4.0';
+var version$1 = 'v3.4.2';
 
 
 var core = Object.freeze({
@@ -2071,7 +2137,6 @@ function Tag$1(impl, conf, innerHTML) {
   if ( impl === void 0 ) impl = {};
   if ( conf === void 0 ) conf = {};
 
-
   var opts = extend({}, conf.opts),
     parent = conf.parent,
     isLoop = conf.isLoop,
@@ -2103,6 +2168,9 @@ function Tag$1(impl, conf, innerHTML) {
     tagName: tagName,
     index: index,
     isLoop: isLoop,
+    // tags having event listeners
+    // it would be better to use weak maps here but we can not introduce breaking changes now
+    listeners: [],
     // these vars will be needed only for the virtual tags
     virts: [],
     tail: null,
@@ -2302,6 +2370,13 @@ function Tag$1(impl, conf, innerHTML) {
       remAttr(root, name);
     });
 
+    // remove all the event listeners
+    this.__.listeners.forEach(function (dom) {
+      Object.keys(dom[RIOT_EVENTS_KEY]).forEach(function (eventName) {
+        dom.removeEventListener(eventName, dom[RIOT_EVENTS_KEY][eventName]);
+      });
+    });
+
     // remove this tag instance from the global virtualDom variable
     if (tagIndex !== -1)
       { __TAGS_CACHE.splice(tagIndex, 1); }
@@ -2320,16 +2395,11 @@ function Tag$1(impl, conf, innerHTML) {
             { arrayishRemove(parent.tags, tagName, this); }
         }
       } else {
-        while (el.firstChild) { el.removeChild(el.firstChild); }
+        // remove the tag contents
+        setInnerHTML(el, '');
       }
 
-      if (p)
-        { if (!mustKeepRoot) {
-          p.removeChild(el);
-        } else {
-          // the riot-tag and the data-is attributes aren't needed anymore, remove them
-          remAttr(p, IS_DIRECTIVE);
-        } }
+      if (p && !mustKeepRoot) { p.removeChild(el); }
     }
 
     if (this.__.virts) {
@@ -2464,6 +2534,7 @@ function getImmediateCustomParentTag(tag) {
 function unmountAll(expressions) {
   each(expressions, function(expr) {
     if (expr instanceof Tag$1) { expr.unmount(true); }
+    else if (expr.tagName) { expr.tag.unmount(true); }
     else if (expr.unmount) { expr.unmount(); }
   });
 }

@@ -17,7 +17,7 @@ var ref_set =	function (ref_changes) {
 					})
 					return	ref_changes
 								.thru (map, function () {
-									return Object .create (refs);
+									return refs .slice ();
 								});
 				};	
 
@@ -27,7 +27,11 @@ var ref_set =	function (ref_changes) {
 			init:	function () {
 						(function (self) {
 							var last_refs = {};
-							mergeAll ([self .event ('mount'), self .event ('updated'), self .event ('before-unmount')])
+							mergeAll ([
+								from (function (when) { self .on ('mount', function (x) { when (x); }); }),
+								from (function (when) { self .on ('updated', function (x) { when (x); }); }),
+								from (function (when) { self .on ('before-unmount', function (x) { when (x); }); })
+							])
 								.map (function () {
 									return self .refs
 								})
@@ -40,17 +44,7 @@ var ref_set =	function (ref_changes) {
 								.thru (tap, function (change) {
 									var diff = {};
 									diff [change .type] = change .node;
-									
-									if (Node .prototype .isPrototypeOf (change .node)) {
-										if (change .type === 'add') {
-											var node = change .node;
-											node .event = events_for (node);
-							    			node .uses = belongs_to (node);
-										}
-										/*if (change .type === 'remove')
-											send_dom_event (change .node) ('unmount');*/
-									}//log ('detected', change .ref, self .dialogue (change .ref));
-									((self .dialogue (change .ref) || {}) .ask || noop) (diff);
+									((self .affiliated (change .ref) || {}) .mention || noop) (diff);
 								})
 						}) (this);			
 					}

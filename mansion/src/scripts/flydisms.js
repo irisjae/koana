@@ -158,7 +158,7 @@ var tap =	function (affect, stream) {
 			};
 
 var takeUntil = curry (2, function (term, src) {
-					return flyd .endsOn (mergeAll ([term, src .end ? src .end : src]), src .thru (tap, noop));
+					return flyd .endsOn (mergeAll ([term, src .end ? src .end : src]), src .thru (map, id));
 				});
 
 var map =	curry (2, function (f, s) {
@@ -177,16 +177,11 @@ var scan =	curry (3, function (f, acc, s) {
 			});
 
 var news =  function (s) {
-				var skip = s .hasVal; var f = false; var v = false;
-				return	s .thru (trans, R .dropWhile (function (x) {
-							if (skip) {
-								skip = false;
-								return true;
-							}
-							else {
-								return false;
-							}
-						}));
+				if (s .hasVal) {
+					return	s .thru (trans, R .drop (1));
+				}
+				else
+					return	s .thru (trans, R .drop (0))
 			};
 
 var flatMap =	curry (2, function (f, s) {
@@ -237,7 +232,7 @@ var switchLatest =	function (s) {
 					
 var from_promise =	function (p) {
 						var s = stream ();
-						s (p) .thru (tap, s .end);
+						p .then (s) .then (function () { s .end (true) });
 						return s;
 					};
 var project =	function (to, s) {

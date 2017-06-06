@@ -1,0 +1,151 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Ready to code?</component-page-title>
+		</nav-title>
+		<nav-buttons>
+			<a href="#logout">
+				<component-logout-button />
+			</a>
+		</nav-buttons>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<portal>
+		<component-spacing height="10px" />
+		<label>
+			Choose a quiz!
+		</label>
+		<component-spacing height="20px" />
+		<component-item if={ my ('status') === 'loading' } >Fetching quizes...</component-item>
+		<component-loading-item if={ my ('status') === 'loading' } />
+		<component-item if={ my ('status') === 'no-items' } >No courses found :(</component-item>
+		<component-dynamic-load
+		    items_to_load=13
+		    interval_for_loading=50
+		    item_height__from=":item-height"
+		    items__from=":subcategories"
+		>
+			<component-portal-subcategory-item item__from=":item">
+		</component-dynamic-load>
+	</portal>
+	<component-spacing height="75px" />
+	<links>
+		<a href="#courses"><label>Courses</label></a>
+		<a href="#highscore"><label>Highscore</label></a>
+		<a href="#contact"><label>Contact us</label></a>
+	</links>
+</component-main-content>
+
+<style>
+	@extend [page-layout];
+	
+	/*component-page-title{
+		
+		font-size: 1.4em;
+	
+	}*/
+	
+	portal {
+	    display: block;
+	    left: 0;
+	    right: 0;
+	    bottom: 95px;
+	    top: 0;
+	    position: absolute;
+	    overflow: scroll;
+		
+		> label {
+			color: #4FABFF;
+			font-weight: bold;
+			font-size: 1.4em;
+			display: block;
+			padding: 0 10px;
+		}
+		
+	}
+	links {
+		position: fixed;
+		bottom: 35px;
+	    left: 0;
+	    right: 0;
+	    opacity: 0.7;
+	    display: flex;
+		justify-content: space-around;
+		> a {
+			color: black;
+			text-align: center;
+		    width: 50px;
+		    white-space: nowrap;
+		    position: relative;
+		    
+		    &:before {
+				content: '';
+				display: block;
+				margin: 0 auto;
+				padding: 25px;
+				background: #50abf1;
+				border-radius: 10px;
+			}
+		    
+		    > label {
+			    position: absolute;
+			    left: 50%;
+			    transform: translateX(-50%);
+			}
+		}
+	}
+
+</style>
+
+<script>
+	self
+		.remembers ('questions-info')
+		.establish (':subcategories', function (requests) { 
+			return 	self .impressions ('questions-info')
+						.thru (map, function (question_list) {
+							var categories = {};
+							question_list .forEach (function (question) {
+								categories [question .category] = true;
+							});
+							return 	Object .keys (categories)
+										.sort (function (a, b) {
+											return a > b;
+										})
+										.map (function (category) {
+											return { category: category };
+										});
+						})
+						.thru (delay, 400)
+						.thru (dropRepeatsWith, json_equal)
+		})
+		.remembers (':item-height', function (item) {
+			return 135;
+		})
+			
+	self 
+		.establish ('status', constant (
+			mechanism (function () {
+				if (my (':subcategories') .length)
+					return 'loaded';
+				else
+					return 'no-items'
+			}, [self .impressions (':subcategories')])
+				.thru (tap_ (function (status) {
+					if (! status .hasVal)
+						status ('loading')
+				}))
+		))
+		.impressions ('status') .thru (tap, self .render)
+		
+	self
+		.impressions (args .cycle__from)
+			.thru (tap, function () {
+				inquire (self .affiliated ('::questions'))
+					.then (function (questions) {
+						self .mention ('questions-info', questions)
+					})
+			})
+</script>

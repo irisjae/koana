@@ -1,200 +1,133 @@
-var frontend_path = window .location .protocol + '//forster-mumenrider.c9users.io';
-var backend_path = window .location .protocol + '//forster-mumenrider.c9users.io:8081';	
+/*
+	global paper,
+	global stateful,
+	global constant,
+	global stringify,
+	global R,
+	global tap,
+	global resettle
+*/
 
-var login_value;
-var logged_in_header =	function () {
-							return login_value && { 'Content-Type': 'application/json', 'X-UUID': login_value .user .uuid };
-						};
+var frontend_path = window .location .protocol + '//playboymansion-mumenrider.c9users.io';
+var backend_path = window .location .protocol + '//playboymansion-mumenrider.c9users.io';	
+
+var home_path = '#home';
 
 
-var api =	paper (function (self, args, me, my) {
-				var logged_out =	{
-										login:	writer (backend_path + '/auth/login', {
-													write:	{
-																method: 'POST',
-																headers: '{ { "Content-Type": "application/json" } }',
-																body: '{ data }'
-															}
-												}, '{ response .data }'),
-										matches_to_find:	reader (backend_path + '/match', {
-																read:	{
-																			method: 'GET',
-																			headers: '{ logged_in_header () }'
-																		}
-																	
-															}, '{ response .data .match_list }')
-									};
-				var loggined_in =	function (login) {
-										login_value = login;
-										return	{
-													test_user:	writer (backend_path + '/admin/test_create_user', {
-																	write:	{
-																				method: 'POST',
-																				headers: '{ { "Content-Type": "application/json", "x-admin-uuid": "68ecd6d1-312e-4388-bee2-c3d81a8895e7" } }',
-																				body: '{ { userName: "tester" } }'
-																			}
-																}, '{ response .data .user }'),
-													hack_login:	writer (backend_path + '/auth/login', {
-																	write:	{
-																				method: 'local',
-																				body: '{ having ({ user: having ({ uuid: data }) (login_value .user) }) (login_value) }'
-																			}
-																}, '{ data }'),
-													//login: stream (login),
-													//logout
-													matches_to_find:	reader (backend_path + '/match', {
-																			read:	{
-																						method: 'GET',
-																						headers: '{ logged_in_header () }'
-																					}
-																				
-																		}, '{ response .data .match_list }'),
-													match_to_find_info:	function (match_id) {
-																			return	reader (backend_path + '/match/' + match_id + '/pre_match_info', {
-																						read:	{
-																									method: 'GET',
-																									headers: '{ logged_in_header () }'
-																								}
-																					}, '{ response .data .pre_match_info }');
-																		},		
-													contact:	writer (backend_path + '/me/contact', {
-																	write:	{
-																				method: 'POST',
-																				headers: '{ logged_in_header () }',
-																				body: '{ data }'	
-																			}
-																}, '{ data }'),
-													team_open:	writer (backend_path + '/me/team', {
-																	write:	{
-																				method: 'POST',
-																				headers: '{ logged_in_header () }',
-																				body: '{ data }'
-																			}
-																}, '{ response .data }'),
-													match_open:	function (team_id) {
-																	return	writer (backend_path + '/me/team/' + team_id + '/match', {
-																				write:	{
-																							method: 'POST',
-																							headers: '{ logged_in_header () }',
-																							body: '{ data }'
-																						}
-																			}, '{ response .data }');
-																},				
-													match_apply:	function (team_id, match_id) {
-																		return	writer (backend_path + '/me/team/' + team_id + '/match/' + match_id + '/request', {
-																					write:	{
-																								method: 'POST',
-																								headers: '{ logged_in_header () }'
-																							}
-																				}, '{ response .data }');
-																	},				
-													match_applications:	function (team_id, match_id) {
-																			return	reader (backend_path + '/me/team/' + team_id + '/match/' + match_id + '/match_request', {
-																						read:	{
-																									method: 'GET',
-																									headers: '{ logged_in_header () }'
-																								}
-																					}, '{ response .data .match_request_list }');
-																		},				
-													teams:	reader (backend_path + '/me/team', {
-																read:	{
-																			method: 'GET',
-																			headers: '{ logged_in_header () }'
-																		}
-															}, '{ response .data .team_list }'),
-													matches:	function (team_id) {
-																	return	reader (backend_path + '/me/team/' + team_id + '/match', {
-																				read:	{
-																							method: 'GET',
-																							headers: '{ logged_in_header () }'
-																						}
-																					
-																			}, '{ response .data .match_list }');
-																},
-													matches_applied:	function (team_id) {
-																			return	reader (backend_path + '/me/team/' + team_id + '/requesting_match', {
-																						read:	{
-																									method: 'GET',
-																									headers: '{ logged_in_header () }'
-																								}
-																							
-																					}, '{ response .data .match_list }');
-																		}
-												};
-									};
-	
-				self
-					.ask (args .api__for, function (reqs) {
-						var curr_api = stream (logged_out);
+var paper_default_api =	paper (function (self, args, my) {
+							self
+								.establish ('::register', stateful ({
+									key: '::register',
+									per: 'none',
+									request: R .applySpec ({
+												path: constant (backend_path + '/register'),
+												method: constant ('POST'),
+												headers: constant ({ 'Content-Type': 'application/json'}),
+												body: stringify
+											}),
+									error: function (response) {
+										if (! response .json)
+											return {
+												item: 'unsuccessful'
+											}
+									},
+									value: R .compose (
+											R .prop ('json')),
+								}))
+								.establish ('::login', stateful ({
+									key: '::login',
+									per: 'none',
+									request: R .applySpec ({
+												path: constant (backend_path + '/login'),
+												method: constant ('POST'),
+												headers: constant ({ 'Content-Type': 'application/json'}),
+												body: stringify
+											}),
+									value: R .compose (
+											R .prop ('json'))
+								}))
+								.establish ('::questions', stateful ({
+									key: '::questions',
+									per: 'lump',
+									request: R .applySpec ({
+												path: constant (backend_path + '/questions'),
+												method: constant ('GET'),
+												headers: constant ({ 'Content-Type': 'application/json'}),
+											}),
+									value: R .compose (
+											R .prop ('json'))
+								}))
+								.establish ('::completed-questions', stateful ({
+									key: '::completed-questions',
+									per: 'none',
+									request: R .applySpec ({
+												fetch: constant (function (path, completed) {
+													return completed;
+												}),
+												method: constant ('process'),
+												item: R .identity
+											}),
+									value: R .compose (
+											R .identity)
+								}))
+								.establish ('::level', stateful ({
+									key: '::level',
+									per: 'none',
+									request: R .applySpec ({
+												fetch: constant (function (path, req) {
+													return req .item;
+												}),
+												method: constant ('process'),
+												item: R .identity
+											}),
+									value: R .compose (
+											R .identity)
+								}))
+								
+								.establish ('::questions-diff', constant (
+									from (function (diff) {
+										self .impressions ('::questions') .init
+											.then (function (prev) {
+												self .impressions ('::questions')
+													.thru (map, R .path (['value', 'item']))
+													.thru (filter, id)
+													.thru (dropRepeatsWith, json_equal)
+													.thru (tap, function (curr) {
+														//diff (diff_ques (curr, prev));
+														prev = curr;
+													})
+											})
+									})
+								))
+						});
 						
-						reqs .thru (tap, function (to) {
-							if (to .login)
-								curr_api (loggined_in (to .login))
-							if (to .logout)
-								curr_api (logged_out)
+						
+var paper_api =	paper (function (self, args, my) {
+					self
+						.remembers ('::api', paper_default_api ())
+						.impressions ('::api')
+							.thru (tap, function (to_be_api) {
+								self .thru (
+									resettle, to_be_api)
+							})
+							
+
+					self .impressions ('::level') .init
+					    .then (function () {
+					        if (! my ('::level'))
+					            self .mention ('::level', 5)
+					    })
+					self .impressions ('::questions-diff')
+						.thru (tap, function (curr) {
+							var _diff = diff_ques (curr, prev);
+							self .mention ('::incomplete-questions',
+								rediff_ques (_diff) (my ('::incomplete-questions')))
 						})
-						
-						return curr_api;
-					})
-			});
+				});
 			
-			
-			
-			
-var num_of_players_to_num =	function (text) {
-					        	if (text === '5v5') return 5;
-					        	if (text === '7v7') return 7;
-					        	if (text === '9v9') return 9;
-					        	if (text === '11v11') return 11;
-							}
-					        
-var num_of_players_to_text =	function (num) {
-						        	return num + 'v' + num 
-						        }
-var day_of_week_to_chi =	function (date_time) {
-								return	'星期' + (function (day) {
-											if (day === '0') return '日'
-											if (day === '1') return '一'
-											if (day === '2') return '二'
-											if (day === '3') return '三'
-											if (day === '4') return '四'
-											if (day === '5') return '五'
-											if (day === '6') return '六'
-										}) (fecha .format (date_time, 'd'))
-							}
-var date_to_chi =	function (date_time) {
-						return fecha .format (date_time, 'YYYY年M月D日')
-					}
-var date_from_chi =	function (str) {
-						return fecha .parse (str, 'YYYY年M月D日')
-					}
-var times =	function (start_date_time, end_date_time) {
-					return fecha .format (start_date_time, 'h:mm A') + ' - ' + fecha .format (end_date_time, 'h:mm A')
-				}
-var location_from_api =	function (str) {
-							return str .split (',') .reverse () [0]
-						}
-var pitch_type_to_chi =	function (enum_) {
-				        	if (enum_ === 'HARD_SURFACE') return '石地場'
-				        	if (enum_ === 'GRASS_CARPET') return '人造草地場'
-				        	if (enum_ === 'ARTIFICIAL_TURF') return '仿真草地場'
-				        	if (enum_ === 'REAL_GRASS') return '草地場'
-				        }
-var field_type_to_chi =	function (enum_) {
-				        	if (enum_ === 'HARD_SURFACE') return '硬地'
-				        	if (enum_ === 'GRASS_CARPET') return '人造草'
-				        	if (enum_ === 'ARTIFICIAL_TURF') return '仿真草'
-				        	if (enum_ === 'REAL_GRASS') return '真草'
-				        }
-var fee_to_chi =	function (fee) {
-						return fee ? 'HKD $' + fee : '免費'
-					}
-						        
-						        
+var api = paper_api () .realize ();
 
-var win_rate =	function (won, played) {
-					return (+ won * 100 / (+ played || 1)) .toFixed (0)
-				}
-var is_league = function (league) {
-					return league ? '是' : '否'
-				}
+
+var valid_email = 	function (email) {
+						return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ .test (email);
+					}

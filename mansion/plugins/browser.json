@@ -15,6 +15,12 @@
         },
         "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.techballogy.fofi"
+        },
+        "cordova-plugin-x-toast": {
+            "PACKAGE_NAME": "com.kingdom.koding"
+        },
+        "cordova-plugin-network-information": {
+            "PACKAGE_NAME": "com.kingdom.koding"
         }
     },
     "dependent_plugins": {}

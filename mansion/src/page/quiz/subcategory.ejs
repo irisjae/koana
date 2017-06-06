@@ -1,0 +1,220 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+			<a href="#portal">
+				<component-back-button />
+			</a>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Points: { my ('points') }/20</component-page-title>
+		</nav-title>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<question>
+		<number>
+			<label>Q{ my ('nth') }.</label>
+		</number>
+		<label>{ my ('text') }</label>
+		
+		<image-holder if={ my ('image') }><img src={ my ('image') }></image-holder>
+		
+		<component-spacing height="20px" />
+	
+		<guesses>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (0), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [0] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (1), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [1] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (2), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [2] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (3), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [3] }</a></guess>
+		</guesses>
+	</question>
+	<!--<navigation>
+		<component-prev-button if={ my ('nth') > 1 } />
+		<component-next-button if={ my ('nth') < 20 } />
+	</navigation>-->
+</component-main-content>
+
+<style>
+	@extend [page-layout];
+	
+	question {
+	    padding: 10px 15px 10px 15px;
+	    display: block;
+	    left: 0;
+	    right: 0;
+	    bottom: 95px;
+	    top: 0;
+	    position: absolute;
+	    overflow: scroll;
+		
+		color: #4FABFF;
+		
+		> number {
+			> label {
+				font-size: 6em;
+			}
+		}
+		
+		> label {
+			font-size: 1.4em;
+			display: block;
+		}
+		
+		> image-holder {
+			> img {
+				max-height: 40%;
+				width: auto;
+			}
+		}
+		
+		> guesses {
+		    width: 100%;
+		    display: flex;
+		    flex-wrap: wrap;
+		    justify-content: space-between;
+		    
+		    > guess {
+    	        flex-basis: calc(50% - 5px);
+			    flex-grow: 0;
+			    flex-shrink: 0;
+			    min-height: 5em;
+			    margin: 5px 0;
+			    padding: 4px;
+			    word-break: break-word;
+		    	
+				> a {
+					background: #B8E4FA;
+				    color: #888;
+				    border-radius: 7px;
+				    padding: 0.5em;
+				    width: 100%;
+				    height: 100%;
+				    display: block;
+				    text-align: center;
+				    
+				    &[active] {
+					    color: #566573;
+					    background: hsla(209,100%,85%,1);
+					}
+			    }
+			}
+			
+			
+			&[completed] {
+				> guess {
+					> a {
+						&[correct] {
+						    color: #566573;
+   							background: hsla(149,100%,65%,1);
+						}
+						&[active] {
+						    color: #FFF;
+						    background: hsla(0,100%,50%,1);
+						}
+						&[correct][active] {
+						    color: #566573;
+   							background: hsla(149,100%,75%,1);
+						}
+					}
+					
+				}
+			}
+		}
+	}
+		
+	navigation {
+	    bottom: 0;
+	    left: 0;
+	    right: 0;
+	    position: absolute;
+	    display: block;
+	    opacity: 0.7;
+	    
+	    > component-prev-button {
+			position: absolute;
+		    left: 25%;
+		    bottom: 0;
+		}
+	    > component-next-button {
+			position: absolute;
+		    right: 25%;
+		    bottom: 0;
+		}
+	}
+</style>
+
+<script>
+	self .temp = true;
+	
+	self
+		.remembers ('questions-items')
+
+		.remembers ('category', parse (args .params [0]))
+		.remembers ('points', parse (args .params [1]) || 0)
+		.remembers ('nth', parse (args .params [2]) || 1)
+		
+		.establish ('questions-in-category', dependent (function () {
+			return 	my ('questions-items') .filter (function (item) {
+						return item .category === my ('category')
+					})
+		}, self .impressions ('questions-items')))
+		.establish ('question', dependent (function () {
+			var pool = my ('questions-in-category');
+			return pool [Math .floor (Math .random () * pool .length)] .question
+		}, self .impressions ('questions-in-category')))
+		.establish ('text', dependent (function () {
+			return my ('question') .text
+		}, self .impressions ('question')))
+		.establish ('answer', dependent (function () {
+			return my ('question') .answer
+		}, self .impressions ('question')))
+		.establish ('traps', dependent (function () {
+			return my ('question') .traps
+		}, self .impressions ('question')))
+		.establish ('image', dependent (function () {
+			return my ('question') .image
+		}, self .impressions ('question')))
+		
+		.establish ('guesses', constant (
+			mechanism (function () {
+				var array = [my ('answer')] .concat (my ('traps'));
+			
+				var currentIndex = array .length
+				var temporaryValue
+				var randomIndex;
+				
+				// While there remain elements to shuffle...
+				while (0 !== currentIndex) {
+				
+					// Pick a remaining element...
+					randomIndex = Math .floor (Math .random () * currentIndex);
+					currentIndex -= 1;
+					
+					// And swap it with the current element.
+					temporaryValue = array [currentIndex];
+					array [currentIndex] = array [randomIndex];
+					array [randomIndex] = temporaryValue;
+				}
+				
+				return array;
+			}, [self .impressions ('question')])
+				.thru (tap_ (function (guesses) {
+					if (! guesses .hasVal)
+						guesses ([])
+				}))
+		))
+		
+		.remembers ('points-for', function (guess) {
+			return my ('guesses') [guess] === my ('answer') ? 1 : 0
+		})
+		
+	self .impressions ('question') .thru (tap, self .render)
+	
+	self .impressions (args .cycle__from)
+		.thru (tap, function () {
+			inquire_last (self .affiliated ('::questions'))
+				.then (function (items) {
+					self .mention ('questions-items', items)
+				})
+		})
+</script>

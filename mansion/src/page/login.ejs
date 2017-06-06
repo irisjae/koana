@@ -1,0 +1,72 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+			<a href="#home">
+				<component-back-button />
+			</a>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Login</component-page-title>
+		</nav-title>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<login>
+		<component-field-control type="email" placeholder="Email" />
+		<component-field-control type="password" placeholder="Password" />
+		<a href="#forget">
+			Forget Password?
+		</a>
+		<component-spacing height="40px" />
+		<component-action>
+			<a href="#ranking">Login</a>
+		</component-action>
+	</login>
+</component-main-content>
+
+<style>
+	@extend [page-layout];
+	
+	login {
+		@extend [padded-layout];
+		
+		> component-input-control {
+			padding: 10px;
+		    width: 100%;
+		    display: block;
+		    font-size: 1.5em;
+		    color: white;
+		    input {
+				@extend .input;
+			}
+		}
+		
+		> a {
+			&[maybe] {
+		        &:after {
+	        	    border: 2px solid #dbdbdb;
+				    border-radius: 290486px;
+				    border-right-color: transparent;
+				    border-top-color: transparent;
+				    content: "";
+				    display: block;
+				    position: relative;
+				    left: 50%;
+				    top: 50%;
+				    position: absolute !important;
+		            width: 32px;
+		            height: 32px;
+		            margin-left: -16px;
+		            margin-top: -16px;
+		            animation: spinAround 600ms infinite linear;
+		            border: 5px solid #dbdbdb;
+		            border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
+		        }
+			}
+		}
+		
+		> disclaimer {
+			color: rgba(0, 0, 0, 0.298039);
+		}
+	}
+</style>

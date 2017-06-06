@@ -1,0 +1,25 @@
+<a href="#quiz/subcategory/#{ stringify (my ('name')) }" if={ my ('subcategory') }>
+	<img src="https://ibin.co/3I0i4laCon7P.png" >
+</a>
+
+<style>
+	> a {
+		display: block;
+	}
+</style>
+	
+<script>
+    self
+        .establish ('item', constant (self .impressions (args .item__from) .thru (dropRepeatsWith, json_equal)))
+
+        .establish ('subcategory', dependent (function () {
+            if (my ('item'))
+                return my ('item') .category;
+        }, self .impressions ('item')))
+		.establish ('name', dependent (function () {
+			return my ('subcategory');
+		}, self .impressions ('subcategory')))
+        
+        
+    self .impressions ('item') .thru (tap, self .render)
+</script>

@@ -8,23 +8,16 @@ var trans = flyd .transduce;
 var combine = flyd .combine;
 var curry = flyd .curryN;
 
-var belongs_to =	function (self) {
-						return	function (stream) {
-									return stream .thru (takeUntil, lifecycle (self) .end);
-								};
+var mechanism = 	function (mechanism, sources) {
+						return	combine (function (self, deps_changed) {
+									self (mechanism (self, deps_changed))
+								}, sources)
 					};
-var events_for =	function (self) {
-						return	function (event) {
-									var naive_event = stream ();
-									(self .on || self .addEventListener) (event, function (e) { naive_event (e) });
-									return belongs_to (self) (naive_event);
-								};
-					};
-var lifecycle =	function (unmountable) {
-					var lifecycle = stream ();
-					(unmountable .on || unmountable .addEventListener) ('unmount', function (e) { lifecycle .end (e) });
-					return lifecycle;
-				};
+
+var none = stream (); none .end (true);
+var forever = stream ();
+var now = function (x) { return stream (x || undefined) };
+
 
 var mergeAll =	function (streams) {
 					var s = flyd .immediate (combine (function (self, changed) {
@@ -34,9 +27,9 @@ var mergeAll =	function (streams) {
 							})
 						}
 						else {
-							streams .some (function (s1) {
-								if (s1 .hasVal) {
-									self (s1 .hasVal);
+							streams .some (function (s) {
+								if (s .hasVal) {
+									self (s ());
 									return true;
 								}
 							});
@@ -44,7 +37,7 @@ var mergeAll =	function (streams) {
 					}, streams));
 					flyd .endsOn (combine (function () {
 						return true;
-					}, streams .map (function (sm) { return sm .end; })), s);
+					}, streams .map (function (sm) { return sm .end ? sm .end : sm; })), s);
 					return s;
 				};
 
@@ -66,8 +59,8 @@ var dropRepeatsWith_ =	function (eq, s) {
 							var prev;
 							return combine (function (self) {
 								if (! self .hasVal || ! eq (s .val, prev)) {
-									self (s .val);
 									prev = s .val;
+									self (s .val);
 								}
 							}, [s]);
 						}
@@ -83,7 +76,7 @@ var promise =	function (stream) {
 					var resolve;
 					var promise = new Promise (function (res) { resolve = res; })
 					var listener = stream .thru (flyd .on, resolve);
-					promise .then (function () { listener .end (true); })
+					listener .end && promise .then (function () { listener .end (true); })
 					return promise;
 				}
 							
@@ -107,6 +100,18 @@ var throttle =	curry (2, function (dur, s) {
 						}
 					}, [s]);
 				});
+var right_throttle =	curry (2, function (dur, s) {
+							var scheduled;
+							return combine (function (self) {
+								if (! scheduled) {
+									self (s ());
+									scheduled = setTimeout (function() {
+										scheduled = undefined;
+										self (s ());
+									}, dur);
+								}
+							}, [s]);
+						});
 
 var afterSilence =	curry (2, function (dur, s) {
 						var scheduled;
@@ -137,14 +142,23 @@ var every =	function (dur) {
 			};
 
 var tap =	function (affect, stream) {
-				var effect = flyd .on (affect, stream);
-				if (stream .end) flyd .on (effect .end, stream .end)
-				else flyd .on (effect .end, stream)
+				if (stream .end) {
+					if (! stream .end ()) {
+						var effect = flyd .on (affect, stream);
+						flyd .on (effect .end, stream .end)	
+					}
+				}
+				else {
+					if (! stream ()) {
+						var effect = flyd .on (affect, stream);
+						flyd .on (effect .end, stream)
+					}
+				}
 				return stream;
 			};
 
 var takeUntil = curry (2, function (term, src) {
-					return flyd .endsOn (flyd .merge (term, src .end), src .thru (tap, noop));
+					return flyd .endsOn (mergeAll ([term, src .end ? src .end : src]), src .thru (tap, noop));
 				});
 
 var map =	curry (2, function (f, s) {
@@ -164,16 +178,15 @@ var scan =	curry (3, function (f, acc, s) {
 
 var news =  function (s) {
 				var skip = s .hasVal; var f = false; var v = false;
-				return	s	.thru (throttle (0))
-							.thru (trans, R .dropWhile (function (x) {
-								if (skip) {
-									skip = false;
-									return true;
-								}
-								else {
-									return false;
-								}
-							}));
+				return	s .thru (trans, R .dropWhile (function (x) {
+							if (skip) {
+								skip = false;
+								return true;
+							}
+							else {
+								return false;
+							}
+						}));
 			};
 
 var flatMap =	curry (2, function (f, s) {
@@ -221,3 +234,23 @@ var switchLatest =	function (s) {
 										.thru (tap, self)
 								}, [s]);
 					};
+					
+var from_promise =	function (p) {
+						var s = stream ();
+						s (p) .thru (tap, s .end);
+						return s;
+					};
+var project =	function (to, s) {
+					s
+						.thru (tap, to)
+						.end .thru (tap, function () {
+							to .end (true);
+						})
+					return s;
+				}
+				
+var from =	function (pushes) {
+				var s = stream ();
+				pushes (s);
+				return s;
+			};

@@ -1,0 +1,152 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+			<a href="#home">
+				<component-back-button />
+			</a>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Create New Player</component-page-title>
+		</nav-title>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<register>
+		<label>
+			Please enter your email and create a password
+		</label>
+		<component-spacing height="20px" />
+		<label1>User Name:</label1>
+		<component-field-control type="text" placeholder="First Name" input__to=":firstname" />
+		<component-field-control type="text" placeholder="Last Name" input__to=":lastname" />
+		
+		<label1>Date of Birth:</label1>
+		<component-field-control type="date" placeholder="" input__to=":dob" />
+		<label1>Nationality:</label1>
+		<component-field-control type="password" placeholder="" input__to=":nationality" />
+		<label1>School:</label1>
+		<component-field-control type="text" placeholder="" input__to=":school" />
+		<component-spacing height="40px" />
+		<component-action>
+			<a ref="action" href="#portal">Create</a>
+		</component-action>
+		
+		
+		<terms-of-agreement>
+			<item>
+				<component-checkbox check__to=":agree-toa" />
+			</item>
+			<label>
+				I agree with the <a href="#disclaimer">Disclaimers and Terms of Agreement</a>
+			</label>
+		</terms-of-agreement>
+	</register>
+</component-main-content>
+
+<style>
+	@extend [page-layout];
+	
+	register {
+		@extend [padded-layout];
+		
+		> label {
+			color: black;
+			font-weight: bold;
+			font-size: 1.4em;
+		}
+		
+		> component-input-control {
+			padding: 10px;
+		    width: 100%;
+		    display: block;
+		    font-size: 1.5em;
+		    
+		    input {
+				@extend .input;
+			}
+		}
+		
+		> a {
+			&[maybe] {
+		        &:after {
+	        	    border: 2px solid #dbdbdb;
+				    border-radius: 290486px;
+				    border-right-color: transparent;
+				    border-top-color: transparent;
+				    content: "";
+				    display: block;
+				    position: relative;
+				    left: 50%;
+				    top: 50%;
+				    position: absolute !important;
+		            width: 32px;
+		            height: 32px;
+		            margin-left: -16px;
+		            margin-top: -16px;
+		            animation: spinAround 600ms infinite linear;
+		            border: 5px solid #dbdbdb;
+		            border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
+		        }
+			}
+		}
+		> terms-of-agreement {
+			display: flex;
+			> item {
+				flex-basis: 50px;
+				padding: 10px;
+			}
+			> label {
+				flex-grow: 1;
+				padding: 10px;
+			}
+			> label1 {
+				font-size: 5px;
+			}
+		}
+	}
+</style>
+
+<script>
+	self .temp = true;
+	
+	self
+		.remembers (':email')
+		.remembers (':password')
+		.remembers (':agree-toa')
+	
+		.establish ('action', ref)
+		.impressions ('action')
+			.thru (tap, function (_ref) {
+				var errors =	function () {
+									if (! valid_email (my (':email')))
+										return 'Please enter a valid email address';
+									if (! my (':password'))
+										return 'Please enter a password'
+									if (my (':password') .length < 8)
+										return 'Please enter a password of at least 8 characters'
+									if (! my (':agree-toa'))
+										return 'You must agree to the terms of agreement'
+								}
+				_ref .addEventListener ('click', function (e) {
+					e .preventDefault ();
+					var _errors = errors ();
+					if (_errors)
+						toast (_errors)
+					else {
+						inquire (self .affiliated ('::register'), {
+							email: my (':email'),
+							password: my (':password')
+						})
+							.then (function () {
+								window .location .hash = _ref .hash;
+							})
+							.catch (function (err) {
+								if (err === 'unsuccessful')
+									toast ('This email has already been registered')
+								else
+									return Promise .reject (err)
+							})
+					}
+				})
+			})
+</script>

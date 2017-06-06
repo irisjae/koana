@@ -12990,13 +12990,13 @@ icon-holder[size="small"] {
 }
 
 @media screen and (max-width: 768px) {
-  [table-row] > label:not(:last-child),
-  [table-row] > item:not(:last-child) {
+  [row-layout] > label:not(:last-child),
+  [row-layout] > item:not(:last-child) {
     margin-bottom: 10px;
   }
 }
 
-[table-row] {
+[row-layout] {
   -webkit-box-align: center;
   -ms-flex-align: center;
   -ms-grid-row-align: center;
@@ -13006,54 +13006,54 @@ icon-holder[size="small"] {
   justify-content: space-between;
 }
 
-[table-row]:not(:last-child) {
+[row-layout]:not(:last-child) {
   margin-bottom: 20px;
 }
 
-[table-row] code {
+[row-layout] code {
   border-radius: 3px;
 }
 
-[table-row] img {
+[row-layout] img {
   display: inline-block;
   vertical-align: top;
 }
 
-[table-row] {
+[row-layout] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-[table-row] > label:not(:last-child) {
+[row-layout] > label:not(:last-child) {
   margin-bottom: 0;
 }
 
-[table-row] > item:not(:last-child) {
+[row-layout] > item:not(:last-child) {
   margin-bottom: 0;
 }
 
-[table-row] > label {
+[row-layout] > label {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
-[table-row] > item {
+[row-layout] > item {
   -webkit-box-flex: 1;
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
 
 @media screen and (min-width: 769px) {
-  [table-row] {
+  [row-layout] {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
 
-  [table-row] > label,
-  [table-row] > item {
+  [row-layout] > label,
+  [row-layout] > item {
     -webkit-box-flex: 1;
     -ms-flex-positive: 1;
     flex-grow: 1;
@@ -13178,15 +13178,176 @@ segment:hover:not([active]) {
   color: #5DADE2;
 }
 
-segment + segment {
-  margin-left: 0.3em;
-}
-
 info-graphic {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+}
+
+modal {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+  overflow: visible;
+  /*max-height: 640px;*/
+  text-align: center;
+  padding: 0;
+  animation: none;
+  direction: ltr;
+  border: 0;
+  font-size: 14px;
+  line-height: 24px;
+  border-radius: 5px;
+  width: 293.75px;
+  box-sizing: border-box;
+  transition: top cubic-bezier(0, 1, 0.5, 1) 100ms;
+  z-index: 99999999;
+  background: #fff;
+  box-shadow: 1px 0 0 #e6e6e6, -1px 0 0 #e6e6e6, 0 1px 0 #e6e6e6, 0 -1px 0 #e6e6e6, 0 3px 13px rgba(0, 0, 0, 0.08);
+}
+
+[bar-like] {
+  padding: 4px 15px 2px 15px;
+  height: 28px;
+  display: block;
+  background: #e0ebeb;
+  color: black;
+  text-align: center;
+}
+
+[row-layout] > label {
+  flex-grow: 0 !important;
+}
+
+[row-layout] > item {
+  display: flex;
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+[row-layout]:not(:last-child) {
+  margin-bottom: unset;
+}
+
+[padded-layout] {
+  padding: 10px 15px 10px 15px;
+  display: block;
+}
+
+[padded-layout] [unpadded-layouting] {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+[padded-layout] > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+[padded-layout] > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+[padded-layout] > :first-child > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+[padded-layout] > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+[strip-layout] {
+  height: 40px;
+  text-align: center;
+  outline: 0;
+  line-height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: height 0.33s cubic-bezier(0, 1, 0.5, 1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-top: 1px solid #e6e6e6;
+}
+
+[strip-layout] > [patch-layout] {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+[strip-layout] > [patch-layout][active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+[strip-layout] > label {
+  outline: 0;
+  flex-grow: 1;
+  text-align: center;
+  display: inline-block;
+  float: left;
+  color: #393939;
+  user-select: none;
+}
+
+[strip-layout] > label[active] {
+  background: #f0f0f0;
+}
+
+[page-layout] {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+[page-layout] > component-nav {
+  flex: 0 1 auto;
+}
+
+[page-layout] > component-tabs {
+  flex: 0 1 auto;
+}
+
+[page-layout] > component-main-content {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+[page-layout][no-background] {
+  background: white;
+}
+
+[page-layout][no-background]:after {
+  content: unset;
+}
+
+[page-layout][light-background] {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+[side-by-side-layout] {
+  justify-content: space-between;
+  display: flex;
+  position: relative;
+}
+
+[side-by-side-layout] > [left] {
+  text-align: left;
+}
+
+[side-by-side-layout] > [right] {
+  text-align: right;
+}
+
+[side-by-side-layout] > [versus] {
+  text-align: center;
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }
 
 nav {
@@ -13250,249 +13411,6 @@ nav > nav-bar > nav-buttons:last-child {
   fill: rgba(255, 255, 255, 0.8);
   font-weight: bold;
   vertical-align: sub;
-}
-
-[bar-header] {
-  padding: 4px 15px 2px 15px;
-  height: 28px;
-  display: block;
-  background: #e0ebeb;
-  color: black;
-  text-align: center;
-}
-
-[table-row]:not(:last-child) {
-  margin-bottom: unset;
-}
-
-[table-row] > label {
-  flex-grow: 0 !important;
-}
-
-[table-row] > item {
-  display: flex;
-  flex-grow: 1;
-  margin-left: 20px;
-}
-
-[comparison-layout] {
-  justify-content: space-between;
-  display: flex;
-  position: relative;
-}
-
-[comparison-layout] > [left] {
-  text-align: left;
-}
-
-[comparison-layout] > [right] {
-  text-align: right;
-}
-
-[comparison-layout] > [versus] {
-  text-align: center;
-  display: block;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-}
-
-[padded-layout] {
-  padding: 10px 15px 10px 15px;
-  display: block;
-}
-
-[padded-layout] [unpadded-layouting] {
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-[padded-layout] > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-[padded-layout] > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-[padded-layout] > :first-child > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-[padded-layout] > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-[page-layout] {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-[page-layout] > component-nav {
-  flex: 0 1 auto;
-}
-
-[page-layout] > component-tabs {
-  flex: 0 1 auto;
-}
-
-[page-layout] > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-[page-layout][no-background] {
-  background: white;
-}
-
-[page-layout][no-background]:after {
-  content: unset;
-}
-
-[page-layout][light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-match {
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -ms-grid-row-align: center;
-  align-items: center;
-  -webkit-box-pack: justify;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-}
-
-match:not(:last-child) {
-  margin-bottom: 20px;
-}
-
-match code {
-  border-radius: 3px;
-}
-
-match img {
-  display: inline-block;
-  vertical-align: top;
-}
-
-@media screen and (min-width: 769px) {
-  match {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-  }
-}
-
-match > match-graphic {
-  -webkit-box-flex: 0;
-  -ms-flex-positive: 0;
-  flex-grow: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-match > match-graphic {
-  margin-right: 10px;
-}
-
-match > match-info {
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  -ms-flex-negative: 1;
-  flex-shrink: 1;
-  text-align: left;
-}
-
-match {
-  -webkit-box-align: start;
-  -ms-flex-align: start;
-  align-items: flex-start;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  text-align: left;
-}
-
-match match {
-  border-top: 1px solid rgba(219, 219, 219, 0.5);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  padding-top: 10px;
-}
-
-match match match {
-  padding-top: 5px;
-}
-
-match match match + match {
-  margin-top: 5px;
-}
-
-match + match {
-  border-top: 1px solid rgba(219, 219, 219, 0.5);
-  margin-top: 10px;
-  padding-top: 10px;
-}
-
-match {
-  margin: 0;
-  position: relative;
-  align-items: center !important;
-}
-
-match > match-graphic highlight-holder {
-  color: black;
-  background: #E9F0EA;
-}
-
-match > match-info info-holder {
-  font-size: 0.9em;
-}
-
-match > match-info info-holder match-time {
-  color: black;
-}
-
-match > match-info info-holder match-location {
-  color: black;
-}
-
-match > match-info info-holder match-location > icon-holder {
-  vertical-align: bottom;
-}
-
-match > match-info info-holder match-location > icon-holder icon.fa-map-marker {
-  color: #C0392B;
-}
-
-match > match-info info-holder match-type {
-  color: #918B8B;
-}
-
-match > match-info info-holder match-opponent {
-  color: #918B8B;
-}
-
-match > match-status {
-  position: absolute;
-  right: 6px;
-  top: 50%;
-  color: black;
-  transform: translateY(-50%);
-}
-
-match > match-substatus {
-  position: absolute;
-  right: 4px;
-  bottom: 2px;
-  font-size: 0.9em;
-  color: #146EB4;
 }
 
 component-action > a {
@@ -13674,6 +13592,38 @@ component-add-fab > floating > action > svg {
 
 component-back-button icon-holder {
   font-size: 2.5em;
+}
+
+component-cached {
+  animation-duration: 0.01s;
+  -o-animation-duration: 0.01s;
+  -ms-animation-duration: 0.01s;
+  -moz-animation-duration: 0.01s;
+  -webkit-animation-duration: 0.01s;
+  animation-name: cache-access;
+  -ms-animation-name: cache-access;
+  -moz-animation-name: cache-access;
+  -webkit-animation-name: cache-access;
+}
+
+@keyframes cache-access {
+  from {
+    outline-color: #fff;
+  }
+
+  to {
+    outline-color: #000;
+  }
+}
+
+@-webkit-keyframes cache-access {
+  from {
+    outline-color: #fff;
+  }
+
+  to {
+    outline-color: #000;
+  }
 }
 
 component-cancel-button span {
@@ -13873,6 +13823,15 @@ component-dynamic-load {
   width: 100%;
   position: relative;
   display: block;
+  animation-duration: 0.01s;
+  -o-animation-duration: 0.01s;
+  -ms-animation-duration: 0.01s;
+  -moz-animation-duration: 0.01s;
+  -webkit-animation-duration: 0.01s;
+  animation-name: dynamic-load-rendered;
+  -ms-animation-name: dynamic-load-rendered;
+  -moz-animation-name: dynamic-load-rendered;
+  -webkit-animation-name: dynamic-load-rendered;
 }
 
 component-dynamic-load > component-dynamic-load-item {
@@ -13883,6 +13842,26 @@ component-dynamic-load > component-dynamic-load-item {
 
 component-dynamic-load > stretcher {
   display: block;
+}
+
+@keyframes dynamic-load-rendered {
+  from {
+    outline-color: #fff;
+  }
+
+  to {
+    outline-color: #000;
+  }
+}
+
+@-webkit-keyframes dynamic-load-rendered {
+  from {
+    outline-color: #fff;
+  }
+
+  to {
+    outline-color: #000;
+  }
 }
 
 component-field-control {
@@ -13972,6 +13951,92 @@ component-item {
   display: block;
 }
 
+fullscreen-holder:not([active]):not(component-jersey-picker > modal > jersey > label:hover):not(component-jersey-picker > modal > jersey > component-field-control:hover) {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: z-index 0.1s step-end, opacity 0.1s ease-out;
+}
+
+segment:hover:not([active]):not(component-jersey-picker > modal > jersey > label:hover):not(component-jersey-picker > modal > jersey > component-field-control:hover) {
+  border-color: #5DADE2;
+  color: #5DADE2;
+}
+
+component-jersey-picker > modal > jersey {
+  height: 40px;
+  text-align: center;
+  outline: 0;
+  line-height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: height 0.33s cubic-bezier(0, 1, 0.5, 1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-top: 1px solid #e6e6e6;
+}
+
+component-jersey-picker > modal > jersey > [patch-layout] {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-jersey-picker > modal > jersey > component-field-control {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-jersey-picker > modal > jersey > [patch-layout][active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-jersey-picker > modal > jersey > label[patch-layout]:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-jersey-picker > modal > jersey > component-field-control[active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-jersey-picker > modal > jersey > component-field-control:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-jersey-picker > modal > jersey > label {
+  outline: 0;
+  flex-grow: 1;
+  text-align: center;
+  display: inline-block;
+  float: left;
+  color: #393939;
+  user-select: none;
+}
+
+component-jersey-picker > modal > jersey > label[active] {
+  background: #f0f0f0;
+}
+
+component-jersey-picker > modal > jersey > label:hover {
+  background: #f0f0f0;
+}
+
+component-jersey-picker > modal > jersey > component-field-control {
+  height: unset;
+}
+
+component-jersey-picker > modal > jersey > component-field-control > placeholder {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+component-jersey-picker > modal > jersey > component-field-control > input {
+  text-align: center;
+}
+
 component-list-bar {
   font-size: 13px;
   background: rgba(196, 196, 196, 0.8);
@@ -13981,6 +14046,42 @@ component-list-bar {
   display: block;
   text-align: center;
   font-weight: bold;
+}
+
+component-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+}
+
+component-loader[active] {
+  opacity: 1;
+  transition: opacity 0.1s ease-out;
+}
+
+component-loader:not([active]) {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: z-index 0.1s step-end, opacity 0.1s ease-out;
+}
+
+component-loader:not([active]) {
+  opacity: 0;
+  pointer-events: unset;
+  z-index: 99999;
+}
+
+component-loader > component-modal-holder > item {
+  color: rgba(255, 255, 255, 0.85);
+  text-align: center;
+}
+
+component-loader > component-modal-holder > item > component-loading-item > div > spinner:after {
+  border-color: transparent transparent rgba(255, 255, 255, 0.85) rgba(255, 255, 255, 0.7) !important;
 }
 
 component-loading-item {
@@ -14737,18 +14838,6 @@ component-select-control a:hover:not([active]) {
   color: #5DADE2;
 }
 
-component-select-control a + segment {
-  margin-left: 0.3em;
-}
-
-component-select-control segment + a {
-  margin-left: 0.3em;
-}
-
-component-select-control a + a {
-  margin-left: 0.3em;
-}
-
 component-select-control {
   -webkit-tap-highlight-color: transparent;
   justify-content: space-between;
@@ -14784,6 +14873,70 @@ component-separator hr {
   position: absolute;
   border: none;
   margin: 0;
+}
+
+component-snackbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  width: 100%;
+}
+
+component-snackbar > snackbar {
+  display: inline-block;
+  min-width: 100%;
+  max-height: 0;
+  opacity: 0;
+  -webkit-transition: opacity 0s 0.25s, max-height 0.25s, -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+  transition: opacity 0s 0.25s, max-height 0.25s, -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 0.25s cubic-bezier(0, 0, 0.2, 1), opacity 0s 0.25s, max-height 0.25s;
+  transition: transform 0.25s cubic-bezier(0, 0, 0.2, 1), opacity 0s 0.25s, max-height 0.25s, -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+  -webkit-transform: translateY(100%);
+  transform: translateY(100%);
+}
+
+component-snackbar > snackbar > item {
+  display: block;
+  padding: .8rem 1.5rem;
+  margin-top: 3px;
+  font-size: .9rem;
+  color: #fff;
+  background-color: #323232;
+  border-radius: 2px;
+}
+
+component-snackbar[active] > snackbar {
+  max-height: 100px;
+  opacity: 1;
+  -webkit-transition: opacity 0s 0s, max-height 0.25s, -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+  transition: opacity 0s 0s, max-height 0.25s, -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+  transition: transform 0.25s cubic-bezier(0, 0, 0.2, 1), opacity 0s 0s, max-height 0.25s;
+  transition: transform 0.25s cubic-bezier(0, 0, 0.2, 1), opacity 0s 0s, max-height 0.25s, -webkit-transform 0.25s cubic-bezier(0, 0, 0.2, 1);
+  -webkit-transform: translateY(0);
+  transform: translateY(0);
+}
+
+@media (min-width: 544px) {
+  component-snackbar {
+    right: 1rem;
+    left: 1rem;
+    width: 100%;
+  }
+
+  component-snackbar > snackbar {
+    min-width: 280px;
+  }
 }
 
 component-spacing-inline > stretcher {
@@ -14859,6 +15012,83 @@ component-table-control > svg {
   display: inline-block;
 }
 
+component-tabs {
+  color: rgba(0, 0, 0, 0.870588);
+  background-color: white;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  border-radius: 2px;
+}
+
+component-tabs tabs {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  height: 48px;
+}
+
+component-tabs tabs > tab {
+  border: 10px;
+  display: inline-block;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0px;
+  padding: 4px 12px 6px;
+  position: relative;
+  transition: padding-top 0.3s;
+  min-width: 80px;
+  max-width: 168px;
+  flex: 1 1 0%;
+  background: none;
+  overflow: hidden;
+}
+
+component-tabs tabs > tab[active] {
+  padding: 2px 12px 6px;
+}
+
+component-tabs tabs > tab[active] a {
+  font-size: 14px;
+  color: #00bcd4;
+}
+
+component-tabs tabs > tab[active] a > svg {
+  color: white !important;
+  fill: #00bcd4 !important;
+}
+
+component-tabs tabs > tab a {
+  display: block;
+  font-size: 12px;
+  text-align: center;
+  transition: color 0.3s, font-size 0.3s;
+  color: rgba(0, 0, 0, 0.541176);
+}
+
+component-tabs tabs > tab a > svg {
+  display: block;
+  color: rgba(0, 0, 0, 0.870588);
+  fill: rgba(0, 0, 0, 0.541176);
+  height: 24px;
+  width: 100%;
+  user-select: none;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+component-tag-control-item {
+  /*> a:hover > tag {
+		    background: #777;
+		    color: #EEE;
+		}*/
+}
+
 component-tag-control {
   font-size: 16px;
   line-height: 24px;
@@ -14891,8 +15121,10 @@ component-tag-control > field {
   height: 100%;
 }
 
-component-tag-control > field > a {
-  padding: 5px 5px 5px 0;
+component-tag-control > field > component-dynamic-load-all {
+  align-self: center;
+  padding: 0 5px 5px 0;
+  display: flex;
 }
 
 component-tag-control > field > input {
@@ -14976,11 +15208,6 @@ component-tag-control > tag-select-box > component-dynamic-load-all > component-
   padding: 10px;
 }
 
-component-tag-item > a:hover > tag {
-  background: #777;
-  color: #EEE;
-}
-
 component-timeslot-highlight {
   display: unset;
   position: unset;
@@ -15032,7 +15259,535 @@ component-timeslot-highlight time-highlight {
   font-size: 0.76em;
 }
 
-component-tree-wrap > item {
+fullscreen-holder:not([active]):not(component-timeslot-picker > modal > start > hour:hover):not(component-timeslot-picker > modal > start > minutes:hover):not(component-timeslot-picker > modal > end > hour:hover):not(component-timeslot-picker > modal > end > minutes:hover):not(component-timeslot-picker > modal > start > label:hover):not(component-timeslot-picker > modal > end > label:hover) {
+  opacity: 0;
+  pointer-events: none;
+  z-index: -1;
+  transition: z-index 0.1s step-end, opacity 0.1s ease-out;
+}
+
+segment:hover:not([active]):not(component-timeslot-picker > modal > start > hour:hover):not(component-timeslot-picker > modal > start > minutes:hover):not(component-timeslot-picker > modal > end > hour:hover):not(component-timeslot-picker > modal > end > minutes:hover):not(component-timeslot-picker > modal > start > label:hover):not(component-timeslot-picker > modal > end > label:hover) {
+  border-color: #5DADE2;
+  color: #5DADE2;
+}
+
+component-timeslot-picker > modal > start {
+  height: 40px;
+  text-align: center;
+  outline: 0;
+  line-height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: height 0.33s cubic-bezier(0, 1, 0.5, 1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-top: 1px solid #e6e6e6;
+}
+
+component-timeslot-picker > modal > end {
+  height: 40px;
+  text-align: center;
+  outline: 0;
+  line-height: 40px;
+  max-height: 40px;
+  box-sizing: border-box;
+  overflow: hidden;
+  transition: height 0.33s cubic-bezier(0, 1, 0.5, 1);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  border-top: 1px solid #e6e6e6;
+}
+
+component-timeslot-picker > modal > start > [patch-layout] {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-timeslot-picker > modal > end > [patch-layout] {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-timeslot-picker > modal > start > hour {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-timeslot-picker > modal > start > minutes {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-timeslot-picker > modal > end > hour {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-timeslot-picker > modal > end > minutes {
+  flex-grow: 1;
+  float: left;
+  position: relative;
+}
+
+component-timeslot-picker > modal > start > [patch-layout][active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > end > [patch-layout][active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > start > hour[active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > start > hour:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > start > minutes[active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > start > minutes:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > end > hour[active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > end > hour:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > end > minutes[active] {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > end > minutes:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > start > label[patch-layout]:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > end > label[patch-layout]:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+component-timeslot-picker > modal > start > label {
+  outline: 0;
+  flex-grow: 1;
+  text-align: center;
+  display: inline-block;
+  float: left;
+  color: #393939;
+  user-select: none;
+}
+
+component-timeslot-picker > modal > end > label {
+  outline: 0;
+  flex-grow: 1;
+  text-align: center;
+  display: inline-block;
+  float: left;
+  color: #393939;
+  user-select: none;
+}
+
+component-timeslot-picker > modal > start > label[active] {
+  background: #f0f0f0;
+}
+
+component-timeslot-picker > modal > end > label[active] {
+  background: #f0f0f0;
+}
+
+component-timeslot-picker > modal > start > label:hover {
+  background: #f0f0f0;
+}
+
+component-timeslot-picker > modal > end > label:hover {
+  background: #f0f0f0;
+}
+
+component-timeslot-picker > modal > start > hour > input {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #393939;
+  font-size: 14px;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > start > minutes > input {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #393939;
+  font-size: 14px;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > end > hour > input {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #393939;
+  font-size: 14px;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > end > minutes > input {
+  background: transparent;
+  box-shadow: none;
+  border: 0;
+  border-radius: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+  color: #393939;
+  font-size: 14px;
+  position: relative;
+  width: 100%;
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > start > hour > label[up] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > start > hour label[down] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > start > minutes > label[up] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > start > minutes label[down] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > end > hour > label[up] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > end > hour label[down] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > end > minutes > label[up] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > end > minutes label[down] {
+  position: absolute;
+  right: 0;
+  width: 14px;
+  padding: 0 4px 0 2px;
+  height: 50%;
+  line-height: 50%;
+  opacity: 0;
+  border: 1px solid rgba(57, 57, 57, 0.05);
+  display: inline-block;
+}
+
+component-timeslot-picker > modal > start > hour > label[up]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > start > hour label[down]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > start > minutes > label[up]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > start > minutes label[down]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > end > hour > label[up]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > end > hour label[down]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > end > minutes > label[up]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > end > minutes label[down]:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+component-timeslot-picker > modal > start > hour > label[up]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > start > hour label[down]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > start > minutes > label[up]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > start > minutes label[down]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > end > hour > label[up]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > end > hour label[down]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > end > minutes > label[up]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > end > minutes label[down]:after {
+  border-bottom-color: #393939;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 4px solid rgba(57, 57, 57, 0.6);
+  display: block;
+  content: "";
+  position: absolute;
+  top: 33%;
+}
+
+component-timeslot-picker > modal > start > hour > label[up] {
+  top: 0;
+  border-bottom: 0;
+}
+
+component-timeslot-picker > modal > start > minutes > label[up] {
+  top: 0;
+  border-bottom: 0;
+}
+
+component-timeslot-picker > modal > end > hour > label[up] {
+  top: 0;
+  border-bottom: 0;
+}
+
+component-timeslot-picker > modal > end > minutes > label[up] {
+  top: 0;
+  border-bottom: 0;
+}
+
+component-timeslot-picker > modal > start > hour > label[down] {
+  top: 50%;
+}
+
+component-timeslot-picker > modal > start > minutes > label[down] {
+  top: 50%;
+}
+
+component-timeslot-picker > modal > end > hour > label[down] {
+  top: 50%;
+}
+
+component-timeslot-picker > modal > end > minutes > label[down] {
+  top: 50%;
+}
+
+component-timeslot-picker > modal > start > hour:hover > label[up] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > start > hour:hover > label[down] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > start > minutes:hover > label[up] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > start > minutes:hover > label[down] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > end > hour:hover > label[up] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > end > hour:hover > label[down] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > end > minutes:hover > label[up] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > end > minutes:hover > label[down] {
+  opacity: 1;
+}
+
+component-timeslot-picker > modal > start > separator {
+  color: #393939;
+  font-weight: bold;
+  width: 2%;
+}
+
+component-timeslot-picker > modal > end > separator {
+  color: #393939;
+  font-weight: bold;
+  width: 2%;
+}
+
+component-timeslot-picker > modal > start > label {
+  flex-grow: 0;
+  flex-basis: 18%;
+}
+
+component-timeslot-picker > modal > end > label {
+  flex-grow: 0;
+  flex-basis: 18%;
+}
+
+component-tree-control-item > item {
   border: 10px;
   display: block;
   font-family: Roboto, sans-serif;
@@ -15051,7 +15806,7 @@ component-tree-wrap > item {
   overflow: hidden;
 }
 
-component-tree-wrap > item > status svg {
+component-tree-control-item > item > status svg {
   display: block;
   color: rgba(0, 0, 0, 0.870588);
   fill: #757575;
@@ -15065,14 +15820,14 @@ component-tree-wrap > item > status svg {
   user-select: none;
 }
 
-component-tree-wrap > item > label {
+component-tree-control-item > item > label {
   margin-left: 0px;
   padding: 16px 16px 16px 72px;
   position: relative;
   display: block;
 }
 
-component-tree-wrap > item > branch-status {
+component-tree-control-item > item > branch-status {
   box-sizing: border-box;
   display: block;
   font-family: Roboto, sans-serif;
@@ -15094,7 +15849,7 @@ component-tree-wrap > item > branch-status {
   background: none;
 }
 
-component-tree-wrap > item > branch-status > button {
+component-tree-control-item > item > branch-status > button {
   border: 10px;
   display: block;
   margin: 0;
@@ -15108,7 +15863,7 @@ component-tree-wrap > item > branch-status > button {
   background: none;
 }
 
-component-tree-wrap > item > branch-status svg {
+component-tree-control-item > item > branch-status svg {
   display: inline-block;
   color: rgba(0, 0, 0, 0.870588);
   fill: currentcolor;
@@ -15118,7 +15873,7 @@ component-tree-wrap > item > branch-status svg {
   user-select: none;
 }
 
-component-tree-wrap > branch {
+component-tree-control-item > branch {
   display: block;
   padding: 8px 0px 8px 16px;
 }
@@ -15134,14 +15889,13 @@ component-wavify > wave {
   background-color: rgba(0, 0, 0, 0.870588);
   opacity: 0.1;
   transform: scale(0);
+  /*&[move][done] {
+	            opacity: 0;
+	            transform: scale(1);
+	        }*/
 }
 
 component-wavify > wave[move] {
-  opacity: 0.1;
-  transform: scale(1);
-}
-
-component-wavify > wave[move][done] {
   opacity: 0;
   transform: scale(1);
 }
@@ -15341,7 +16095,7 @@ page-disclaimer register > a[maybe]:after {
 }
 
 page-disclaimer register > disclaimer {
-  color: rgba(0, 0, 0, 0.298039);
+  color: black;
 }
 
 page-forget forget > component-input-control input {
@@ -16071,6 +16825,11 @@ page-quiz-subcategory question > label {
   display: block;
 }
 
+page-quiz-subcategory question > image-holder > img {
+  max-height: 40%;
+  width: auto;
+}
+
 page-quiz-subcategory question > guesses {
   width: 100%;
   display: flex;
@@ -16085,10 +16844,12 @@ page-quiz-subcategory question > guesses > guess {
   min-height: 5em;
   margin: 5px 0;
   padding: 4px;
+  word-break: break-word;
 }
 
 page-quiz-subcategory question > guesses > guess > a {
-  color: white;
+  background: #B8E4FA;
+  color: #888;
   border-radius: 7px;
   padding: 0.5em;
   width: 100%;
@@ -16100,22 +16861,6 @@ page-quiz-subcategory question > guesses > guess > a {
 page-quiz-subcategory question > guesses > guess > a[active] {
   color: #566573;
   background: #b3daff;
-}
-
-page-quiz-subcategory question > guesses > guess:nth-child(1) > a {
-  background: #db831e;
-}
-
-page-quiz-subcategory question > guesses > guess:nth-child(2) > a {
-  background: #ff0000;
-}
-
-page-quiz-subcategory question > guesses > guess:nth-child(3) > a {
-  background: #ff008c;
-}
-
-page-quiz-subcategory question > guesses > guess:nth-child(4) > a {
-  background: #4bcc2e;
 }
 
 page-quiz-subcategory question > guesses[completed] > guess > a[correct] {
@@ -16152,6 +16897,67 @@ page-quiz-subcategory navigation > component-next-button {
   position: absolute;
   right: 25%;
   bottom: 0;
+}
+
+page-ranking:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+  background: white;
+}
+
+page-ranking {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+page-ranking > component-nav {
+  flex: 0 1 auto;
+}
+
+page-ranking > component-tabs {
+  flex: 0 1 auto;
+}
+
+page-ranking > component-main-content {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+page-ranking[no-background] {
+  background: white;
+}
+
+page-ranking[no-background]:after {
+  content: unset;
+}
+
+page-ranking[light-background] {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+page-ranking ranking {
+  overflow: scroll;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+page-ranking ranking > label {
+  color: #4FABFF;
+  font-weight: bold;
+  font-size: 1.4em;
+  display: block;
+  padding: 0 10px;
 }
 
 page-register register > component-input-control input {
@@ -16340,7 +17146,80 @@ page-register register > terms-of-agreement > label {
   padding: 10px;
 }
 
-page-test-course:after {
+page-register register > terms-of-agreement > label1 {
+  font-size: 5px;
+}
+
+page-subaccount-create register > component-input-control input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  color: #566573;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 14px;
+  height: 32px;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  line-height: 24px;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  vertical-align: top;
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+  max-width: 100%;
+  width: 100%;
+}
+
+page-subaccount-create register > component-input-control input:hover {
+  border-color: #b5b5b5;
+}
+
+page-subaccount-create register > component-input-control input:active {
+  border-color: #00d1b2;
+  outline: none;
+}
+
+page-subaccount-create register > component-input-control input:focus {
+  border-color: #00d1b2;
+  outline: none;
+}
+
+page-subaccount-create register > component-input-control input[disabled] {
+  background-color: whitesmoke;
+  border-color: #dbdbdb;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+page-subaccount-create register > component-input-control input[disabled]::-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-subaccount-create register > component-input-control input[disabled]::-webkit-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-subaccount-create register > component-input-control input[disabled]:-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-subaccount-create register > component-input-control input[disabled]:-ms-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-subaccount-create register > component-input-control input[type="search"] {
+  border-radius: 290486px;
+}
+
+page-subaccount-create:after {
   content: "";
   position: absolute;
   top: 0;
@@ -16352,100 +17231,111 @@ page-test-course:after {
   background: white;
 }
 
-page-test-course {
+page-subaccount-create register {
+  padding: 10px 15px 10px 15px;
+  display: block;
+}
+
+page-subaccount-create register [unpadded-layouting] {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+page-subaccount-create register > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-subaccount-create register > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-subaccount-create register > :first-child > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-subaccount-create register > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-subaccount-create {
   height: 100%;
   display: flex;
   flex-flow: column;
   transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 
-page-test-course > component-nav {
+page-subaccount-create > component-nav {
   flex: 0 1 auto;
 }
 
-page-test-course > component-tabs {
+page-subaccount-create > component-tabs {
   flex: 0 1 auto;
 }
 
-page-test-course > component-main-content {
+page-subaccount-create > component-main-content {
   flex: 1 1 auto;
   position: relative;
 }
 
-page-test-course[no-background] {
+page-subaccount-create[no-background] {
   background: white;
 }
 
-page-test-course[no-background]:after {
+page-subaccount-create[no-background]:after {
   content: unset;
 }
 
-page-test-course[light-background] {
+page-subaccount-create[light-background] {
   background: rgba(255, 255, 255, 0.4);
 }
 
-page-test-course component-page-title {
+page-subaccount-create register > label {
+  color: black;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+page-subaccount-create register > component-input-control {
+  padding: 10px;
+  width: 100%;
+  display: block;
   font-size: 1.5em;
 }
 
-page-test-course portal {
-  padding: 10px 15px 10px 15px;
+page-subaccount-create register > a[maybe]:after {
+  border: 2px solid #dbdbdb;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
   display: block;
-  left: 0;
-  right: 0;
-  bottom: 95px;
-  top: 0;
-  position: absolute;
-  overflow: scroll;
-}
-
-page-test-course portal > label {
-  color: #4FABFF;
-  font-weight: bold;
-  font-size: 1.4em;
-  display: block;
-}
-
-page-test-course portal [unpad] {
-  margin-left: -10px;
-  margin-right: -10px;
-  /*&:first-child {
-					margin-top: -15px;
-				}
-				&:last-child {
-					margin-top: -15px;
-				}*/
-}
-
-page-test-course links {
-  position: fixed;
-  bottom: 35px;
-  left: 0;
-  right: 0;
-  opacity: 0.7;
-  display: flex;
-  justify-content: space-around;
-}
-
-page-test-course links > a {
-  color: black;
-  text-align: center;
-  width: 50px;
-  white-space: nowrap;
   position: relative;
-}
-
-page-test-course links > a:before {
-  content: '';
-  display: block;
-  margin: 0 auto;
-  padding: 25px;
-  background: #50abf1;
-  border-radius: 10px;
-}
-
-page-test-course links > a > label {
-  position: absolute;
   left: 50%;
-  transform: translateX(-50%);
+  top: 50%;
+  position: absolute !important;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  animation: spinAround 600ms infinite linear;
+  border: 5px solid #dbdbdb;
+  border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
+}
+
+page-subaccount-create register > terms-of-agreement {
+  display: flex;
+}
+
+page-subaccount-create register > terms-of-agreement > item {
+  flex-basis: 50px;
+  padding: 10px;
+}
+
+page-subaccount-create register > terms-of-agreement > label {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+page-subaccount-create register > terms-of-agreement > label1 {
+  font-size: 5px;
 }

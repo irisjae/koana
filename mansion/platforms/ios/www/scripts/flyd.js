@@ -196,66 +196,6 @@ flyd.on = curryN(2, function(f, s) {
 })
 
 /**
- * Creates a new stream with the results of calling the function on every incoming
- * stream with and accumulator and the incoming value.
- *
- * __Signature__: `(a -> b -> a) -> a -> Stream b -> Stream a`
- *
- * @name flyd.scan
- * @param {Function} fn - the function to call
- * @param {*} val - the initial value of the accumulator
- * @param {stream} stream - the stream source
- * @return {stream} the new stream
- *
- * @example
- * var numbers = flyd.stream();
- * var sum = flyd.scan(function(sum, n) { return sum+n; }, 0, numbers);
- * numbers(2)(3)(5);
- * sum(); // 10
- */
-flyd.scan = curryN(3, function(f, acc, s) {
-  var ns = combine(function(self) {
-    self(acc = f(acc, s.val));
-  }, [s]);
-  if (!ns.hasVal) ns(acc);
-  return ns;
-});
-
-/**
- * Creates a new stream down which all values from both `stream1` and `stream2`
- * will be sent.
- *
- * __Signature__: `Stream a -> Stream a -> Stream a`
- *
- * @name flyd.merge
- * @param {stream} source1 - one stream to be merged
- * @param {stream} source2 - the other stream to be merged
- * @return {stream} a stream with the values from both sources
- *
- * @example
- * var btn1Clicks = flyd.stream();
- * button1Elm.addEventListener(btn1Clicks);
- * var btn2Clicks = flyd.stream();
- * button2Elm.addEventListener(btn2Clicks);
- * var allClicks = flyd.merge(btn1Clicks, btn2Clicks);
- */
-flyd.merge = curryN(2, function(s1, s2) {
-  var s = flyd.immediate(combine(function(self, changed) {
-    if (changed[0]) {
-      self(changed[0]());
-    } else if (s1.hasVal) {
-      self(s1.val);
-    } else if (s2.hasVal) {
-      self(s2.val);
-    }
-  }, [s1, s2]));
-  flyd.endsOn(combine(function() {
-    return true;
-  }, [s1.end, s2.end]), s);
-  return s;
-});
-
-/**
  * Creates a new stream resulting from applying `transducer` to `stream`.
  *
  * __Signature__: `Transducer -> Stream a -> Stream b`
@@ -276,15 +216,19 @@ flyd.merge = curryN(2, function(s1, s2) {
  * s1(1)(1)(2)(3)(3)(3)(4);
  * results; // => [2, 4, 6, 8]
  */
+var skip = {};
+ 
 flyd.transduce = curryN(2, function(xform, source) {
   xform = xform(new StreamTransformer());
   return combine(function(self) {
-    var res = xform['@@transducer/step'](undefined, source.val);
+    var res = xform['@@transducer/step'](skip, source.val);
     if (res && res['@@transducer/reduced'] === true) {
+      if (res['@@transducer/value'] !== skip) self (res['@@transducer/value']);
       self.end(true);
-      return res['@@transducer/value'];
-    } else {
-      return res;
+    }
+    else {
+      if (res !== skip)
+        self (res);
     }
   }, [source]);
 });
@@ -436,7 +380,7 @@ function createDependentStream(deps, fn) {
  * @return {Boolean} `true` if all dependencies have vales, `false` otherwise
  */
 function initialDepsNotMet(stream) {
-  stream.depsMet = stream.deps.some(function(s) {
+  stream.depsMet = stream.deps.every(function(s) {
     return s.hasVal;
   });
   return !stream.depsMet;
@@ -477,6 +421,7 @@ function updateStreamValue(s, n) {
  * @private
  */
 function markListeners(s, lists) {
+  lists = lists .slice ();
   var i, list;
   for (i = 0; i < lists.length; ++i) {
     list = lists[i];
