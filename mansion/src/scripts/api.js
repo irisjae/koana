@@ -9,7 +9,7 @@
 */
 
 var frontend_path = window .location .protocol + '//playboymansion-mumenrider.c9users.io';
-var backend_path = window .location .protocol + '//playboymansion-mumenrider.c9users.io';	
+var backend_path = window .location .protocol + '//playboymansion-mumenrider.c9users.io/api';	
 
 var home_path = '#home';
 

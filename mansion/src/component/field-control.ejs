@@ -1,5 +1,5 @@
 <placeholder empty={ my ('empty') }>{ args .placeholder }</placeholder>
-<input ref="input" type={ args .type } maxlength={ args .maxlength }>
+<input ref="input" type={ args .type } maxlength={ args .maxlength } readonly={ args .readonly != undefined }>
 <hr>
 <hr focused={ my ('focused') }>
 
@@ -103,6 +103,10 @@
             })
         if (args .input__to)
             ref .addEventListener ('input', function () {
+                self .mention (args .input__to, ref .value)
+            })
+        if (args .focus__to)
+            self .impressions ('focus') .thru (tap, function () {
                 self .mention (args .input__to, ref .value)
             })
             

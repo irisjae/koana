@@ -1,4 +1,4 @@
-require ('./kk_index')
+require ('api/kk_index')
 	.then (function (kk_index) {
 		console .log ('kk index', kk_index)
 	})

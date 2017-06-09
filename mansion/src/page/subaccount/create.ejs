@@ -16,17 +16,27 @@
 			Please enter your email and create a password
 		</label>
 		<component-spacing height="20px" />
-		<label1>User Name:</label1>
+		<label>User Name:</label>
 		<component-field-control type="text" placeholder="First Name" input__to=":firstname" />
 		<component-field-control type="text" placeholder="Last Name" input__to=":lastname" />
 		
-		<label1>Date of Birth:</label1>
-		<component-field-control type="date" placeholder="" input__to=":dob" />
-		<label1>Nationality:</label1>
+		<label>Date of Birth:</label>
+		<component-field-control placeholder={ my (':date-of-birth') } input__to=":date-of-birth" ref="date-of-birth-ref" readonly />
+		<fullscreen-holder active={ my ('picking-date-of-birth') }>
+			<component-modal-holder>
+				<component-date-picker date__to=":date-of-birth" />
+			</component-modal-holder>
+		</fullscreen-holder>
+		
+
+		<label>Nationality:</label>
 		<component-field-control type="password" placeholder="" input__to=":nationality" />
-		<label1>School:</label1>
+
+		<label>School:</label>
 		<component-field-control type="text" placeholder="" input__to=":school" />
+
 		<component-spacing height="40px" />
+
 		<component-action>
 			<a ref="action" href="#portal">Create</a>
 		</component-action>
@@ -63,6 +73,12 @@
 		    
 		    input {
 				@extend .input;
+			}
+		}
+		
+		> component-field-control[ref="date-of-birth-ref"] {
+			> placeholder {
+			    color: black;
 			}
 		}
 		
@@ -112,8 +128,37 @@
 	self
 		.remembers (':email')
 		.remembers (':password')
+		.remembers (':date-of-birth')
 		.remembers (':agree-toa')
 	
+	
+	
+	
+	
+	self .remembers ('picking-date-of-birth')	
+	self .impressions ('picking-date-of-birth') .thru (map, noop) .thru (tap, self .render);
+
+	self .establish ('date-of-birth-ref', ref)
+		.impressions ('date-of-birth-ref')
+		.thru (map, function (tag) {
+			return tag .root;
+		})
+		.thru (tap, function (ref) {
+			ref .addEventListener ('click', function (e) {
+				self .mention ('picking-date-of-birth', true);
+			})
+		})
+			
+	self .impressions (':date-of-birth')
+		.thru (delay, 150)
+		.thru (tap, function () {
+			self .mention ('picking-date-of-birth', false);
+		})
+		
+		
+		
+	
+	self
 		.establish ('action', ref)
 		.impressions ('action')
 			.thru (tap, function (_ref) {

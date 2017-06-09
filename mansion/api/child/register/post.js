@@ -1,16 +1,29 @@
-var use_db = require ('../../use_db')
+var use_db = require ('api/use_db')
+var detokenizer = require ('api/detokenizer')
 
 module .exports =   function (ctx, next) {
-                        var email = ctx .request .body .email;
-                        var password = ctx .request .body .password;
+                        var parent_id = detokenizer (ctx .request .body .parent_token);
+                        var name = ctx .request .body .name;
+                        var pin = ctx .request .body .pin;
                         return  use_db (function (session) {
-                                    return  session .run ('MATCH (parent:Parent { email: { email } }) RETURN parent', { email: email })
+                                    return  session .run (
+                                                'MATCH (parent:Parent) WHERE ID (parent) = { id } ' + 
+                                                'RETURN parent',
+                                            {
+                                                id: parent_id
+                                            })
                                                 .then (function (results) {
                                                     if (! results .records .length)
                                                         return Promise .reject (new Error ('Parent doesn\'t exists'))
                                                 })
                                                 .then (function () {
-                                                    return session .run ('CREATE (parent:Parent { email: { email }, password: { password } })', { email: email, password: password })
+                                                    return  session .run (
+                                                                'CREATE (child:Child { name: { name }, pin: { pin }, level: { level } })',
+                                                            {
+                                                                name: name,
+                                                                pin: pin,
+                                                                level: 1
+                                                            })
                                                 })
                                                 .then (function () {
                                                     return {}

@@ -1,4 +1,4 @@
-var use_db = require ('./use_db')
+var use_db = require ('api/use_db')
                 
 require ('./kk_index')
     .then (function (kk_questions) {

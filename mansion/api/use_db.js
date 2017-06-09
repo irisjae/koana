@@ -28,7 +28,7 @@ module .exports =   function (use_case) {
                                         return  Promise .resolve (session)
                                                     .then (use_case)
                                                     .catch (function (error) {
-                                                        console .log ('error', error);
+                                                        console .error ('error', error);
                                                     })
                                                     .then (function (data) {
                                                         session .close ();
@@ -36,6 +36,6 @@ module .exports =   function (use_case) {
                                                     })
                                     })
                                     .catch (function (error) {
-                                        console .log ('Driver instantiation failed', error);
+                                        console .error ('Driver instantiation failed', error);
                                     })
                     };

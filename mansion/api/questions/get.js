@@ -1,8 +1,10 @@
-var use_db = require ('../use_db')
+var use_db = require ('api/use_db')
 
 module .exports =   function (ctx, next) {
                         return  use_db (function (session) {
-                                    return session .run ('MATCH (question:Question) MATCH (subcategory:Subcategory)-[:Owns]->(question) RETURN question, subcategory')
+                                    return session .run (
+                                        'MATCH (question:Question) MATCH (subcategory:Subcategory)-[:Owns]->(question) ' +
+                                        'RETURN question, subcategory ')
                                 })
                                     .then (function (results) {
                                         return  results .records .map (function (record) {
