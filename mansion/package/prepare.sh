@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 DIR=sudo dirname $(readlink -f $0)
 cd "$DIR"
 
@@ -25,7 +26,7 @@ if npm list -g cordova; then
     echo cordova already installed
 else
     echo trying install cordova...
-    sudo npm install -g cordova
+    npm install -g cordova
 fi
 
 echo
@@ -60,5 +61,8 @@ else
     wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
     echo 'deb http://debian.neo4j.org/repo stable/' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
     sudo apt-get update
-    sudo apt-get install neo4j=3.2.2
+    sudo apt-get install neo4j
 fi
+
+echo installing npm packages...
+npm install
