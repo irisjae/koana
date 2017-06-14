@@ -1,6 +1,0 @@
-# style precompilation
-src/styles/cache/
-src/styles/copy/
-
-# cordova platforms
-platforms/*/
