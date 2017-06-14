@@ -4,6 +4,16 @@ cd "$DIR"
 
 echo
 echo
+echo checking npm version...
+if ! npm outdated -g npm | grep -z npm; then
+    echo npm is up to date
+else
+    echo trying to update npm
+    npm install -g npm
+fi
+
+echo
+echo
 echo checking nvm version...
 . ~/.nvm/nvm.sh
 nvm install 7.1.0
@@ -27,6 +37,8 @@ if npm list -g cordova; then
 else
     echo trying install cordova...
     npm install -g cordova
+    cordova platform rm browser android ios
+    cordova platform add browser android ios
 fi
 
 echo
@@ -64,5 +76,29 @@ else
     sudo apt-get install neo4j
 fi
 
+echo
+echo
+if [ -e node_modules/package ]; then
+    echo remove linked package module...
+    rm node_modules/package
+fi
+if [ -e node_modules/api ]; then
+    echo remove linked api module...
+    rm node_modules/api
+fi
+
+echo
+echo
 echo installing npm packages...
 npm install
+
+echo
+echo
+if [ ! -e node_modules/package ]; then
+    echo linking package as module...
+    ln -s ../ node_modules/package
+fi
+if [ ! -e node_modules/api ]; then
+    echo linking api as module...
+    ln -s ../api node_modules/api
+fi

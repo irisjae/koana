@@ -4,7 +4,7 @@
     "description": "playboy",
     "main": "index.js",
     "scripts": {
-        "prepare": "./package/prepare.sh",
+        "setup": "./package/setup.sh",
         "build": "./package/build.sh",
         "serve": "./package/serve.sh",
         "test": "./package/test.sh"
@@ -36,17 +36,17 @@
         "node-fetch": "^2.0.0-alpha.5",
         "node-sass": "^4.5.0",
         "ramda": "^0.24.1",
-        "riot-compiler": "^3.2.1",
-        "tap": "^10.3.3"
+        "riot-compiler": "^3.2.1"
     },
     "cordova": {
         "platforms": [
-            "android",
-            "browser",
-            "ios"
+            "android"
         ],
         "plugins": {
             "cordova-plugin-whitelist": {}
         }
+    },
+    "devDependencies": {
+        "tap": "^10.3.3"
     }
 }
