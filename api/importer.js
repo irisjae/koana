@@ -1,6 +1,10 @@
 var use_db = require ('api/use_db')
                 
 require ('./kk_index')
+    .then (function (x) {
+        console .log (x);
+        return x;
+    })
     .then (function (kk_questions) {
         return  use_db (function (session) {
                     var categories = Object .keys (kk_questions);

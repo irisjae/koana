@@ -46,6 +46,14 @@ else
     echo 'deb http://debian.neo4j.org/repo stable/' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
     sudo apt-get update
     sudo apt-get install neo4j
+    sudo sed -i -E s/#\?dbms.connector.bolt.tls_level=.\+/dbms.connector.bolt.tls_level=OPTIONAL/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.connector.bolt.listen_address=.\+/dbms.connector.bolt.listen_address=:8081/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.connector.http.listen_address=.\+/dbms.connector.http.listen_address=:8082/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.security.auth_enabled=.\+/dbms.security.auth_enabled=false/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.memory.heap.initial_size=.\+/dbms.memory.heap.initial_size=512m/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.memory.heap.max_size=.\+/dbms.memory.heap.max_size=512m/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.connector.https.enabled=.\+/dbms.connector.https.enabled=false/ /etc/neo4j/neo4j.conf
+    sudo sed -i -E s/#\?dbms.connectors.default_listen_address=.\+/dbms.connectors.default_listen_address=0.0.0.0/ /etc/neo4j/neo4j.conf
 fi
 
 echo

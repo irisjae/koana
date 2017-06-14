@@ -29,21 +29,21 @@ require ('koa-qs') (new (require ('koa')) ())
 			return router;
 		}, router) .routes ();
 	}) ((function (extensions) {
-		var search = function (dir) {
-			return	require ('fs-extra') .readdirSync (dir)
-						.reduce (function (results, file) {
-							var full_file = dir + '/' + file;
-							var stat = require ('fs-extra') .statSync (full_file);
-							if (stat && stat .isDirectory ())
-								return results .concat (search (full_file));
-							else if (extensions .some (function (extension) {
-								return file .indexOf (extension) !== -1;
-							}))
-								return results .concat ([full_file .slice (0, full_file .lastIndexOf ('.'))]);
-							else
-								return results;
-						}, []);
-		};
+		var search =	function (dir) {
+							return	require ('fs-extra') .readdirSync (dir)
+										.reduce (function (results, file) {
+											var full_file = dir + '/' + file;
+											var stat = require ('fs-extra') .statSync (full_file);
+											if (stat && stat .isDirectory ())
+												return results .concat (search (full_file));
+											else if (extensions .some (function (extension) {
+												return file .indexOf (extension) !== -1;
+											}))
+												return results .concat ([full_file .slice (0, full_file .lastIndexOf ('.'))]);
+											else
+												return results;
+										}, []);
+						};
 		return search;
 	}) (['get', 'post']) (__dirname + '/../api'), require ('koa-router') ()))
 	
