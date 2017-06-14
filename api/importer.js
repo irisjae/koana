@@ -1,14 +1,13 @@
 var use_db = require ('api/use_db')
                 
 require ('./kk_index')
-    .then (function (x) {
-        console .log (x);
-        return x;
+    .then (function () {
+        console .log ('got kk questions...');
     })
     .then (function (kk_questions) {
         return  use_db (function (session) {
                     var categories = Object .keys (kk_questions);
-                    
+            
                     return  Promise .all (categories .map (function (category) {
                                 return  Promise .all (kk_questions [category] .map (function (question) {
                                             return  session .run (

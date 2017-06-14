@@ -6,7 +6,8 @@ var fetch_driver =  function () {
                         last_attempt = new Promise (function (resolve, reject) {
                             var driver = neo4j .driver ("bolt://localhost:8081");
                             
-                            /*/resolve (driver);
+                            /**/module .exports .driver = driver;
+                            resolve (driver);
                             /*/driver .onCompleted =   function () {
                                                         module .exports .driver = driver;
                                                         resolve (driver);
@@ -43,7 +44,8 @@ module .exports =   function (use_case) {
                                                         return data
                                                     })
                                     })
+                                    /*
                                     .catch (function (err) {
                                         console .error ('failed to make driver', err);
-                                    })
+                                    })//*/
                     };
