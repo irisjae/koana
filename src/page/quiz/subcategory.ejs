@@ -6,31 +6,31 @@
 			</a>
 		</nav-buttons>
 		<nav-title>
-			<component-page-title>Points: { my ('points') }/20</component-page-title>
+			<component-page-title>Points: { points }/20</component-page-title>
 		</nav-title>
 	</nav-bar>
 </nav>
 <component-main-content>
 	<question>
 		<number>
-			<label>Q{ my ('nth') }.</label>
+			<label>Q{ nth }.</label>
 		</number>
-		<label>{ my ('text') }</label>
+		<label>{ text () }</label>
 		
-		<image-holder if={ my ('image') }><img src={ my ('image') }></image-holder>
+		<image-holder if={ image () }><img src={ image () }></image-holder>
 		
 		<component-spacing height="20px" />
 	
 		<guesses>
-			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (0), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [0] }</a></guess>
-			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (1), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [1] }</a></guess>
-			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (2), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [2] }</a></guess>
-			<guess><a href="#quiz/subcategory/#{ [ my ('category'), my ('points') + my ('points-for') (3), my ('nth') + 1 ] .map (stringify) .join ('/') }">{ my ('guesses') [3] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ category, points + points_for (0), nth + 1 ] .map (stringify) .join ('/') }">{ guesses () [0] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ category, points + points_for (1), nth + 1 ] .map (stringify) .join ('/') }">{ guesses () [1] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ category, points + points_for (2), nth + 1 ] .map (stringify) .join ('/') }">{ guesses () [2] }</a></guess>
+			<guess><a href="#quiz/subcategory/#{ [ category, points + points_for (3), nth + 1 ] .map (stringify) .join ('/') }">{ guesses () [3] }</a></guess>
 		</guesses>
 	</question>
 	<!--<navigation>
-		<component-prev-button if={ my ('nth') > 1 } />
-		<component-next-button if={ my ('nth') < 20 } />
+		<component-prev-button if={ nth > 1 } />
+		<component-next-button if={ nth < 20 } />
 	</navigation>-->
 </component-main-content>
 
@@ -146,75 +146,68 @@
 <script>
 	self .temp = true;
 	
-	self
-		.remembers ('questions-items')
+	var questions_items = stream ();
 
-		.remembers ('category', parse (args .params [0]))
-		.remembers ('points', parse (args .params [1]) || 0)
-		.remembers ('nth', parse (args .params [2]) || 1)
+	var category = parse (args [0]);
+	var points = parse (args [1]) || 0;
+	var nth = parse (args [2]) || 1;
 		
-		.establish ('questions-in-category', dependent (function () {
-			return 	my ('questions-items') .filter (function (item) {
-						return item .category === my ('category')
-					})
-		}, self .impressions ('questions-items')))
-		.establish ('question', dependent (function () {
-			var pool = my ('questions-in-category');
-			return pool [Math .floor (Math .random () * pool .length)] .question
-		}, self .impressions ('questions-in-category')))
-		.establish ('text', dependent (function () {
-			return my ('question') .text
-		}, self .impressions ('question')))
-		.establish ('answer', dependent (function () {
-			return my ('question') .answer
-		}, self .impressions ('question')))
-		.establish ('traps', dependent (function () {
-			return my ('question') .traps
-		}, self .impressions ('question')))
-		.establish ('image', dependent (function () {
-			return my ('question') .image
-		}, self .impressions ('question')))
+	var questions_in_category = mechanism (function () {
+		return 	questions_items () .filter (function (item) {
+					return item .category === category
+				})
+	}, [questions_items])
+	var question = mechanism (function () {
+		var pool = questions_in_category ();
+		return pool [Math .floor (Math .random () * pool .length)] .question
+	}, [questions_in_category])
+	var text = mechanism (function () {
+		return question () .text
+	}, [question])
+	var answer = mechanism (function () {
+		return question () .answer
+	}, [question])
+	var traps = mechanism (function () {
+		return question () .traps
+	}, [question])
+	var image = mechanism (function () {
+		return question () .image
+	}, [question])
 		
-		.establish ('guesses', constant (
-			mechanism (function () {
-				var array = [my ('answer')] .concat (my ('traps'));
-			
-				var currentIndex = array .length
-				var temporaryValue
-				var randomIndex;
-				
-				// While there remain elements to shuffle...
-				while (0 !== currentIndex) {
-				
-					// Pick a remaining element...
-					randomIndex = Math .floor (Math .random () * currentIndex);
-					currentIndex -= 1;
+	var guesses =	mechanism (function () {
+						var array = [answer ()] .concat (traps ());
 					
-					// And swap it with the current element.
-					temporaryValue = array [currentIndex];
-					array [currentIndex] = array [randomIndex];
-					array [randomIndex] = temporaryValue;
-				}
-				
-				return array;
-			}, [self .impressions ('question')])
-				.thru (tap_ (function (guesses) {
-					if (! guesses .hasVal)
-						guesses ([])
-				}))
-		))
+						var currentIndex = array .length
+						var temporaryValue
+						var randomIndex;
+						
+						// While there remain elements to shuffle...
+						while (0 !== currentIndex) {
+						
+							// Pick a remaining element...
+							randomIndex = Math .floor (Math .random () * currentIndex);
+							currentIndex -= 1;
+							
+							// And swap it with the current element.
+							temporaryValue = array [currentIndex];
+							array [currentIndex] = array [randomIndex];
+							array [randomIndex] = temporaryValue;
+						}
+						
+						return array;
+					}, [question]) .thru (begins_with, [[]])
 		
-		.remembers ('points-for', function (guess) {
-			return my ('guesses') [guess] === my ('answer') ? 1 : 0
-		})
+	var points_for = function (guess) {
+		return guesses () [guess] === answer () ? 1 : 0
+	}
 		
-	self .impressions ('question') .thru (tap, self .render)
+	question .thru (map, noop) .thru (tap, self .render)
 	
-	self .impressions (args .cycle__from)
+	args .cycle__from
 		.thru (tap, function () {
-			inquire_last (self .affiliated ('::questions'))
+			inquire_last (api () .questions)
 				.then (function (items) {
-					self .mention ('questions-items', items)
+					questions_items (items)
 				})
 		})
 </script>

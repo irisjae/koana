@@ -58,11 +58,10 @@ var retaining =	function (you) {
 								return i;
 							};
 				};
-var mutate =	function (mutator) {
-					return	function (data) {
-								var _data = like (data);
-								mutator (_data);
-								return _data;
+var mutate =	function (data) {
+					return	function (x, y) {
+								data [x] = y;
+								return data;
 							};
 				};
 var difference =	function (data) {
@@ -155,18 +154,6 @@ var flatten =	function (ary) {
 								return a .concat (b)
 							}, [])
 				};
-				
-var consistentfy =	function (original_refs) {
-						var shallow_refs = {};
-						for (var ref in original_refs) {
-							shallow_refs [ref] = original_refs [ref]
-							if (! shallow_refs [ref] .length)
-								shallow_refs [ref] = [shallow_refs [ref]];
-							else
-								shallow_refs [ref] = shallow_refs [ref] .slice ();
-						}
-						return shallow_refs;
-					};
 					
 var constant =	function (x) {
 					return function () { return x; };
@@ -211,3 +198,17 @@ var pack =	function (aliases) {
 							return x;
 						};
 			};
+var make =	function (func) {
+				var x = {};
+				func (x);
+				return x;
+			}		
+			
+			
+			
+var climb = function (n, scope) {
+            for (var i = 0; i < n; i ++) {
+              scope = scope .parent;
+            }
+            return scope;
+          }

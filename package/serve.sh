@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR=sudo dirname $(readlink -f $0)
+DIR="$(sudo dirname $(readlink -f $0))"
 cd "$DIR"
 
 screen -wipe
@@ -11,4 +11,4 @@ fi
 . ~/.nvm/nvm.sh
 nvm use 7.1.0
 node --version
-node package/serve.js
+node serve.js

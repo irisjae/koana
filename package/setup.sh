@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
-DIR=sudo dirname $(readlink -f $0)
+DIR="$(sudo dirname $(readlink -f $0))"
 cd "$DIR"
+cd ..
 
 echo
 echo
@@ -69,7 +70,7 @@ echo checking npm version...
 if ! npm outdated -g npm | grep -z npm; then
     echo npm is up to date
 else
-    echo trying to update npm
+    echo trying to update npm...
     npm install -g npm
 fi
 

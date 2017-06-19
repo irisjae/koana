@@ -100,17 +100,9 @@
 </style>
 
 <script>
-	self
-		.remembers ('tabs', ['quizes', 'profile', 'courses'])
+	var tabs = ['quizes', 'profile', 'courses']
 		
-		.remembers ('highlight-position', function () {
-			return 100 * my ('tabs') .indexOf (args .tab) / my ('tabs') .length
-		})
-		
-		.remembers (':waves', none)
-	
-	
-	self .impressions (':waves')
-		.thru (flatMap, id)
-//		.thru (tap, log)
+	var highlight_position = function () {
+		return 100 * tabs .indexOf (args .tab) / tabs .length
+	}
 </script>

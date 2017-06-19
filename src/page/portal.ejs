@@ -19,16 +19,16 @@
 			Choose a quiz!
 		</label>
 		<component-spacing height="20px" />
-		<component-item if={ my ('status') === 'loading' } >Fetching quizes...</component-item>
-		<component-loading-item if={ my ('status') === 'loading' } />
-		<component-item if={ my ('status') === 'no-items' } >No courses found :(</component-item>
+		<component-item if={ status () === 'loading' } >Fetching quizes...</component-item>
+		<component-loading-item if={ status () === 'loading' } />
+		<component-item if={ status () === 'no-items' } >No courses found :(</component-item>
 		<component-dynamic-load
 		    items_to_load=13
 		    interval_for_loading=50
-		    item_height__from=":item-height"
-		    items__from=":subcategories"
+		    item_height={ item_height }
+		    items__from={ subcategories }
 		>
-			<component-portal-subcategory-item item__from=":item">
+			<component-portal-subcategory-item item__from={ _item .item__from }>
 		</component-dynamic-load>
 	</portal>
 	<component-spacing height="75px" />
@@ -101,51 +101,41 @@
 </style>
 
 <script>
-	self
-		.remembers ('questions-info')
-		.establish (':subcategories', function (requests) { 
-			return 	self .impressions ('questions-info')
-						.thru (map, function (question_list) {
-							var categories = {};
-							question_list .forEach (function (question) {
-								categories [question .category] = true;
-							});
-							return 	Object .keys (categories)
-										.sort (function (a, b) {
-											return a > b;
-										})
-										.map (function (category) {
-											return { category: category };
-										});
-						})
-						.thru (delay, 400)
-						.thru (dropRepeatsWith, json_equal)
-		})
-		.remembers (':item-height', function (item) {
-			return 135;
-		})
-			
-	self 
-		.establish ('status', constant (
-			mechanism (function () {
-				if (my (':subcategories') .length)
-					return 'loaded';
-				else
-					return 'no-items'
-			}, [self .impressions (':subcategories')])
-				.thru (tap_ (function (status) {
-					if (! status .hasVal)
-						status ('loading')
-				}))
-		))
-		.impressions ('status') .thru (tap, self .render)
+	var questions_info = stream ()
+	var subcategories =	questions_info
+							.thru (map, function (question_list) {
+								var categories = {};
+								question_list .forEach (function (question) {
+									categories [question .category] = true;
+								});
+								return 	Object .keys (categories)
+											.sort (function (a, b) {
+												return a > b;
+											})
+											.map (function (category) {
+												return { category: category };
+											});
+							})
+							.thru (delay, 400)
+							.thru (dropRepeatsWith, json_equal)
 		
-	self
-		.impressions (args .cycle__from)
-			.thru (tap, function () {
-				inquire (self .affiliated ('::questions'))
-					.then (function (questions) {
-						self .mention ('questions-info', questions)
-					})
-			})
+	var item_height = 	function (item) {
+							return 135;
+						}
+			
+	var status =	mechanism (function () {
+						if (subcategories () .length)
+							return 'loaded';
+						else
+							return 'no-items'
+					}, [subcategories])
+					.thru (begins_with, 'loading')
+	
+	status .thru (map, noop) .thru (tap, self .render)
+		
+	args .cycle__from
+		.thru (tap, function () {
+			inquire (api () .questions)
+				.then (questions_info)
+		})
 </script>

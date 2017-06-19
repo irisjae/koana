@@ -17,7 +17,7 @@ var stateful =	function (opts) {
 					var error = opts .error;
 					var value = opts .value;
 					
-					return function (inquiries) {
+					return dialogue (function (inquiries) {
 							
 								var states = stream ();
 								var states_persistence = persistance (states, key, cache_prefix);
@@ -75,7 +75,7 @@ var stateful =	function (opts) {
 													})
 													.thru (map, function (req) {
 														var id = req .label;
-														return	Promise .resolve (fetching ())
+														return	[Promise .resolve ((fetching () || {}) [0])
 																	.then (function () {
 																		/*var _state = states ();
 																		if ((per === 'all' && (_state && _state .value)) ||
@@ -102,10 +102,10 @@ var stateful =	function (opts) {
 																							item: (error || R .identity) (_error)
 																						}
 																					})
-																	});
+																	})];
 													})
 													.thru (tap, function () {
-														Promise .resolve (fetching ())
+														fetching () [0]
 															.then (function (_fetch) {
 																var prev = states ();
 																var curr = like (prev);
@@ -178,7 +178,7 @@ var stateful =	function (opts) {
 								states .cached = states_persistence .cached;
 								
 								return states;
-						}
+						})
 					};
 
 
@@ -213,10 +213,10 @@ var persistance =	function (s, key, prefix) {
 									caching: caching,
 									cached:	combine (function (self) {
 												var _state = caching ();
-												return Promise .resolve (self ())
+												return [Promise .resolve ((self () || []) [0])
 															.then (function () {
 																return persist (_state)
-															});
+															})];
 											}, [ caching ])
 
 								}

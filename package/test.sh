@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR=sudo dirname $(readlink -f $0)
+DIR="$(sudo dirname $(readlink -f $0))"
 cd "$DIR"
 
 . ~/.nvm/nvm.sh
@@ -8,18 +8,26 @@ nvm use 7.1.0
 node --version
 
 screen -wipe
-if screen -list | grep -q "neo4j"; then
-    echo Closing screen neo4j...
+if screen -list | grep -q "^neo4j"; then
+    echo
+    echo
+    echo closing screen neo4j...
     screen -S "neo4j" -X quit
 fi
 
+echo
+echo
 if screen -list | grep -q "test-neo4j"; then
     echo Screen test-neo4j already open
 else
-    echo Opening screen test-neo4j...
+    echo opening screen test-neo4j...
     screen -dmS test-neo4j sudo neo4j console
 fi
 
-
+echo
+echo
+echo running tests...
+echo
 cd ..
+shopt -s globstar
 tap test/**/*.js
