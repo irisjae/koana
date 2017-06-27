@@ -1,0 +1,1723 @@
+2017-06-19 07:27:07.660+0000 WARN [o.n.i.p.PageCache] The dbms.memory.pagecache.size setting has not been configured. It is recommended that this setting is always explicitly configured, to ensure the system has a balanced configuration. Until then, a computed heuristic value of 20580026368 bytes will be used instead. 
+2017-06-19 07:27:09.849+0000 INFO [o.n.k.i.f.CommunityEditionModule] No locking implementation specified, defaulting to 'community'
+2017-06-19 07:27:10.297+0000 INFO [o.n.k.AvailabilityGuard] Requirement makes database unavailable: Database available
+2017-06-19 07:27:10.438+0000 INFO [o.n.k.i.DiagnosticsManager] --- INITIALIZED diagnostics START ---
+2017-06-19 07:27:10.439+0000 INFO [o.n.k.i.DiagnosticsManager] Neo4j Kernel properties:
+2017-06-19 07:27:10.439+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.connector.http.enabled=true
+2017-06-19 07:27:10.439+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.security.auth_enabled=true
+2017-06-19 07:27:10.440+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.connector.bolt.type=BOLT
+2017-06-19 07:27:10.440+0000 INFO [o.n.k.i.DiagnosticsManager] unsupported.dbms.directories.neo4j_home=/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02
+2017-06-19 07:27:10.440+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.directories.import=import
+2017-06-19 07:27:10.440+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.connector.https.enabled=true
+2017-06-19 07:27:10.440+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.connector.http.type=HTTP
+2017-06-19 07:27:10.440+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.jvm.additional=-Dunsupported.dbms.udc.source=tarball
+2017-06-19 07:27:10.441+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.tx_log.rotation.retention_policy=1 days
+2017-06-19 07:27:10.441+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.windows_service_name=neo4j
+2017-06-19 07:27:10.441+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.connector.https.type=HTTP
+2017-06-19 07:27:10.441+0000 INFO [o.n.k.i.DiagnosticsManager] unsupported.dbms.edition=community
+2017-06-19 07:27:10.441+0000 INFO [o.n.k.i.DiagnosticsManager] dbms.connector.bolt.enabled=true
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] Diagnostics providers:
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] org.neo4j.kernel.configuration.Config
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] org.neo4j.kernel.info.DiagnosticsManager
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] SYSTEM_MEMORY
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] JAVA_MEMORY
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] OPERATING_SYSTEM
+2017-06-19 07:27:10.442+0000 INFO [o.n.k.i.DiagnosticsManager] JAVA_VIRTUAL_MACHINE
+2017-06-19 07:27:10.443+0000 INFO [o.n.k.i.DiagnosticsManager] CLASSPATH
+2017-06-19 07:27:10.443+0000 INFO [o.n.k.i.DiagnosticsManager] LIBRARY_PATH
+2017-06-19 07:27:10.443+0000 INFO [o.n.k.i.DiagnosticsManager] SYSTEM_PROPERTIES
+2017-06-19 07:27:10.443+0000 INFO [o.n.k.i.DiagnosticsManager] LINUX_SCHEDULERS
+2017-06-19 07:27:10.443+0000 INFO [o.n.k.i.DiagnosticsManager] NETWORK
+2017-06-19 07:27:10.443+0000 INFO [o.n.k.i.DiagnosticsManager] System memory information:
+2017-06-19 07:27:10.452+0000 INFO [o.n.k.i.DiagnosticsManager] Total Physical memory: 51.11 GB
+2017-06-19 07:27:10.455+0000 INFO [o.n.k.i.DiagnosticsManager] Free Physical memory: 4.29 GB
+2017-06-19 07:27:10.455+0000 INFO [o.n.k.i.DiagnosticsManager] Committed virtual memory: 16.89 GB
+2017-06-19 07:27:10.456+0000 INFO [o.n.k.i.DiagnosticsManager] Total swap space: 50.00 GB
+2017-06-19 07:27:10.456+0000 INFO [o.n.k.i.DiagnosticsManager] Free swap space: 42.84 GB
+2017-06-19 07:27:10.456+0000 INFO [o.n.k.i.DiagnosticsManager] JVM memory information:
+2017-06-19 07:27:10.456+0000 INFO [o.n.k.i.DiagnosticsManager] Free  memory: 778.85 MB
+2017-06-19 07:27:10.457+0000 INFO [o.n.k.i.DiagnosticsManager] Total memory: 818.00 MB
+2017-06-19 07:27:10.457+0000 INFO [o.n.k.i.DiagnosticsManager] Max   memory: 12.78 GB
+2017-06-19 07:27:10.462+0000 INFO [o.n.k.i.DiagnosticsManager] Garbage Collector: G1 Young Generation: [G1 Eden Space, G1 Survivor Space]
+2017-06-19 07:27:10.462+0000 INFO [o.n.k.i.DiagnosticsManager] Garbage Collector: G1 Old Generation: [G1 Eden Space, G1 Survivor Space, G1 Old Gen]
+2017-06-19 07:27:10.463+0000 INFO [o.n.k.i.DiagnosticsManager] Memory Pool: Code Cache (Non-heap memory): committed=5.56 MB, used=5.54 MB, max=240.00 MB, threshold=0.00 B
+2017-06-19 07:27:10.464+0000 INFO [o.n.k.i.DiagnosticsManager] Memory Pool: Metaspace (Non-heap memory): committed=14.25 MB, used=13.36 MB, max=-1.00 B, threshold=0.00 B
+2017-06-19 07:27:10.464+0000 INFO [o.n.k.i.DiagnosticsManager] Memory Pool: Compressed Class Space (Non-heap memory): committed=2.00 MB, used=1.80 MB, max=1.00 GB, threshold=0.00 B
+2017-06-19 07:27:10.465+0000 INFO [o.n.k.i.DiagnosticsManager] Memory Pool: G1 Eden Space (Heap memory): committed=36.00 MB, used=26.00 MB, max=-1.00 B, threshold=?
+2017-06-19 07:27:10.465+0000 INFO [o.n.k.i.DiagnosticsManager] Memory Pool: G1 Survivor Space (Heap memory): committed=6.00 MB, used=6.00 MB, max=-1.00 B, threshold=?
+2017-06-19 07:27:10.466+0000 INFO [o.n.k.i.DiagnosticsManager] Memory Pool: G1 Old Gen (Heap memory): committed=776.00 MB, used=6.47 MB, max=12.78 GB, threshold=0.00 B
+2017-06-19 07:27:10.466+0000 INFO [o.n.k.i.DiagnosticsManager] Operating system information:
+2017-06-19 07:27:10.467+0000 INFO [o.n.k.i.DiagnosticsManager] Operating System: Linux; version: 4.9.17-c9; arch: amd64; cpus: 8
+2017-06-19 07:27:10.467+0000 INFO [o.n.k.i.DiagnosticsManager] Max number of file descriptors: 1048576
+2017-06-19 07:27:10.467+0000 INFO [o.n.k.i.DiagnosticsManager] Number of open file descriptors: 101
+2017-06-19 07:27:10.478+0000 INFO [o.n.k.i.DiagnosticsManager] Process id: 36598@mumenrider-briansark-4986105
+2017-06-19 07:27:10.478+0000 INFO [o.n.k.i.DiagnosticsManager] Byte order: LITTLE_ENDIAN
+2017-06-19 07:27:10.478+0000 INFO [o.n.k.i.DiagnosticsManager] Local timezone: Etc/UTC
+2017-06-19 07:27:10.478+0000 INFO [o.n.k.i.DiagnosticsManager] JVM information:
+2017-06-19 07:27:10.478+0000 INFO [o.n.k.i.DiagnosticsManager] VM Name: Java HotSpot(TM) 64-Bit Server VM
+2017-06-19 07:27:10.479+0000 INFO [o.n.k.i.DiagnosticsManager] VM Vendor: Oracle Corporation
+2017-06-19 07:27:10.479+0000 INFO [o.n.k.i.DiagnosticsManager] VM Version: 25.131-b11
+2017-06-19 07:27:10.482+0000 INFO [o.n.k.i.DiagnosticsManager] JIT compiler: HotSpot 64-Bit Tiered Compilers
+2017-06-19 07:27:10.483+0000 INFO [o.n.k.i.DiagnosticsManager] VM Arguments: [-XX:+UseG1GC, -XX:-OmitStackTraceInFastThrow, -XX:+AlwaysPreTouch, -XX:+UnlockExperimentalVMOptions, -XX:+TrustFinalNonStaticFields, -XX:+DisableExplicitGC, -Djdk.tls.ephemeralDHKeySize=2048, -Dunsupported.dbms.udc.source=tarball, -Dfile.encoding=UTF-8]
+2017-06-19 07:27:10.483+0000 INFO [o.n.k.i.DiagnosticsManager] Java classpath:
+2017-06-19 07:27:10.486+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-graphdb-api-3.3.0-alpha02.jar
+2017-06-19 07:27:10.486+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/netty-all-4.1.8.Final.jar
+2017-06-19 07:27:10.486+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-http-9.2.9.v20150224.jar
+2017-06-19 07:27:10.486+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/zipfs.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-udc-3.3.0-alpha02.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-browser-3.0.4.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/parboiled-scala_2.11-1.1.7.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/jfr.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-unsafe-3.3.0-alpha02.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-beanutils-1.8.3.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/asm-5.2.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-codegen-3.3.0-alpha02.jar
+2017-06-19 07:27:10.487+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-ir-3.2-3.2.1.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-io-3.3.0-alpha02.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-server-9.2.9.v20150224.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/mimepull-1.9.3.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jersey-server-1.19.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/jsse.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-import-tool-3.3.0-alpha02.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/lucene-analyzers-common-5.5.0.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-collections-3.3.0-alpha02.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/cldrdata.jar
+2017-06-19 07:27:10.488+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/scala-library-2.11.8.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-frontend-3.2-3.2.1.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-server-3.3.0-alpha02.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-compress-1.12.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-lang-2.6.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunec.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-lucene-index-3.3.0-alpha02.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-xml-9.2.9.v20150224.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jackson-core-asl-1.9.13.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jackson-mapper-asl-1.9.13.jar
+2017-06-19 07:27:10.489+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunjce_provider.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/lucene-queryparser-5.5.0.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-frontend-3.1-3.1.5.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/opencsv-2.3.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-frontend-2.3-2.3.11.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/lucene-codecs-5.5.0.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-configuration-3.3.0-alpha02.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/plugins/*
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/dnsns.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/parboiled-core-1.1.7.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/javax.servlet-api-3.1.0.jar
+2017-06-19 07:27:10.490+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-primitive-collections-3.3.0-alpha02.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-servlet-9.2.9.v20150224.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-bolt-3.3.0-alpha02.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/rhino-1.7R4.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-security-3.3.0-alpha02.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jackson-jaxrs-1.9.13.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/bcprov-jdk15on-1.53.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-util-9.2.9.v20150224.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-jmx-3.3.0-alpha02.jar
+2017-06-19 07:27:10.491+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jfxrt.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/jce.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-compiler-3.1-3.1.5.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-shell-3.3.0-alpha02.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-dbms-3.3.0-alpha02.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-index-3.3.0-alpha02.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/jaccess.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/bcpkix-jdk15on-1.53.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-security-9.2.9.v20150224.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-kernel-3.3.0-alpha02.jar
+2017-06-19 07:27:10.492+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/concurrentlinkedhashmap-lru-1.4.2.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jersey-servlet-1.19.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/scala-reflect-2.11.8.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/sunpkcs11.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-compiler-3.3-3.3.0-alpha02.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-lang3-3.3.2.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/rt.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-resource-3.3.0-alpha02.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-graph-matching-3.1.3.jar
+2017-06-19 07:27:10.493+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-csv-3.3.0-alpha02.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jersey-multipart-1.19.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/charsets.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-common-3.3.0-alpha02.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-frontend-3.3-3.3.0-alpha02.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/server-api-3.3.0-alpha02.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-ir-3.3-3.3.0-alpha02.jar
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/conf/
+2017-06-19 07:27:10.494+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-configuration-1.10.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-command-line-3.3.0-alpha02.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-logging-1.1.1.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/classes
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-digester-2.1.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/lucene-core-5.5.0.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-consistency-check-3.3.0-alpha02.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jline-2.12.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-webapp-9.2.9.v20150224.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-lucene-upgrade-3.3.0-alpha02.jar
+2017-06-19 07:27:10.495+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/nashorn.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/commons-io-2.4.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-3.3.0-alpha02.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jersey-core-1.19.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/sunrsasign.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-logging-3.3.0-alpha02.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [bootstrap] /usr/lib/jvm/java-8-oracle/jre/lib/resources.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [loader.1] file:/usr/lib/jvm/java-8-oracle/jre/lib/ext/localedata.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jetty-io-9.2.9.v20150224.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/caffeine-2.3.3.jar
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/plugins/
+2017-06-19 07:27:10.496+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-compiler-3.2-3.2.1.jar
+2017-06-19 07:27:10.497+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/jsr311-api-1.1.2.r612.jar
+2017-06-19 07:27:10.497+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-cypher-compiler-2.3-2.3.11.jar
+2017-06-19 07:27:10.497+0000 INFO [o.n.k.i.DiagnosticsManager]  [classpath + loader.0] file:/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/lib/neo4j-graph-algo-3.3.0-alpha02.jar
+2017-06-19 07:27:10.497+0000 INFO [o.n.k.i.DiagnosticsManager] Library path:
+2017-06-19 07:27:10.498+0000 INFO [o.n.k.i.DiagnosticsManager] /home/ubuntu/workspace/experiment/~/.c9/local/lib
+2017-06-19 07:27:10.498+0000 INFO [o.n.k.i.DiagnosticsManager] /usr/java/packages/lib/amd64
+2017-06-19 07:27:10.498+0000 INFO [o.n.k.i.DiagnosticsManager] /usr/lib64
+2017-06-19 07:27:10.499+0000 INFO [o.n.k.i.DiagnosticsManager] /lib64
+2017-06-19 07:27:10.499+0000 INFO [o.n.k.i.DiagnosticsManager] /lib
+2017-06-19 07:27:10.499+0000 INFO [o.n.k.i.DiagnosticsManager] /usr/lib
+2017-06-19 07:27:10.499+0000 INFO [o.n.k.i.DiagnosticsManager] System.properties:
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] sun.boot.library.path = /usr/lib/jvm/java-8-oracle/jre/lib/amd64
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] path.separator = :
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] file.encoding.pkg = sun.io
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] sun.java.launcher = SUN_STANDARD
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] sun.os.patch.level = unknown
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] user.dir = /home/ubuntu/workspace/experiment
+2017-06-19 07:27:10.500+0000 INFO [o.n.k.i.DiagnosticsManager] sun.jnu.encoding = UTF-8
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] unsupported.dbms.udc.source = tarball
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] sun.management.compiler = HotSpot 64-Bit Tiered Compilers
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] user.home = /home/ubuntu
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] user.timezone = Etc/UTC
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] file.encoding = UTF-8
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] user.name = ubuntu
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] sun.java.command = org.neo4j.server.CommunityEntryPoint --home-dir=/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02 --config-dir=/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/conf
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] sun.arch.data.model = 64
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] user.language = en
+2017-06-19 07:27:10.501+0000 INFO [o.n.k.i.DiagnosticsManager] awt.toolkit = sun.awt.X11.XToolkit
+2017-06-19 07:27:10.502+0000 INFO [o.n.k.i.DiagnosticsManager] jdk.tls.ephemeralDHKeySize = 2048
+2017-06-19 07:27:10.502+0000 INFO [o.n.k.i.DiagnosticsManager] file.separator = /
+2017-06-19 07:27:10.502+0000 INFO [o.n.k.i.DiagnosticsManager] sun.io.unicode.encoding = UnicodeLittle
+2017-06-19 07:27:10.502+0000 INFO [o.n.k.i.DiagnosticsManager] sun.cpu.endian = little
+2017-06-19 07:27:10.502+0000 INFO [o.n.k.i.DiagnosticsManager] sun.cpu.isalist = 
+2017-06-19 07:27:10.502+0000 INFO [o.n.k.i.DiagnosticsManager] Linux scheduler information:
+2017-06-19 07:27:10.712+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.712+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.713+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.713+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.713+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.714+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.716+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.716+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.717+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.717+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.717+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.718+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.719+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.719+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.719+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.720+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.720+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.721+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.721+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.721+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.722+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.722+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.722+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.723+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.723+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.723+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.724+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.724+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.725+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.725+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.725+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.726+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.727+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.727+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.728+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.728+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.728+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.729+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.729+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.730+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.730+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.730+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.731+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.731+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.732+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.732+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.732+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.733+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.733+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.734+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.734+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.734+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.734+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.735+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.735+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.735+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.736+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.736+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.736+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.737+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.737+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.737+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.738+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.738+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.738+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.738+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.739+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.739+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.739+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.740+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.740+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.740+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.741+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.741+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.741+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.742+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.742+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.742+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.743+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.743+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.744+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.744+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.744+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.745+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.745+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.745+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.745+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.746+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.746+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.746+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.749+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.750+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.750+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.751+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.751+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.751+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.752+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.752+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.752+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.753+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.753+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.753+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.755+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.755+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.756+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.756+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.756+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.757+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.758+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.758+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.758+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.761+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.762+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.762+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.762+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.763+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.763+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.763+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.764+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.764+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.764+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.765+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.765+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.765+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.766+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.766+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.766+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.767+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.767+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.768+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.768+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.768+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.768+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.769+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.769+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.769+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.770+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.770+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.770+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.771+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.772+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.772+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.773+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.773+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.773+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.773+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.774+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.774+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.774+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.775+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.775+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.775+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.775+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.776+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.776+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.776+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.776+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.777+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.777+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.777+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.778+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.778+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.778+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.779+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.779+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.779+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.780+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.780+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.780+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.781+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.781+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.781+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.781+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.782+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.782+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.782+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.782+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.783+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.783+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.783+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.783+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.784+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.784+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.784+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.785+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.785+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.785+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.785+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.785+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.786+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.786+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.786+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.786+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.787+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.787+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.787+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.787+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.788+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.788+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.788+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.788+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.789+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.789+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.789+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.789+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.790+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.790+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.790+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.790+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.790+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.791+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.791+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.791+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.791+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.792+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.792+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.792+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.792+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.793+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.793+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.793+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.793+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.794+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.794+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.794+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.794+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.795+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.795+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.795+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.795+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.796+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.796+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.796+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.796+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.797+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.797+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.798+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.798+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.798+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.841+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.842+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.842+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.842+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.842+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.843+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.843+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.843+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.844+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.844+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.844+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.844+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.845+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.845+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.845+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.845+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.845+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.846+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.846+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.846+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.846+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.847+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.847+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.847+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.847+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.848+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.848+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.848+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.848+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.848+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.849+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.849+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.849+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.849+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.849+0000 INFO [o.n.k.i.DiagnosticsManager] noop deadline [cfq] 
+2017-06-19 07:27:10.850+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.850+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.850+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.850+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.851+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.851+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.851+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.851+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.852+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.852+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.852+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.852+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.852+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.852+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.853+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.853+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.853+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.853+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.854+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.854+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.854+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.854+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.854+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.855+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.855+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.855+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.855+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.855+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.856+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.856+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.856+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.856+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.856+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.857+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.857+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.857+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.857+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.857+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.858+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.858+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.858+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.858+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.859+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.859+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.859+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.859+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.859+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.860+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.860+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.860+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.860+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.860+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.861+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.861+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.861+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.861+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.862+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.862+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.862+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.862+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.863+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.863+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.863+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.863+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.863+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.864+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.864+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.864+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.864+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.864+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.865+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.865+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.865+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.865+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.865+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.866+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.866+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.866+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.866+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.866+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.867+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.867+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.867+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.867+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.868+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.868+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.868+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.868+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.868+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.869+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.869+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.869+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.869+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.869+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.870+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.870+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.870+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.870+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.870+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.871+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.871+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.871+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.871+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.872+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.872+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.872+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.873+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.873+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.873+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.874+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.874+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.875+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.875+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.875+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.875+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.876+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.876+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.876+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.876+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.877+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.877+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.877+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.878+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.878+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.878+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.878+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.879+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.879+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.879+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.879+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.880+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.880+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.880+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.880+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.880+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.881+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.881+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.881+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.882+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.882+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.882+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.882+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.883+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.883+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.883+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.883+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.884+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.884+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.884+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.884+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.885+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.885+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.885+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.885+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.886+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.886+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.886+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.886+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.887+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.887+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.887+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.888+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.888+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.888+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.888+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.889+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.889+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.889+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.890+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.890+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.890+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.890+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.891+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.891+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.891+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.891+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.892+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.892+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.892+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.893+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.893+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.893+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.893+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.894+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.894+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.894+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.894+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.895+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.895+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.895+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.896+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.896+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.896+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.896+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.896+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.896+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.897+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.897+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.897+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.897+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.897+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.898+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.898+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.898+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.898+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.898+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.899+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.899+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.899+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.899+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.899+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.900+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.900+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.900+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.900+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.900+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.901+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.901+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.901+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.901+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.901+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.902+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.902+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.902+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.902+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.902+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.905+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.905+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.905+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.905+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.906+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.906+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.906+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.906+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.906+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.907+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.907+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.908+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.908+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.908+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.908+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.909+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.909+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.909+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.909+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.910+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.910+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.910+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.910+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.910+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.911+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.911+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.911+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.912+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.912+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.912+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.912+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.912+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.913+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.913+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.913+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.913+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.913+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.914+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.914+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.914+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.914+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.915+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.915+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.915+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.915+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.915+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.916+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.916+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.916+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.916+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.916+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.917+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.917+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.917+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.917+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.917+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.918+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.918+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.918+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.918+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.918+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.919+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.919+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.919+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.919+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.919+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.920+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.920+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.920+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.920+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.920+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.921+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.921+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.921+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.921+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.922+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.922+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.922+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.922+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.922+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.924+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.924+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.924+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.924+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.924+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.925+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.925+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.925+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.925+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.926+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.926+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.926+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.926+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.926+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.927+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.927+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.927+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.939+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.940+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.940+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.940+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.940+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.941+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.941+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.941+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.941+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.941+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.942+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.942+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.942+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.942+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.942+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.943+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.943+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.943+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.943+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.944+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.944+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.944+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.944+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.944+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.945+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.945+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.945+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.945+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.945+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.946+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.946+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.946+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.946+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.946+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.947+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.949+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.949+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.950+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.950+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.950+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.950+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.951+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.951+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.951+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.951+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.952+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.952+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.952+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.952+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.953+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.953+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.953+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.953+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.953+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.954+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.954+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.954+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.954+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.954+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.955+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.955+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.955+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.955+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.956+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.956+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.956+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.956+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.956+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.957+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.957+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.957+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.957+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.958+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.958+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.958+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.958+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.958+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.959+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.959+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.959+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.959+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.960+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.960+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.960+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.960+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.960+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:10.961+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.015+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.015+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.016+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.016+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.016+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.016+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.016+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.017+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.017+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.017+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.017+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.017+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.018+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.018+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.018+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.018+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.018+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.019+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.019+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.019+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.019+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.024+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.025+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.025+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.025+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.025+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.025+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.026+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.026+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.026+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.026+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.026+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.027+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.027+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.027+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.027+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.027+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.027+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.028+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.028+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.028+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.028+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.028+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.028+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.029+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.029+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.029+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.029+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.029+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.029+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.030+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.030+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.030+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.030+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.030+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.030+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.031+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.031+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.031+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.031+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.031+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.031+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.032+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.032+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.032+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.032+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.032+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.033+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.033+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.033+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.033+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.033+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.033+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.034+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.034+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.034+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.034+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.034+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.034+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.035+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.035+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.035+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.035+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.036+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.036+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.036+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.037+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.037+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.037+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.037+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.037+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.038+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.038+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.038+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.038+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.038+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.039+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.039+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.039+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.039+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.039+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.039+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.040+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.041+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.041+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.041+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.041+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.041+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.041+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.042+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.043+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.043+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.043+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.043+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.043+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.043+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.044+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.044+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.044+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.044+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.044+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.045+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.045+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.045+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.045+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.045+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.045+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.046+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.046+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.046+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.046+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.046+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.046+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.047+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.047+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.047+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.047+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.047+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.047+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.048+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.048+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.048+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.048+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.048+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.048+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.049+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.049+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.049+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.049+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.049+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.049+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.050+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.050+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.050+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.050+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.050+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.051+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.051+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.051+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.051+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.051+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.051+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.052+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.052+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.052+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.052+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.052+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.052+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.053+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.053+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.053+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.053+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.053+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.054+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.054+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.054+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.054+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.054+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.054+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.055+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.055+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.055+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.055+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.055+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.055+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.056+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.056+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.056+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.056+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.056+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.056+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.057+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.057+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.057+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.057+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.057+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.058+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.058+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.058+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.059+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.059+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.059+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.059+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.059+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.060+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.060+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.060+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.060+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.060+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.060+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.061+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.062+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.062+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.062+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.062+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.062+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.062+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.063+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.063+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.063+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.063+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.063+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.063+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.064+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.065+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.066+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.067+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.067+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.067+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.067+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.068+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.068+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.068+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.068+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.068+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.069+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.070+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.071+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.071+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.071+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.071+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.071+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.071+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.072+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.073+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.073+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.073+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.073+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.073+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.073+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.074+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.075+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.075+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.075+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.075+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.075+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.075+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] noop deadline [cfq] 
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.076+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.077+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.078+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.079+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.079+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.079+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.079+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.080+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.081+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.081+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.081+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.081+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.081+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.081+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.082+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.083+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.084+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.085+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.086+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.215+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.215+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.215+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.215+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.215+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.216+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.217+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.218+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.219+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.220+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.221+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.222+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.223+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.224+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.225+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.226+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.227+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.228+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.229+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.230+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.231+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.232+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.233+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.234+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.235+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.236+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.237+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.238+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.239+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.240+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.241+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.242+0000 INFO [o.n.k.i.DiagnosticsManager] none
+2017-06-19 07:27:11.243+0000 INFO [o.n.k.i.DiagnosticsManager] Network information:
+2017-06-19 07:27:11.253+0000 INFO [o.n.k.i.DiagnosticsManager] Interface eth0:
+2017-06-19 07:27:11.253+0000 INFO [o.n.k.i.DiagnosticsManager]     address: fe80:0:0:0:42:acff:fe11:1a%eth0
+2017-06-19 07:27:11.254+0000 INFO [o.n.k.i.DiagnosticsManager]     address: 172.17.0.26
+2017-06-19 07:27:11.254+0000 INFO [o.n.k.i.DiagnosticsManager] Interface lo:
+2017-06-19 07:27:11.254+0000 INFO [o.n.k.i.DiagnosticsManager]     address: 0:0:0:0:0:0:0:1%lo
+2017-06-19 07:27:11.254+0000 INFO [o.n.k.i.DiagnosticsManager]     address: 127.0.0.1
+2017-06-19 07:27:11.254+0000 INFO [o.n.k.i.DiagnosticsManager] --- INITIALIZED diagnostics END ---
+2017-06-19 07:27:12.513+0000 INFO [o.n.b.v.r.WorkerFactory] Bolt Server extension loaded.
+2017-06-19 07:27:12.520+0000 INFO [o.n.b.v.r.WorkerFactory] Bolt enabled on 127.0.0.1:7687.
+2017-06-19 07:27:12.865+0000 INFO [o.n.k.i.s.f.RecordFormatSelector] Selected format 'RecordFormat:StandardV3_2[v0.A.8]' for the new store
+2017-06-19 07:27:13.790+0000 INFO [o.n.k.i.a.i.IndexingService] IndexingService.init: indexes not specifically mentioned above are null
+2017-06-19 07:27:13.793+0000 INFO [o.n.k.i.i.l.NativeLabelScanStore] No scan store found, this might just be first use. Preparing to rebuild.
+2017-06-19 07:27:13.865+0000 INFO [o.n.k.NeoStoreDataSource] Opened logical log [/home/ubuntu/workspace/experiment/neo4j-community-3.3.0-alpha02/data/databases/graph.db/neostore.transaction.db.0] version=0, lastTxId=1 (clean)
+2017-06-19 07:27:13.869+0000 INFO [o.n.k.NeoStoreDataSource] No commits found after last check point (which is at <no log position given>)
+2017-06-19 07:27:13.877+0000 WARN [o.n.k.i.s.MetaDataStore] Missing counts store, rebuilding it.
+2017-06-19 07:27:14.638+0000 WARN [o.n.k.i.s.MetaDataStore] Counts store rebuild completed.
+2017-06-19 07:27:14.654+0000 INFO [o.n.k.i.a.i.IndexingService] IndexingService.start: indexes not specifically mentioned above are null
+2017-06-19 07:27:14.657+0000 INFO [o.n.k.i.i.l.NativeLabelScanStore] Rebuilding scan store, this may take a while
+2017-06-19 07:27:14.681+0000 INFO [o.n.k.i.i.l.NativeLabelScanStore] Scan store rebuilt (roughly 0 nodes)
+2017-06-19 07:27:14.685+0000 INFO [o.n.k.i.DatabaseHealth] Database health set to OK
+2017-06-19 07:27:15.834+0000 WARN [io.netty.util.internal.MacAddressUtil] Failed to find a usable hardware address from the network interfaces; using random bytes: eb:7f:3c:1a:01:54:0a:6f
+2017-06-19 07:27:16.016+0000 INFO [o.n.k.AvailabilityGuard] Fulfilling of requirement makes database available: Database available
+2017-06-19 07:27:16.017+0000 INFO [o.n.k.i.f.GraphDatabaseFacadeFactory] Database is now ready
+2017-06-19 07:27:16.020+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for KernelDiagnostics:Versions START ---
+2017-06-19 07:27:16.020+0000 INFO [o.n.k.i.DiagnosticsManager] Graph Database: community single StoreId{creationTime=1497857233412, randomId=-6063461855371577120, storeVersion=15813456178476550, upgradeTime=1497857233412, upgradeId=1}
+2017-06-19 07:27:16.020+0000 INFO [o.n.k.i.DiagnosticsManager] Kernel version: 3.3.0-alpha02,134a644fae189dfcba2afde7a0ccb71ce8f9a693
+2017-06-19 07:27:16.020+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for KernelDiagnostics:Versions END ---
+2017-06-19 07:27:16.024+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for NEO_STORE_VERSIONS START ---
+2017-06-19 07:27:16.024+0000 INFO [o.n.k.i.DiagnosticsManager] Store versions:
+2017-06-19 07:27:16.024+0000 INFO [o.n.k.i.DiagnosticsManager] Store versions:
+2017-06-19 07:27:16.024+0000 INFO [o.n.k.i.DiagnosticsManager]   ArrayPropertyStore v0.A.8
+2017-06-19 07:27:16.025+0000 INFO [o.n.k.i.DiagnosticsManager]   NodeStore v0.A.8
+2017-06-19 07:27:16.025+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore v0.A.8
+2017-06-19 07:27:16.025+0000 INFO [o.n.k.i.DiagnosticsManager]   PropertyIndexStore v0.A.8
+2017-06-19 07:27:16.025+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore v0.A.8
+2017-06-19 07:27:16.025+0000 INFO [o.n.k.i.DiagnosticsManager]   ArrayPropertyStore v0.A.8
+2017-06-19 07:27:16.025+0000 INFO [o.n.k.i.DiagnosticsManager]   PropertyStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   RelationshipStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   RelationshipTypeStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   LabelTokenStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   SchemaStore v0.A.8
+2017-06-19 07:27:16.026+0000 INFO [o.n.k.i.DiagnosticsManager]   RelationshipGroupStore v0.A.8
+2017-06-19 07:27:16.027+0000 INFO [o.n.k.i.DiagnosticsManager]   NeoStore v0.A.8
+2017-06-19 07:27:16.027+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for NEO_STORE_VERSIONS END ---
+2017-06-19 07:27:16.027+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for NEO_STORE_ID_USAGE START ---
+2017-06-19 07:27:16.027+0000 INFO [o.n.k.i.DiagnosticsManager] Id usage:
+2017-06-19 07:27:16.027+0000 INFO [o.n.k.i.DiagnosticsManager] Id usage:
+2017-06-19 07:27:16.028+0000 INFO [o.n.k.i.DiagnosticsManager]   ArrayPropertyStore: used=1 high=0
+2017-06-19 07:27:16.028+0000 INFO [o.n.k.i.DiagnosticsManager]   NodeStore: used=0 high=-1
+2017-06-19 07:27:16.028+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore: used=1 high=0
+2017-06-19 07:27:16.028+0000 INFO [o.n.k.i.DiagnosticsManager]   PropertyIndexStore: used=0 high=-1
+2017-06-19 07:27:16.029+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore: used=1 high=0
+2017-06-19 07:27:16.029+0000 INFO [o.n.k.i.DiagnosticsManager]   ArrayPropertyStore: used=1 high=0
+2017-06-19 07:27:16.029+0000 INFO [o.n.k.i.DiagnosticsManager]   PropertyStore: used=0 high=-1
+2017-06-19 07:27:16.029+0000 INFO [o.n.k.i.DiagnosticsManager]   RelationshipStore: used=0 high=-1
+2017-06-19 07:27:16.029+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore: used=1 high=0
+2017-06-19 07:27:16.030+0000 INFO [o.n.k.i.DiagnosticsManager]   RelationshipTypeStore: used=0 high=-1
+2017-06-19 07:27:16.030+0000 INFO [o.n.k.i.DiagnosticsManager]   StringPropertyStore: used=1 high=0
+2017-06-19 07:27:16.030+0000 INFO [o.n.k.i.DiagnosticsManager]   LabelTokenStore: used=0 high=-1
+2017-06-19 07:27:16.030+0000 INFO [o.n.k.i.DiagnosticsManager]   SchemaStore: used=1 high=0
+2017-06-19 07:27:16.031+0000 INFO [o.n.k.i.DiagnosticsManager]   RelationshipGroupStore: used=1 high=0
+2017-06-19 07:27:16.031+0000 INFO [o.n.k.i.DiagnosticsManager]   NeoStore: used=15 high=14
+2017-06-19 07:27:16.031+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for NEO_STORE_ID_USAGE END ---
+2017-06-19 07:27:16.031+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for NEO_STORE_RECORDS START ---
+2017-06-19 07:27:16.031+0000 INFO [o.n.k.i.DiagnosticsManager] Neostore records:
+2017-06-19 07:27:16.033+0000 INFO [o.n.k.i.DiagnosticsManager] TIME (Creation time): 1497857233412
+2017-06-19 07:27:16.033+0000 INFO [o.n.k.i.DiagnosticsManager] RANDOM_NUMBER (Random number for store id): -6063461855371577120
+2017-06-19 07:27:16.033+0000 INFO [o.n.k.i.DiagnosticsManager] LOG_VERSION (Current log version): 0
+2017-06-19 07:27:16.034+0000 INFO [o.n.k.i.DiagnosticsManager] LAST_TRANSACTION_ID (Last committed transaction): 1
+2017-06-19 07:27:16.034+0000 INFO [o.n.k.i.DiagnosticsManager] STORE_VERSION (Store format version): 15813456178476550
+2017-06-19 07:27:16.034+0000 INFO [o.n.k.i.DiagnosticsManager] FIRST_GRAPH_PROPERTY (First property record containing graph properties): -1
+2017-06-19 07:27:16.034+0000 INFO [o.n.k.i.DiagnosticsManager] LAST_CONSTRAINT_TRANSACTION (Last committed transaction containing constraint changes): 0
+2017-06-19 07:27:16.034+0000 INFO [o.n.k.i.DiagnosticsManager] UPGRADE_TRANSACTION_ID (Transaction id most recent upgrade was performed at): 1
+2017-06-19 07:27:16.034+0000 INFO [o.n.k.i.DiagnosticsManager] UPGRADE_TIME (Time of last upgrade): 1497857233412
+2017-06-19 07:27:16.035+0000 INFO [o.n.k.i.DiagnosticsManager] LAST_TRANSACTION_CHECKSUM (Checksum of last committed transaction): 0
+2017-06-19 07:27:16.035+0000 INFO [o.n.k.i.DiagnosticsManager] UPGRADE_TRANSACTION_CHECKSUM (Checksum of transaction id the most recent upgrade was performed at): 0
+2017-06-19 07:27:16.035+0000 INFO [o.n.k.i.DiagnosticsManager] LAST_CLOSED_TRANSACTION_LOG_VERSION (Log version where the last transaction commit entry has been written into): 0
+2017-06-19 07:27:16.035+0000 INFO [o.n.k.i.DiagnosticsManager] LAST_CLOSED_TRANSACTION_LOG_BYTE_OFFSET (Byte offset in the log file where the last transaction commit entry has been written into): 16
+2017-06-19 07:27:16.035+0000 INFO [o.n.k.i.DiagnosticsManager] LAST_TRANSACTION_COMMIT_TIMESTAMP (Commit time timestamp for last committed transaction): 0
+2017-06-19 07:27:16.036+0000 INFO [o.n.k.i.DiagnosticsManager] UPGRADE_TRANSACTION_COMMIT_TIMESTAMP (Commit timestamp of transaction the most recent upgrade was performed at): 0
+2017-06-19 07:27:16.036+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for NEO_STORE_RECORDS END ---
+2017-06-19 07:27:16.038+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for TRANSACTION_RANGE START ---
+2017-06-19 07:27:16.038+0000 INFO [o.n.k.i.DiagnosticsManager] Transaction log:
+2017-06-19 07:27:16.039+0000 INFO [o.n.k.i.DiagnosticsManager] No transactions found in any log
+2017-06-19 07:27:16.039+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for TRANSACTION_RANGE END ---
+2017-06-19 07:27:16.040+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for KernelDiagnostics:StoreFiles START ---
+2017-06-19 07:27:16.041+0000 INFO [o.n.k.i.DiagnosticsManager] Disk space on partition (Total / Free / Free %): 2288300032 / 834306048 / 36
+2017-06-19 07:27:16.041+0000 INFO [o.n.k.i.DiagnosticsManager] Storage files: (filename : modification date - size)
+2017-06-19 07:27:16.043+0000 INFO [o.n.k.i.DiagnosticsManager]   index:
+2017-06-19 07:27:16.044+0000 INFO [o.n.k.i.DiagnosticsManager]   - Total: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.045+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.046+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.counts.db.a: 2017-06-19T07:27:14+0000 - 96.00 B
+2017-06-19 07:27:16.046+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.047+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.labelscanstore.db: 2017-06-19T07:27:14+0000 - 40.00 kB
+2017-06-19 07:27:16.047+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.labeltokenstore.db: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.047+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.labeltokenstore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.048+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.labeltokenstore.db.names: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.048+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.labeltokenstore.db.names.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.049+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.nodestore.db: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.049+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.nodestore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.049+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.nodestore.db.labels: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.050+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.nodestore.db.labels.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.050+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.051+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.arrays: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.051+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.arrays.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.051+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.052+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.index: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.052+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.index.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.052+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.index.keys: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.053+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.index.keys.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.053+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.strings: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.053+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.propertystore.db.strings.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.054+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshipgroupstore.db: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.054+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshipgroupstore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.054+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshipstore.db: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.055+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshipstore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.055+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshiptypestore.db: 2017-06-19T07:27:13+0000 - 0.00 B
+2017-06-19 07:27:16.055+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshiptypestore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.056+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshiptypestore.db.names: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.056+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.relationshiptypestore.db.names.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.056+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.schemastore.db: 2017-06-19T07:27:13+0000 - 8.00 kB
+2017-06-19 07:27:16.057+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.schemastore.db.id: 2017-06-19T07:27:13+0000 - 9.00 B
+2017-06-19 07:27:16.057+0000 INFO [o.n.k.i.DiagnosticsManager]   neostore.transaction.db.0: 2017-06-19T07:27:13+0000 - 16.00 B
+2017-06-19 07:27:16.057+0000 INFO [o.n.k.i.DiagnosticsManager]   store_lock: 2017-06-19T07:27:12+0000 - 0.00 B
+2017-06-19 07:27:16.057+0000 INFO [o.n.k.i.DiagnosticsManager] Storage summary: 
+2017-06-19 07:27:16.058+0000 INFO [o.n.k.i.DiagnosticsManager]   Total size of store: 112.24 kB
+2017-06-19 07:27:16.058+0000 INFO [o.n.k.i.DiagnosticsManager]   Total size of mapped files: 112.00 kB
+2017-06-19 07:27:16.058+0000 INFO [o.n.k.i.DiagnosticsManager] --- STARTED diagnostics for KernelDiagnostics:StoreFiles END ---
+2017-06-19 07:27:20.886+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 1162ms.
+2017-06-19 07:27:21.624+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 373ms.
+2017-06-19 07:27:22.508+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 214ms.
+2017-06-19 07:27:32.856+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 671ms.
+2017-06-19 07:27:37.032+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 1888ms.
+2017-06-19 07:27:40.074+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 252ms.
+2017-06-19 07:27:44.303+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 280ms.
+2017-06-19 07:27:47.059+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 273ms.
+2017-06-19 07:27:50.672+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 269ms.
+2017-06-19 07:27:53.940+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 573ms.
+2017-06-19 07:28:04.368+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 328ms.
+2017-06-19 07:28:07.084+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 427ms.
+2017-06-19 07:28:09.235+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 376ms.
+2017-06-19 07:28:12.087+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 255ms.
+2017-06-19 07:28:14.463+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 210ms.
+2017-06-19 07:28:16.052+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 279ms.
+2017-06-19 07:28:18.674+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 210ms.
+2017-06-19 07:28:20.456+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 258ms.
+2017-06-19 07:28:24.255+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 302ms.
+2017-06-19 07:28:26.442+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 743ms.
+2017-06-19 07:28:27.647+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 266ms.
+2017-06-19 07:28:34.427+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 258ms.
+2017-06-19 07:28:39.254+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 272ms.
+2017-06-19 07:28:43.224+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 283ms.
+2017-06-19 07:28:46.877+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 296ms.
+2017-06-19 07:28:48.826+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 248ms.
+2017-06-19 07:28:52.455+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 298ms.
+2017-06-19 07:28:55.831+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 288ms.
+2017-06-19 07:29:27.651+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 299ms.
+2017-06-19 07:29:28.669+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 278ms.
+2017-06-19 07:29:31.861+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 291ms.
+2017-06-19 07:29:34.049+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 303ms.
+2017-06-19 07:29:36.069+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 268ms.
+2017-06-19 07:29:41.430+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 286ms.
+2017-06-19 07:29:45.070+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 313ms.
+2017-06-19 07:29:47.471+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 304ms.
+2017-06-19 07:29:51.424+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 312ms.
+2017-06-19 07:29:53.815+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 299ms.
+2017-06-19 07:29:56.644+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 517ms.
+2017-06-19 07:30:00.461+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 301ms.
+2017-06-19 07:30:04.574+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 302ms.
+2017-06-19 07:30:10.431+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 216ms.
+2017-06-19 07:30:12.922+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 269ms.
+2017-06-19 07:30:14.836+0000 WARN [o.n.k.i.c.MonitorGc] GC Monitor: Application threads blocked for 539ms.
+2017-06-19 07:30:15.206+0000 INFO [o.n.k.i.DiagnosticsManager] --- SERVER STARTED START ---
+2017-06-19 07:30:20.224+0000 INFO [o.n.k.i.DiagnosticsManager] --- SERVER STARTED END ---
+2017-06-19 07:30:20.454+0000 INFO [o.n.k.i.f.GraphDatabaseFacadeFactory] Shutdown started
+2017-06-19 07:30:20.456+0000 INFO [o.n.k.i.f.GraphDatabaseFacadeFactory] Database is now unavailable
+2017-06-19 07:30:20.628+0000 INFO [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [1]:  Starting check pointing...
+2017-06-19 07:30:20.629+0000 INFO [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [1]:  Starting store flush...
+2017-06-19 07:30:20.640+0000 INFO [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [1]:  Store flush completed
+2017-06-19 07:30:20.640+0000 INFO [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [1]:  Starting appending check point entry into the tx log...
+2017-06-19 07:30:20.652+0000 INFO [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [1]:  Appending check point entry into the tx log completed
+2017-06-19 07:30:20.652+0000 INFO [o.n.k.i.t.l.c.CheckPointerImpl] Check Pointing triggered by database shutdown [1]:  Check pointing completed
+2017-06-19 07:30:20.652+0000 INFO [o.n.k.i.t.l.p.LogPruningImpl] Log Rotation [0]:  Starting log pruning.
+2017-06-19 07:30:20.652+0000 INFO [o.n.k.i.t.l.p.LogPruningImpl] Log Rotation [0]:  Log pruning complete.
+2017-06-19 07:30:20.889+0000 INFO [o.n.k.i.DiagnosticsManager] --- STOPPING diagnostics START ---
+2017-06-19 07:30:20.890+0000 INFO [o.n.k.i.DiagnosticsManager] --- STOPPING diagnostics END ---

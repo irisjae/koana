@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR="$(sudo dirname $(readlink -f $0))"
+DIR="$(sudo dirname "$(readlink -f "$0")")"
 cd "$DIR"
 
 . ~/.nvm/nvm.sh

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-DIR="$(sudo dirname $(readlink -f $0))"
+DIR="$(sudo dirname "$(readlink -f "$0")")"
 cd "$DIR"
 cd ..
 
@@ -16,45 +16,27 @@ fi
 
 echo
 echo
-echo checking neo4j...
-if dpkg-query -l neo4j; then
-    echo neo4j already installed
+echo "checking java (for neo4j)..."
+if type -p java; then
+    echo found java executable in PATH
+    _java=java
+elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]]; then
+    echo found java executable in JAVA_HOME     
+    _java="$JAVA_HOME/bin/java"
 else
-    if type -p java; then
-        echo found java executable in PATH
-        _java=java
-    elif [[ -n "$JAVA_HOME" ]] && [[ -x "$JAVA_HOME/bin/java" ]]; then
-        echo found java executable in JAVA_HOME     
-        _java="$JAVA_HOME/bin/java"
-    else
-        echo no java
-        exit 1
-    fi
-    
-    version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
-    echo version "$version"
-    if ! [[ "$version" > "1.8" ]]; then
-        echo trying install java 8...
-        sudo add-apt-repository ppa:webupd8team/java
-        sudo apt-get update
-        sudo apt-get install oracle-java8-installer
-    else
-        echo has java 8
-    fi
-    
-    echo trying installing neo4j...
-    wget -O - https://debian.neo4j.org/neotechnology.gpg.key | sudo apt-key add -
-    echo 'deb http://debian.neo4j.org/repo stable/' | sudo tee -a /etc/apt/sources.list.d/neo4j.list
+    echo no java
+    exit 1
+fi
+
+version=$("$_java" -version 2>&1 | awk -F '"' '/version/ {print $2}')
+echo version "$version"
+if ! [[ "$version" > "1.8" ]]; then
+    echo trying install java 8...
+    sudo add-apt-repository ppa:webupd8team/java
     sudo apt-get update
-    sudo apt-get install neo4j
-    sudo sed -i -E s/#\?dbms.connector.bolt.tls_level=.\+/dbms.connector.bolt.tls_level=OPTIONAL/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.connector.bolt.listen_address=.\+/dbms.connector.bolt.listen_address=:8081/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.connector.http.listen_address=.\+/dbms.connector.http.listen_address=:8082/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.security.auth_enabled=.\+/dbms.security.auth_enabled=false/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.memory.heap.initial_size=.\+/dbms.memory.heap.initial_size=512m/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.memory.heap.max_size=.\+/dbms.memory.heap.max_size=512m/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.connector.https.enabled=.\+/dbms.connector.https.enabled=false/ /etc/neo4j/neo4j.conf
-    sudo sed -i -E s/#\?dbms.connectors.default_listen_address=.\+/dbms.connectors.default_listen_address=0.0.0.0/ /etc/neo4j/neo4j.conf
+    sudo apt-get install oracle-java8-installer
+else
+    echo has java 8
 fi
 
 echo
@@ -83,6 +65,10 @@ fi
 if [ -e node_modules/api ]; then
     echo temp remove linked api module...
     rm node_modules/api
+fi
+if [ -e node_modules/test ]; then
+    echo temp remove linked api module...
+    rm node_modules/test
 fi
 
 echo
@@ -122,4 +108,8 @@ fi
 if [ ! -e node_modules/api ]; then
     echo linking api as module...
     ln -s ../api node_modules/api
+fi
+if [ ! -e node_modules/test ]; then
+    echo linking test as module...
+    ln -s ../test node_modules/test
 fi

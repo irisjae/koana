@@ -353,6 +353,12 @@ nav {
 		    display: block;
 		    bottom: 20%;
 		}
+	    > nav-buttons {
+	    	> * {
+		    	margin: 0 2px;
+	    	}
+	    }
+
 	
 	    > nav-buttons:first-child {
 	    	left: 10px;

@@ -1,0 +1,100 @@
+<nav>
+	<nav-bar>
+		<nav-buttons>
+			<a>
+				<component-custom-hamburger />
+			</a>
+		</nav-buttons>
+		<nav-title>
+			<component-page-title>Ready to code?</component-page-title>
+		</nav-title>
+		<nav-buttons>
+			<a href="#home">
+				<component-logout-button />
+			</a>
+		</nav-buttons>
+	</nav-bar>
+</nav>
+<component-main-content>
+	<page>
+		<component-spacing height="10px" />
+		<label>
+			Choose a quiz!
+		</label>
+		<component-spacing height="20px" />
+		<component-item if={ status () === 'loading' } >Fetching quizes...</component-item>
+		<component-loading-item if={ status () === 'loading' } />
+		<component-item if={ status () === 'no-items' } >No courses found :(</component-item>
+		<component-dynamic-load
+		    items_to_load=13
+		    interval_for_loading=50
+		    item_height={ item_height }
+		    items__from={ subcategories }
+		>
+			<component-custom-subcategory-item item__from={ _item .item__from }>
+		</component-dynamic-load>
+	</page>
+</component-main-content>
+<component-custom-tabs tab="quizes" />
+
+<style>
+	@extend [page-layout];
+
+	page {
+	    display: block;
+	    left: 0;
+	    right: 0;
+	    bottom: 0;
+	    top: 0;
+	    position: absolute;
+	    overflow: scroll;
+		
+		> label {
+			color: #4FABFF;
+			font-weight: bold;
+			font-size: 1.4em;
+			display: block;
+			padding: 0 10px;
+		}
+		
+	}
+</style>
+
+<script>
+	args .cycle__from
+		.thru (tap, function () {
+			inquire (api () .questions)
+				.then (questions_info)
+		})
+	var questions_info = stream ()
+	var subcategories =	questions_info
+							.thru (map, function (question_list) {
+								var categories = {};
+								question_list .forEach (function (question) {
+									categories [question .category] = true;
+								});
+								return 	Object .keys (categories)
+											.sort (function (a, b) {
+												return a > b;
+											})
+											.map (function (category) {
+												return { category: category };
+											});
+							})
+							.thru (delay, 400)
+							.thru (dropRepeatsWith, json_equal)
+		
+	var item_height = 	function (item) {
+							return 135;
+						}
+			
+	var status =	mechanism (function () {
+						if (subcategories () .length)
+							return 'loaded';
+						else
+							return 'no-items'
+					}, [subcategories])
+					.thru (_begins_with, 'loading')
+	
+	status .thru (map, noop) .thru (tap, self .render)
+</script>

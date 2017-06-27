@@ -249,8 +249,10 @@ var from =	function (pushes) {
 				pushes (s);
 				return s;
 			};
+var stream_pushes =	from;
 var begins_with =	function (what, s) {
 						if (! s .hasVal)
 							s (what)
 						return s;
 					}
+var _begins_with = begins_with;

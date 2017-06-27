@@ -1,0 +1,40 @@
+<component-hamburger-button ref="action" />
+<component-custom-menu off={ off () } ref="menu" />
+
+<style>
+    > component-hamburger-button {
+        svg g {
+            fill: white;
+        }
+    }
+    > component-custom-menu {
+        &[off] {
+            transform: translateX(-224px);
+            pointer-events: none;
+        }
+        &:not([off]) {
+            > pane {
+                box-shadow: hsla(0,100%,0%,0.05) 1px 0px 35px;
+            }
+        }
+        
+        transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+    }
+</style>
+
+<script>
+    var off = stream (true);
+    off .thru (map, noop) .thru (tap, self .render)
+    
+    ref ('action') .thru (tap, function (_ref) {
+        _ref .addEventListener ('click', function () {
+            off (! off ())
+        }, true)
+    })
+    ref ('menu') .thru (tap, function (_ref) {
+        _ref .addEventListener ('click', function (e) {
+            if (e .target === _ref)
+                off (! off ())
+        })
+    })
+</script>

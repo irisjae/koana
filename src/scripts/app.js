@@ -291,6 +291,98 @@ riot.tag2('component-checkbox', '', '', '', function(opts) {
 });
 riot.tag2('component-create-button', '<span>建立</span>', '', '', function(opts) {
 });
+riot.tag2('component-custom-avatar', '<img size="40" src="images/uxceo-128.jpg" style=" color: rgb(255, 255, 255); background-color: rgb(188, 188, 188); user-select: none; display: inline-flex; align-items: center; justify-content: center; font-size: 20px; border-radius: 50%; height: 40px; width: 40px; position: absolute; top: 8px; left: 16px;">', '', '', function(opts) {
+});
+riot.tag2('component-custom-hamburger', '<component-hamburger-button ref="{ref prefix}action"></component-hamburger-button> <component-custom-menu off="{expression:component-custom-hamburger:1}" ref="{ref prefix}menu"></component-custom-menu>', '', '', function(opts) {
+	(function (self, args) {
+
+	 self ._loaded = true;
+	 self ._scope = function () {};
+	var self_diff = stream ();
+	var yielded_diff = stream ();
+	self .yielded_diff = yielded_diff ;
+	var diffs = mergeAll ([ self_diff, yielded_diff ]);
+	var ref = function (name) { return ref_diff (name, diffs) };
+	var ref_set = function (name) { return ref_set_diff (name, diffs) };
+	var _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy)  ;
+	_refs .thru (map, self_refs) .thru (diff_refs) .thru (tap, self_diff);
+	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
+	self .on ("update", function () {args = self .opts});
+
+		    var off = stream (true);
+		    off .thru (map, noop) .thru (tap, self .render)
+
+		    ref ('action') .thru (tap, function (_ref) {
+		        _ref .addEventListener ('click', function () {
+		            off (! off ())
+		        }, true)
+		    })
+		    ref ('menu') .thru (tap, function (_ref) {
+		        _ref .addEventListener ('click', function (e) {
+		            if (e .target === _ref)
+		                off (! off ())
+		        })
+		    })
+
+	self .expressions = {};
+
+	self .expressions [0] = function (_item) { return  off ()  };
+	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
+	}) (this, this .opts);
+});
+riot.tag2('component-custom-menu', '<pane> <item> <icon> <svg viewbox="0 0 24 24"> <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path> </svg> </icon> <label>Preview</label> </item> <hr> <item> <icon> <svg viewbox="0 0 24 24"> <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path> </svg> </icon> <label>Preview</label> </item> </pane>', '', '', function(opts) {
+});
+riot.tag2('component-custom-nav', '', '', '', function(opts) {
+});
+riot.tag2('component-custom-subcategory-item', '<a href="#account/quiz/subcategory/#{expression:component-custom-subcategory-item:1}" if="{expression:component-custom-subcategory-item:2}"> <img src="https://ibin.co/3I0i4laCon7P.png"> </a>', '', '', function(opts) {
+	(function (self, args) {
+
+	 self ._loaded = true;
+	 self ._scope = function () {};
+	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
+	self .on ("update", function () {args = self .opts});
+
+		    var item = args .item__from .thru (dropRepeatsWith, json_equal)
+
+		    var subcategory = mechanism (function () {
+		        if (item ())
+		            return item () .category;
+		    }, [item])
+			var name = mechanism (function () {
+				return subcategory ();
+			}, [subcategory])
+
+		    item .thru (map, noop) .thru (tap, self .render)
+
+	self .expressions = {};
+
+	self .expressions [0] = function (_item) { return  stringify (name ())  };
+	self .expressions [1] = function (_item) { return  subcategory ()  };
+	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
+	}) (this, this .opts);
+});
+riot.tag2('component-custom-tabs', '<tabs> <tab active="{expression:component-custom-tabs:1}"> <a href="#account/quizes"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="512px" height="512px" viewbox="0 0 485.213 485.212" style="enable-background:new 0 0 485.213 485.212;" xml:space="preserve"> <g> <path d="M394.235,151.628c0,82.449-49.695,92.044-59.021,181.956c0,8.382-6.785,15.163-15.168,15.163H165.161 c-8.379,0-15.161-6.781-15.161-15.163h-0.028c-9.299-89.912-58.994-99.507-58.994-181.956C90.978,67.878,158.855,0,242.606,0 S394.235,67.878,394.235,151.628z M318.423,363.906H166.794c-8.384,0-15.166,6.786-15.166,15.168 c0,8.378,6.782,15.163,15.166,15.163h151.628c8.378,0,15.163-6.785,15.163-15.163C333.586,370.692,326.801,363.906,318.423,363.906 z M318.423,409.396H166.794c-8.384,0-15.166,6.786-15.166,15.163c0,8.383,6.782,15.168,15.166,15.168h151.628 c8.378,0,15.163-6.785,15.163-15.168C333.586,416.182,326.801,409.396,318.423,409.396z M212.282,485.212h60.65 c16.76,0,30.322-13.562,30.322-30.326h-121.3C181.955,471.65,195.518,485.212,212.282,485.212z" fill="#7e7e7e"></path> </g> </svg> Quizes </a> <component-wavify></component-wavify> </tab> <tab active="{expression:component-custom-tabs:2}"> <a href="#account/ranking"> <svg width="53" height="61" viewbox="0 0 53 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>person.svg</title> <desc>Created using Figma</desc> <g id="Canvas" transform="translate(3410 646)"> <g id="person"> <g id="Shape 1"> <use xlink:href="#9c74239e-b755-4545-99a8-48b1d7ecbd25" transform="translate(-3409.11 -645.992)" fill="#7E7E7E"></use> </g> </g> </g> <defs> <path id="9c74239e-b755-4545-99a8-48b1d7ecbd25" d="M 51.475 55.7731C 51.475 58.1371 49.558 60.0541 47.194 60.0541L 4.294 60.0541C 1.922 60.0541 5.95703e-05 58.1319 5.95703e-05 55.7599L 5.95703e-05 51.475C 5.95703e-05 40.181 17.158 34.317 17.158 34.317C 17.158 34.317 18.14 32.563 17.158 30.027C 13.55 27.368 13.109 23.2071 12.868 12.8691C 13.61 2.51805 20.877 -8.98438e-05 25.737 -8.98438e-05C 30.597 -8.98438e-05 37.864 2.51405 38.606 12.8691C 38.366 23.2071 37.924 27.368 34.316 30.027C 33.334 32.558 34.316 34.317 34.316 34.317C 34.316 34.317 51.4741 40.181 51.4741 51.475L 51.4741 55.7731L 51.475 55.7731Z"></path> </defs> </svg> Profile </a> <component-wavify></component-wavify> </tab> <tab active="{expression:component-custom-tabs:3}"> <a href="#account/courses"> <svg width="53" height="55" viewbox="0 0 53 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>Group.svg</title> <desc>Created using Figma</desc> <g id="Canvas" transform="translate(3158 640)"> <g id="Group"> <g id="Vector"> <use xlink:href="#d60b977b-c6cb-4cd6-a033-e5e20ff036b1 " transform="translate(-3157.01 -605.957)" fill="#7E7E7E"></use> <use xlink:href="#5670583f-69b7-46ee-a0f3-ef772c677463 " transform="translate(-3157.01 -605.957)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#254bfab7-40f3-4302-8f28-322cca3a71fe " transform="translate(-3157.08 -604.429)" fill="#7E7E7E"></use> <use xlink:href="#c4e58a41-6c58-49b2-a4be-037c647ffdc9 " transform="translate(-3157.08 -604.429)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#bbc3b3c1-24ea-4300-8410-e8ae50ab9626" transform="translate(-3157.01 -627.113)" fill="#7E7E7E"></use> <use xlink:href="#bbc3b3c1-24ea-4300-8410-e8ae50ab9626" transform="translate(-3157.01 -627.113)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#2b5d59ac-2960-4d37-add9-218f307054d1" transform="translate(-3132.07 -637.793)" fill="#7E7E7E"></use> <use xlink:href="#7fa86e4d-affc-4a7c-bc50-fd219bc128a0" transform="translate(-3132.07 -637.793)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#91250fb5-0514-4c13-8163-c8972105f3bb" transform="translate(-3156.95 -637.793)" fill="#7E7E7E"></use> <use xlink:href="#6095b802-9d95-4559-b13b-044d0cb2f1fd" transform="translate(-3156.95 -637.793)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#6d4d5c0d-f0bc-4f44-b2f3-18f4195f5d6e" transform="translate(-3131.91 -627.337)" fill="#7E7E7E"></use> <use xlink:href="#8409e859-16a0-427e-9e2d-e90a431e5986" transform="translate(-3131.91 -627.337)" fill="#7E7E7E"></use> </g> </g> </g> <defs> <path id="d60b977b-c6cb-4cd6-a033-e5e20ff036b1 " d="M 51.2969 6.64063e-05L 1.17188e-05 6.64063e-05L 1.17188e-05 13.8131L 51.2969 13.8131L 51.2969 6.64063e-05Z"></path> <path id="5670583f-69b7-46ee-a0f3-ef772c677463 " d="M 1.17188e-05 6.64063e-05L 1.17188e-05 -0.499934L -0.499988 -0.499934L -0.499988 6.64063e-05L 1.17188e-05 6.64063e-05ZM 51.2969 6.64063e-05L 51.7969 6.64063e-05L 51.7969 -0.499934L 51.2969 -0.499934L 51.2969 6.64063e-05ZM 51.2969 13.8131L 51.2969 14.3131L 51.7969 14.3131L 51.7969 13.8131L 51.2969 13.8131ZM 1.17188e-05 13.8131L -0.499988 13.8131L -0.499988 14.3131L 1.17188e-05 14.3131L 1.17188e-05 13.8131ZM 1.17188e-05 0.500066L 51.2969 0.500066L 51.2969 -0.499934L 1.17188e-05 -0.499934L 1.17188e-05 0.500066ZM 50.7969 6.64063e-05L 50.7969 13.8131L 51.7969 13.8131L 51.7969 6.64063e-05L 50.7969 6.64063e-05ZM 51.2969 13.3131L 1.17188e-05 13.3131L 1.17188e-05 14.3131L 51.2969 14.3131L 51.2969 13.3131ZM 0.500012 13.8131L 0.500012 6.64063e-05L -0.499988 6.64063e-05L -0.499988 13.8131L 0.500012 13.8131Z"></path> <path id="254bfab7-40f3-4302-8f28-322cca3a71fe " d="M 51.4389 11.8971C 51.4389 15.2301 48.6291 17.9311 45.1701 17.9311L 6.26606 17.9311C 2.80906 17.9311 -5.66406e-05 15.2291 -5.66406e-05 11.8971L -5.66406e-05 6.03798C -5.66406e-05 2.69798 2.80906 -0.000101563 6.26606 -0.000101563L 45.1701 -0.000101563C 48.6291 -0.000101563 51.4389 2.69798 51.4389 6.03798L 51.4389 11.8971Z"></path> <path id="c4e58a41-6c58-49b2-a4be-037c647ffdc9 " d="M 50.9389 11.8971C 50.9389 14.936 48.3713 17.4311 45.1701 17.4311L 45.1701 18.4311C 48.8869 18.4311 51.9389 15.5243 51.9389 11.8971L 50.9389 11.8971ZM 45.1701 17.4311L 6.26606 17.4311L 6.26606 18.4311L 45.1701 18.4311L 45.1701 17.4311ZM 6.26606 17.4311C 3.06707 17.4311 0.499943 14.9352 0.499943 11.8971L -0.500057 11.8971C -0.500057 15.523 2.55105 18.4311 6.26606 18.4311L 6.26606 17.4311ZM 0.499943 11.8971L 0.499943 6.03798L -0.500057 6.03798L -0.500057 11.8971L 0.499943 11.8971ZM 0.499943 6.03798C 0.499943 2.9919 3.06708 0.499898 6.26606 0.499898L 6.26606 -0.500102C 2.55103 -0.500102 -0.500057 2.40407 -0.500057 6.03798L 0.499943 6.03798ZM 6.26606 0.499898L 45.1701 0.499898L 45.1701 -0.500102L 6.26606 -0.500102L 6.26606 0.499898ZM 45.1701 0.499898C 48.3713 0.499898 50.9389 2.99207 50.9389 6.03798L 51.9389 6.03798C 51.9389 2.4039 48.887 -0.500102 45.1701 -0.500102L 45.1701 0.499898ZM 50.9389 6.03798L 50.9389 11.8971L 51.9389 11.8971L 51.9389 6.03798L 50.9389 6.03798Z"></path> <path id="bbc3b3c1-24ea-4300-8410-e8ae50ab9626" d="M 26.198 21.2L -1.17188e-05 21.2L -1.17188e-05 6.05469e-05L 26.198 21.2Z"></path> <path id="bbc3b3c1-24ea-4300-8410-e8ae50ab9626" d="M 26.198 21.2L 26.198 21.7L 27.6107 21.7L 26.5125 20.8113L 26.198 21.2ZM -1.17188e-05 21.2L -0.500012 21.2L -0.500012 21.7L -1.17188e-05 21.7L -1.17188e-05 21.2ZM -1.17188e-05 6.05469e-05L 0.314516 -0.38862L -0.500012 -1.04775L -0.500012 6.05469e-05L -1.17188e-05 6.05469e-05ZM 26.198 20.7L -1.17188e-05 20.7L -1.17188e-05 21.7L 26.198 21.7L 26.198 20.7ZM 0.499988 21.2L 0.499988 6.05469e-05L -0.500012 6.05469e-05L -0.500012 21.2L 0.499988 21.2ZM -0.31454 0.388741L 25.8835 21.5887L 26.5125 20.8113L 0.314516 -0.38862L -0.31454 0.388741Z"></path> <path id="2b5d59ac-2960-4d37-add9-218f307054d1" d="M 25.623 31.8429L -9.375e-05 31.8429L -9.375e-05 -0.000115234L 25.623 31.8429Z"></path> <path id="7fa86e4d-affc-4a7c-bc50-fd219bc128a0" d="M 25.623 31.8429L 25.623 32.3429L 26.6671 32.3429L 26.0125 31.5294L 25.623 31.8429ZM -9.375e-05 31.8429L -0.500094 31.8429L -0.500094 32.3429L -9.375e-05 32.3429L -9.375e-05 31.8429ZM -9.375e-05 -0.000115234L 0.389452 -0.31357L -0.500094 -1.41905L -0.500094 -0.000115234L -9.375e-05 -0.000115234ZM 25.623 31.3429L -9.375e-05 31.3429L -9.375e-05 32.3429L 25.623 32.3429L 25.623 31.3429ZM 0.499906 31.8429L 0.499906 -0.000115234L -0.500094 -0.000115234L -0.500094 31.8429L 0.499906 31.8429ZM -0.38964 0.31334L 25.2334 32.1564L 26.0125 31.5294L 0.389452 -0.31357L -0.38964 0.31334Z"></path> <path id="91250fb5-0514-4c13-8163-c8972105f3bb" d="M -8.00781e-05 31.8849L 24.9169 31.8849L 24.9169 -0.000115234L -8.00781e-05 31.8849Z"></path> <path id="6095b802-9d95-4559-b13b-044d0cb2f1fd" d="M -8.00781e-05 31.8849L -0.394051 31.577L -1.02538 32.3849L -8.00781e-05 32.3849L -8.00781e-05 31.8849ZM 24.9169 31.8849L 24.9169 32.3849L 25.4169 32.3849L 25.4169 31.8849L 24.9169 31.8849ZM 24.9169 -0.000115234L 25.4169 -0.000115234L 25.4169 -1.45196L 24.5229 -0.30799L 24.9169 -0.000115234ZM -8.00781e-05 32.3849L 24.9169 32.3849L 24.9169 31.3849L -8.00781e-05 31.3849L -8.00781e-05 32.3849ZM 25.4169 31.8849L 25.4169 -0.000115234L 24.4169 -0.000115234L 24.4169 31.8849L 25.4169 31.8849ZM 24.5229 -0.30799L -0.394051 31.577L 0.393891 32.1928L 25.3109 0.307759L 24.5229 -0.30799Z"></path> <path id="6d4d5c0d-f0bc-4f44-b2f3-18f4195f5d6e" d="M -8.78906e-05 21.3869L 26.2001 21.3869L 26.2001 -6.05469e-05L -8.78906e-05 21.3869Z"></path> <path id="8409e859-16a0-427e-9e2d-e90a431e5986" d="M -8.78906e-05 21.3869L -0.316268 20.9996L -1.4033 21.8869L -8.78906e-05 21.8869L -8.78906e-05 21.3869ZM 26.2001 21.3869L 26.2001 21.8869L 26.7001 21.8869L 26.7001 21.3869L 26.2001 21.3869ZM 26.2001 -6.05469e-05L 26.7001 -6.05469e-05L 26.7001 -1.05364L 25.8839 -0.387398L 26.2001 -6.05469e-05ZM -8.78906e-05 21.8869L 26.2001 21.8869L 26.2001 20.8869L -8.78906e-05 20.8869L -8.78906e-05 21.8869ZM 26.7001 21.3869L 26.7001 -6.05469e-05L 25.7001 -6.05469e-05L 25.7001 21.3869L 26.7001 21.3869ZM 25.8839 -0.387398L -0.316268 20.9996L 0.316092 21.7742L 26.5163 0.387277L 25.8839 -0.387398Z"></path> </defs> </svg> Courses </a> <component-wavify></component-wavify> </tab> </tabs>', '', '', function(opts) {
+	(function (self, args) {
+
+	 self ._loaded = true;
+	 self ._scope = function () {};
+	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
+	self .on ("update", function () {args = self .opts});
+
+			var tabs = ['quizes', 'profile', 'courses']
+
+			var highlight_position = function () {
+				return 100 * tabs .indexOf (args .tab) / tabs .length
+			}
+
+	self .expressions = {};
+
+	self .expressions [0] = function (_item) { return  args .tab === 'quizes'  };
+	self .expressions [1] = function (_item) { return  args .tab === 'profile'  };
+	self .expressions [2] = function (_item) { return  args .tab === 'courses'  };
+	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
+	}) (this, this .opts);
+});
 riot.tag2('component-date-bar', '<span>{expression:component-date-bar:1}{expression:component-date-bar:2}</span>', '', '', function(opts) {
 	(function (self, args) {
 
@@ -718,6 +810,8 @@ riot.tag2('component-field-control', '<placeholder empty="{expression:component-
 	}) (this, this .opts);
 });
 riot.tag2('component-filter-button', '<span>篩選</span>', '', '', function(opts) {
+});
+riot.tag2('component-hamburger-button', '<svg width="12px" height="16px" viewbox="0 0 12 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>three-bars</title> <desc>Created with Sketch.</desc> <defs></defs> <g id="Octicons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="three-bars" fill="#000000"> <path d="M11.41,9 L0.59,9 C0,9 0,8.59 0,8 C0,7.41 0,7 0.59,7 L11.4,7 C11.99,7 11.99,7.41 11.99,8 C11.99,8.59 11.99,9 11.4,9 L11.41,9 Z M11.41,5 L0.59,5 C0,5 0,4.59 0,4 C0,3.41 0,3 0.59,3 L11.4,3 C11.99,3 11.99,3.41 11.99,4 C11.99,4.59 11.99,5 11.4,5 L11.41,5 Z M0.59,11 L11.4,11 C11.99,11 11.99,11.41 11.99,12 C11.99,12.59 11.99,13 11.4,13 L0.59,13 C0,13 0,12.59 0,12 C0,11.41 0,11 0.59,11 L0.59,11 Z" id="Shape"></path> </g> </g> </svg>', '', '', function(opts) {
 });
 riot.tag2('component-input-control', '<input ref="{ref prefix}input" type="{expression:component-input-control:1}" placeholder="{expression:component-input-control:2}" maxlength="{expression:component-input-control:3}">', '', '', function(opts) {
 	(function (self, args) {
@@ -1158,33 +1252,6 @@ riot.tag2('component-pitch-picker', '<selected-location> <input type="text" plac
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
-riot.tag2('component-portal-subcategory-item', '<a href="#quiz/subcategory/#{expression:component-portal-subcategory-item:1}" if="{expression:component-portal-subcategory-item:2}"> <img src="https://ibin.co/3I0i4laCon7P.png"> </a>', '', '', function(opts) {
-	(function (self, args) {
-
-	 self ._loaded = true;
-	 self ._scope = function () {};
-	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
-	self .on ("update", function () {args = self .opts});
-
-		    var item = args .item__from .thru (dropRepeatsWith, json_equal)
-
-		    var subcategory = mechanism (function () {
-		        if (item ())
-		            return item () .category;
-		    }, [item])
-			var name = mechanism (function () {
-				return subcategory ();
-			}, [subcategory])
-
-		    item .thru (map, noop) .thru (tap, self .render)
-
-	self .expressions = {};
-
-	self .expressions [0] = function (_item) { return  stringify (name ())  };
-	self .expressions [1] = function (_item) { return  subcategory ()  };
-	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
-	}) (this, this .opts);
-});
 riot.tag2('component-prev-button', '<svg width="94" height="93" viewbox="0 0 94 93" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns"><title>Group</title><desc>Created using Figma</desc><g id="Canvas" transform="translate(158 699)" figma:type="canvas"><g id="Group" figma:type="frame"><g id="Vector" figma:type="vector"><use xlink:href="#fe2ae1a3-28ca-4124-aaa8-007b41494fe6" transform="translate(-157.365 -698.995)" fill="#4FABFF"></use></g><g id="Vector" figma:type="vector"><use xlink:href="#24ce5aa5-81c0-42f7-97ba-a8180a42d963" transform="translate(-131.275 -681.445)" fill="#FFFFFF"></use></g></g></g><defs><path id="fe2ae1a3-28ca-4124-aaa8-007b41494fe6" d="M 80.73 4.88281e-05L 12.0001 4.88281e-05C 5.37264 4.88281e-05 5.37109e-05 5.37263 5.37109e-05 12L 5.37109e-05 80.73C 5.37109e-05 87.3574 5.37264 92.73 12.0001 92.73L 80.73 92.73C 87.3575 92.73 92.73 87.3574 92.73 80.73L 92.73 12C 92.73 5.37263 87.3575 4.88281e-05 80.73 4.88281e-05Z"></path><path id="24ce5aa5-81c0-42f7-97ba-a8180a42d963" d="M 29.2 9.76563e-05L 29.2 58.39L 1.95312e-05 29.19L 29.2 9.76563e-05Z"></path></defs></svg>', '', '', function(opts) {
 });
 riot.tag2('component-select-control', '{ enter yield }<yield></yield>{ exit yield }', '', '', function(opts) {
@@ -1338,28 +1405,6 @@ riot.tag2('component-table-control', '<span ref="{ref prefix}span">{expression:c
 	self .expressions [0] = function (_item) { return  message () || '未輸入'  };
 	self .expressions [1] = function (_item) { return  picking ()  };
 	if (! self .update_strategy || self .update_strategy === "push") self .shouldUpdate = R .T;
-	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
-	}) (this, this .opts);
-});
-riot.tag2('component-tabs', '<tabs> <tab active="{expression:component-tabs:1}"> <a href="#portal"> <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" width="512px" height="512px" viewbox="0 0 485.213 485.212" style="enable-background:new 0 0 485.213 485.212;" xml:space="preserve"> <g> <path d="M394.235,151.628c0,82.449-49.695,92.044-59.021,181.956c0,8.382-6.785,15.163-15.168,15.163H165.161 c-8.379,0-15.161-6.781-15.161-15.163h-0.028c-9.299-89.912-58.994-99.507-58.994-181.956C90.978,67.878,158.855,0,242.606,0 S394.235,67.878,394.235,151.628z M318.423,363.906H166.794c-8.384,0-15.166,6.786-15.166,15.168 c0,8.378,6.782,15.163,15.166,15.163h151.628c8.378,0,15.163-6.785,15.163-15.163C333.586,370.692,326.801,363.906,318.423,363.906 z M318.423,409.396H166.794c-8.384,0-15.166,6.786-15.166,15.163c0,8.383,6.782,15.168,15.166,15.168h151.628 c8.378,0,15.163-6.785,15.163-15.168C333.586,416.182,326.801,409.396,318.423,409.396z M212.282,485.212h60.65 c16.76,0,30.322-13.562,30.322-30.326h-121.3C181.955,471.65,195.518,485.212,212.282,485.212z" fill="#7e7e7e"></path> </g> </svg> Quizes </a> <component-wavify></component-wavify> </tab> <tab active="{expression:component-tabs:2}"> <a href="#profile"> <svg width="53" height="61" viewbox="0 0 53 61" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>person.svg</title> <desc>Created using Figma</desc> <g id="Canvas" transform="translate(3410 646)"> <g id="person"> <g id="Shape 1"> <use xlink:href="#9c74239e-b755-4545-99a8-48b1d7ecbd25" transform="translate(-3409.11 -645.992)" fill="#7E7E7E"></use> </g> </g> </g> <defs> <path id="9c74239e-b755-4545-99a8-48b1d7ecbd25" d="M 51.475 55.7731C 51.475 58.1371 49.558 60.0541 47.194 60.0541L 4.294 60.0541C 1.922 60.0541 5.95703e-05 58.1319 5.95703e-05 55.7599L 5.95703e-05 51.475C 5.95703e-05 40.181 17.158 34.317 17.158 34.317C 17.158 34.317 18.14 32.563 17.158 30.027C 13.55 27.368 13.109 23.2071 12.868 12.8691C 13.61 2.51805 20.877 -8.98438e-05 25.737 -8.98438e-05C 30.597 -8.98438e-05 37.864 2.51405 38.606 12.8691C 38.366 23.2071 37.924 27.368 34.316 30.027C 33.334 32.558 34.316 34.317 34.316 34.317C 34.316 34.317 51.4741 40.181 51.4741 51.475L 51.4741 55.7731L 51.475 55.7731Z"></path> </defs> </svg> Profile </a> <component-wavify></component-wavify> </tab> <tab active="{expression:component-tabs:3}"> <a href="#courses"> <svg width="53" height="55" viewbox="0 0 53 55" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"> <title>Group.svg</title> <desc>Created using Figma</desc> <g id="Canvas" transform="translate(3158 640)"> <g id="Group"> <g id="Vector"> <use xlink:href="#d60b977b-c6cb-4cd6-a033-e5e20ff036b1 " transform="translate(-3157.01 -605.957)" fill="#7E7E7E"></use> <use xlink:href="#5670583f-69b7-46ee-a0f3-ef772c677463 " transform="translate(-3157.01 -605.957)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#254bfab7-40f3-4302-8f28-322cca3a71fe " transform="translate(-3157.08 -604.429)" fill="#7E7E7E"></use> <use xlink:href="#c4e58a41-6c58-49b2-a4be-037c647ffdc9 " transform="translate(-3157.08 -604.429)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#bbc3b3c1-24ea-4300-8410-e8ae50ab9626" transform="translate(-3157.01 -627.113)" fill="#7E7E7E"></use> <use xlink:href="#bbc3b3c1-24ea-4300-8410-e8ae50ab9626" transform="translate(-3157.01 -627.113)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#2b5d59ac-2960-4d37-add9-218f307054d1" transform="translate(-3132.07 -637.793)" fill="#7E7E7E"></use> <use xlink:href="#7fa86e4d-affc-4a7c-bc50-fd219bc128a0" transform="translate(-3132.07 -637.793)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#91250fb5-0514-4c13-8163-c8972105f3bb" transform="translate(-3156.95 -637.793)" fill="#7E7E7E"></use> <use xlink:href="#6095b802-9d95-4559-b13b-044d0cb2f1fd" transform="translate(-3156.95 -637.793)" fill="#7E7E7E"></use> </g> <g id="Vector"> <use xlink:href="#6d4d5c0d-f0bc-4f44-b2f3-18f4195f5d6e" transform="translate(-3131.91 -627.337)" fill="#7E7E7E"></use> <use xlink:href="#8409e859-16a0-427e-9e2d-e90a431e5986" transform="translate(-3131.91 -627.337)" fill="#7E7E7E"></use> </g> </g> </g> <defs> <path id="d60b977b-c6cb-4cd6-a033-e5e20ff036b1 " d="M 51.2969 6.64063e-05L 1.17188e-05 6.64063e-05L 1.17188e-05 13.8131L 51.2969 13.8131L 51.2969 6.64063e-05Z"></path> <path id="5670583f-69b7-46ee-a0f3-ef772c677463 " d="M 1.17188e-05 6.64063e-05L 1.17188e-05 -0.499934L -0.499988 -0.499934L -0.499988 6.64063e-05L 1.17188e-05 6.64063e-05ZM 51.2969 6.64063e-05L 51.7969 6.64063e-05L 51.7969 -0.499934L 51.2969 -0.499934L 51.2969 6.64063e-05ZM 51.2969 13.8131L 51.2969 14.3131L 51.7969 14.3131L 51.7969 13.8131L 51.2969 13.8131ZM 1.17188e-05 13.8131L -0.499988 13.8131L -0.499988 14.3131L 1.17188e-05 14.3131L 1.17188e-05 13.8131ZM 1.17188e-05 0.500066L 51.2969 0.500066L 51.2969 -0.499934L 1.17188e-05 -0.499934L 1.17188e-05 0.500066ZM 50.7969 6.64063e-05L 50.7969 13.8131L 51.7969 13.8131L 51.7969 6.64063e-05L 50.7969 6.64063e-05ZM 51.2969 13.3131L 1.17188e-05 13.3131L 1.17188e-05 14.3131L 51.2969 14.3131L 51.2969 13.3131ZM 0.500012 13.8131L 0.500012 6.64063e-05L -0.499988 6.64063e-05L -0.499988 13.8131L 0.500012 13.8131Z"></path> <path id="254bfab7-40f3-4302-8f28-322cca3a71fe " d="M 51.4389 11.8971C 51.4389 15.2301 48.6291 17.9311 45.1701 17.9311L 6.26606 17.9311C 2.80906 17.9311 -5.66406e-05 15.2291 -5.66406e-05 11.8971L -5.66406e-05 6.03798C -5.66406e-05 2.69798 2.80906 -0.000101563 6.26606 -0.000101563L 45.1701 -0.000101563C 48.6291 -0.000101563 51.4389 2.69798 51.4389 6.03798L 51.4389 11.8971Z"></path> <path id="c4e58a41-6c58-49b2-a4be-037c647ffdc9 " d="M 50.9389 11.8971C 50.9389 14.936 48.3713 17.4311 45.1701 17.4311L 45.1701 18.4311C 48.8869 18.4311 51.9389 15.5243 51.9389 11.8971L 50.9389 11.8971ZM 45.1701 17.4311L 6.26606 17.4311L 6.26606 18.4311L 45.1701 18.4311L 45.1701 17.4311ZM 6.26606 17.4311C 3.06707 17.4311 0.499943 14.9352 0.499943 11.8971L -0.500057 11.8971C -0.500057 15.523 2.55105 18.4311 6.26606 18.4311L 6.26606 17.4311ZM 0.499943 11.8971L 0.499943 6.03798L -0.500057 6.03798L -0.500057 11.8971L 0.499943 11.8971ZM 0.499943 6.03798C 0.499943 2.9919 3.06708 0.499898 6.26606 0.499898L 6.26606 -0.500102C 2.55103 -0.500102 -0.500057 2.40407 -0.500057 6.03798L 0.499943 6.03798ZM 6.26606 0.499898L 45.1701 0.499898L 45.1701 -0.500102L 6.26606 -0.500102L 6.26606 0.499898ZM 45.1701 0.499898C 48.3713 0.499898 50.9389 2.99207 50.9389 6.03798L 51.9389 6.03798C 51.9389 2.4039 48.887 -0.500102 45.1701 -0.500102L 45.1701 0.499898ZM 50.9389 6.03798L 50.9389 11.8971L 51.9389 11.8971L 51.9389 6.03798L 50.9389 6.03798Z"></path> <path id="bbc3b3c1-24ea-4300-8410-e8ae50ab9626" d="M 26.198 21.2L -1.17188e-05 21.2L -1.17188e-05 6.05469e-05L 26.198 21.2Z"></path> <path id="bbc3b3c1-24ea-4300-8410-e8ae50ab9626" d="M 26.198 21.2L 26.198 21.7L 27.6107 21.7L 26.5125 20.8113L 26.198 21.2ZM -1.17188e-05 21.2L -0.500012 21.2L -0.500012 21.7L -1.17188e-05 21.7L -1.17188e-05 21.2ZM -1.17188e-05 6.05469e-05L 0.314516 -0.38862L -0.500012 -1.04775L -0.500012 6.05469e-05L -1.17188e-05 6.05469e-05ZM 26.198 20.7L -1.17188e-05 20.7L -1.17188e-05 21.7L 26.198 21.7L 26.198 20.7ZM 0.499988 21.2L 0.499988 6.05469e-05L -0.500012 6.05469e-05L -0.500012 21.2L 0.499988 21.2ZM -0.31454 0.388741L 25.8835 21.5887L 26.5125 20.8113L 0.314516 -0.38862L -0.31454 0.388741Z"></path> <path id="2b5d59ac-2960-4d37-add9-218f307054d1" d="M 25.623 31.8429L -9.375e-05 31.8429L -9.375e-05 -0.000115234L 25.623 31.8429Z"></path> <path id="7fa86e4d-affc-4a7c-bc50-fd219bc128a0" d="M 25.623 31.8429L 25.623 32.3429L 26.6671 32.3429L 26.0125 31.5294L 25.623 31.8429ZM -9.375e-05 31.8429L -0.500094 31.8429L -0.500094 32.3429L -9.375e-05 32.3429L -9.375e-05 31.8429ZM -9.375e-05 -0.000115234L 0.389452 -0.31357L -0.500094 -1.41905L -0.500094 -0.000115234L -9.375e-05 -0.000115234ZM 25.623 31.3429L -9.375e-05 31.3429L -9.375e-05 32.3429L 25.623 32.3429L 25.623 31.3429ZM 0.499906 31.8429L 0.499906 -0.000115234L -0.500094 -0.000115234L -0.500094 31.8429L 0.499906 31.8429ZM -0.38964 0.31334L 25.2334 32.1564L 26.0125 31.5294L 0.389452 -0.31357L -0.38964 0.31334Z"></path> <path id="91250fb5-0514-4c13-8163-c8972105f3bb" d="M -8.00781e-05 31.8849L 24.9169 31.8849L 24.9169 -0.000115234L -8.00781e-05 31.8849Z"></path> <path id="6095b802-9d95-4559-b13b-044d0cb2f1fd" d="M -8.00781e-05 31.8849L -0.394051 31.577L -1.02538 32.3849L -8.00781e-05 32.3849L -8.00781e-05 31.8849ZM 24.9169 31.8849L 24.9169 32.3849L 25.4169 32.3849L 25.4169 31.8849L 24.9169 31.8849ZM 24.9169 -0.000115234L 25.4169 -0.000115234L 25.4169 -1.45196L 24.5229 -0.30799L 24.9169 -0.000115234ZM -8.00781e-05 32.3849L 24.9169 32.3849L 24.9169 31.3849L -8.00781e-05 31.3849L -8.00781e-05 32.3849ZM 25.4169 31.8849L 25.4169 -0.000115234L 24.4169 -0.000115234L 24.4169 31.8849L 25.4169 31.8849ZM 24.5229 -0.30799L -0.394051 31.577L 0.393891 32.1928L 25.3109 0.307759L 24.5229 -0.30799Z"></path> <path id="6d4d5c0d-f0bc-4f44-b2f3-18f4195f5d6e" d="M -8.78906e-05 21.3869L 26.2001 21.3869L 26.2001 -6.05469e-05L -8.78906e-05 21.3869Z"></path> <path id="8409e859-16a0-427e-9e2d-e90a431e5986" d="M -8.78906e-05 21.3869L -0.316268 20.9996L -1.4033 21.8869L -8.78906e-05 21.8869L -8.78906e-05 21.3869ZM 26.2001 21.3869L 26.2001 21.8869L 26.7001 21.8869L 26.7001 21.3869L 26.2001 21.3869ZM 26.2001 -6.05469e-05L 26.7001 -6.05469e-05L 26.7001 -1.05364L 25.8839 -0.387398L 26.2001 -6.05469e-05ZM -8.78906e-05 21.8869L 26.2001 21.8869L 26.2001 20.8869L -8.78906e-05 20.8869L -8.78906e-05 21.8869ZM 26.7001 21.3869L 26.7001 -6.05469e-05L 25.7001 -6.05469e-05L 25.7001 21.3869L 26.7001 21.3869ZM 25.8839 -0.387398L -0.316268 20.9996L 0.316092 21.7742L 26.5163 0.387277L 25.8839 -0.387398Z"></path> </defs> </svg> Courses </a> <component-wavify></component-wavify> </tab> </tabs>', '', '', function(opts) {
-	(function (self, args) {
-
-	 self ._loaded = true;
-	 self ._scope = function () {};
-	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
-	self .on ("update", function () {args = self .opts});
-
-			var tabs = ['quizes', 'profile', 'courses']
-
-			var highlight_position = function () {
-				return 100 * tabs .indexOf (args .tab) / tabs .length
-			}
-
-	self .expressions = {};
-
-	self .expressions [0] = function (_item) { return  args .tab === 'quizes'  };
-	self .expressions [1] = function (_item) { return  args .tab === 'profile'  };
-	self .expressions [2] = function (_item) { return  args .tab === 'courses'  };
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
@@ -1860,87 +1905,9 @@ riot.tag2('component-wavify', '', '', '', function(opts) {
 });
 riot.tag2('component-x-button', '<icon-holder nav-button><svg width="13" height="13" viewbox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:figma="http://www.figma.com/figma/ns"><title>cancel</title><desc>Created using Figma</desc><g id="Canvas" transform="translate(1022 334)" figma:type="canvas"><g id="cancel" style="mix-blend-mode:normal;" figma:type="frame"><g id="Group" style="mix-blend-mode:normal;" figma:type="frame"><g id="Vector" style="mix-blend-mode:normal;" figma:type="vector"><use xlink:href="#1c8fcd43-ce74-4b25-b1b4-2f698b0c61a8" transform="translate(-1022 -334)" fill="#5DADE2" style="mix-blend-mode:normal;"></use></g></g></g></g><defs><path id="1c8fcd43-ce74-4b25-b1b4-2f698b0c61a8" d="M 5.87831 6.50199L 0.123962 12.2965C -0.0359037 12.4575 -0.0359037 12.7183 0.123962 12.8793C 0.203793 12.9599 0.30861 13 0.413223 13C 0.51804 13 0.622653 12.9599 0.702484 12.8793L 6.5001 7.04119L 12.2977 12.8793C 12.3778 12.9599 12.4824 13 12.587 13C 12.6916 13 12.7964 12.9599 12.8762 12.8793C 13.0361 12.7183 13.0361 12.4575 12.8762 12.2965L 7.12209 6.50199L 12.8801 0.703352C 13.04 0.54237 13.04 0.281566 12.8801 0.120583C 12.7202 -0.0401945 12.4612 -0.0401945 12.3016 0.120583L 6.5003 5.96279L 0.698422 0.120788C 0.538556 -0.0399899 0.279765 -0.0399899 0.119899 0.120788C -0.0399664 0.28177 -0.0399664 0.542574 0.119899 0.703557L 5.87831 6.50199Z"></path></defs></svg></icon-holder>', '', '', function(opts) {
 });
-riot.tag2('page-courses', '<nav> <nav-bar> <nav-buttons> <a href="#portal"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Courses</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <highscore> <my-highscore> <label>Your score is:</label> <score>29</score> </my-highscore> <highscores> <highscore><label>Champion</label><item>John Huen: 179</item></highscore> <highscore><label>First Runner-up</label><item>John Huen: 169</item></highscore> <highscore><label>Second Runner-up</label><item>John Huen: 168</item></highscore> </highscores> </highscore> </component-main-content>', '', '', function(opts) {
+riot.tag2('page-account-courses', '<nav> <nav-bar> <nav-buttons> <a> <component-custom-hamburger></component-custom-hamburger> </a> </nav-buttons> <nav-title> <component-page-title>Courses</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <highscore> <my-highscore> <label>Your score is:</label> <score>29</score> </my-highscore> <highscores> <highscore><label>Champion</label><item>John Huen: 179</item></highscore> <highscore><label>First Runner-up</label><item>John Huen: 169</item></highscore> <highscore><label>Second Runner-up</label><item>John Huen: 168</item></highscore> </highscores> </highscore> </component-main-content> <component-custom-tabs tab="courses"></component-custom-tabs>', '', '', function(opts) {
 });
-riot.tag2('page-disclaimer', '<nav> <nav-bar> <nav-buttons> <a href="#register"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title></nav-title> </nav-bar> </nav> <component-main-content> <register> <label> Disclaimer and Terms of Agreements </label> <component-spacing height="20px"></component-spacing> <disclaimer> <p>The information contained on www.kodingkingdom.com website and mobile app (the "Service") is for general information purposes only.</p> <p>Koding Kingdom (Hong Kong) Limited assumes no responsibility for errors or omissions in the contents on the Service.</p> <p>In no event shall Koding Kingdom (Hong Kong) Limited be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. Koding Kingdom (Hong Kong) Limited reserves the right to make additions, deletions, or modification to the contents on the Service at any time without prior notice.</p> <p>Koding Kingdom (Hong Kong) Limited does not warrant that the website is free of viruses or other harmful components.</p> <p>This Disclaimer is licensed by TermsFeed to Koding Kingdom (Hong Kong) Limited.</p> </disclaimer> </register> </component-main-content>', '', '', function(opts) {
-});
-riot.tag2('page-forget', '<nav> <nav-bar> <nav-buttons> <a href="#login"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Forget Password</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <forget> <label>Please enter your email to receive a new password.</label> <component-field-control placeholder="Email" type="email"></component-field-control> <component-spacing height="40px"></component-spacing> <component-action> <a href="#home">Send</a> </component-action> </forget> </component-main-content>', '', '', function(opts) {
-});
-riot.tag2('page-highscore', '<nav> <nav-bar> <nav-buttons> <a href="#portal"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Highscore</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <highscore> <my-highscore> <label>Your score is:</label> <score>29</score> </my-highscore> <highscores> <highscore><label>Champion</label><item>John Huen: 179</item></highscore> <highscore><label>First Runner-up</label><item>John Huen: 169</item></highscore> <highscore><label>Second Runner-up</label><item>John Huen: 168</item></highscore> </highscores> </highscore> </component-main-content>', '', '', function(opts) {
-});
-riot.tag2('page-home', '<home> <label>CODE&#x3E;<br>&#x3C;WARS</label> <img src="https://ibin.co/3I5zb7FQHEYr.png"> <component-spacing height="40px"></component-spacing> <component-action> <a href="#login">Login</a> </component-action> <component-spacing height="10px"></component-spacing> <component-action> <a href="#register">Register</a> </component-action> </home>', '', '', function(opts) {
-});
-riot.tag2('page-login', '<nav> <nav-bar> <nav-buttons> <a href="#home"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Login</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <login> <component-field-control placeholder="Email" type="email"></component-field-control> <component-field-control type="password" placeholder="Password"></component-field-control> <a href="#forget"> Forget Password? </a> <component-spacing height="40px"></component-spacing> <component-action> <a href="#ranking">Login</a> </component-action> </login> </component-main-content>', '', '', function(opts) {
-});
-riot.tag2('page-logout', '', '', '', function(opts) {
-	(function (self, args) {
-
-	 self ._loaded = true;
-	 self ._scope = function () {};
-	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
-	self .on ("update", function () {args = self .opts});
-
-	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
-	}) (this, this .opts);
-});
-riot.tag2('page-portal', '<nav> <nav-bar> <nav-buttons> </nav-buttons> <nav-title> <component-page-title>Ready to code?</component-page-title> </nav-title> <nav-buttons> <a href="#logout"> <component-logout-button></component-logout-button> </a> </nav-buttons> </nav-bar> </nav> <component-main-content> <portal> <component-spacing height="10px"></component-spacing> <label> Choose a quiz! </label> <component-spacing height="20px"></component-spacing> <component-item if="{expression:page-portal:1}">Fetching quizes...</component-item> <component-loading-item if="{expression:page-portal:2}"></component-loading-item> <component-item if="{expression:page-portal:3}">No courses found :(</component-item> <component-dynamic-load items_to_load="13" interval_for_loading="50" item_height="{expression:page-portal:4}" items__from="{expression:page-portal:5}"> <component-portal-subcategory-item item__from="{expression:page-portal:6}"> </component-dynamic-load> </portal> <component-spacing height="75px"></component-spacing> <links> <a href="#courses"><label>Courses</label></a> <a href="#highscore"><label>Highscore</label></a> <a href="#contact"><label>Contact us</label></a> </links> </component-main-content>', '', '', function(opts) {
-	(function (self, args) {
-
-	 self ._loaded = true;
-	 self ._scope = function () {};
-	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
-	self .on ("update", function () {args = self .opts});
-
-			var questions_info = stream ()
-			var subcategories =	questions_info
-									.thru (map, function (question_list) {
-										var categories = {};
-										question_list .forEach (function (question) {
-											categories [question .category] = true;
-										});
-										return 	Object .keys (categories)
-													.sort (function (a, b) {
-														return a > b;
-													})
-													.map (function (category) {
-														return { category: category };
-													});
-									})
-									.thru (delay, 400)
-									.thru (dropRepeatsWith, json_equal)
-
-			var item_height = 	function (item) {
-									return 135;
-								}
-
-			var status =	mechanism (function () {
-								if (subcategories () .length)
-									return 'loaded';
-								else
-									return 'no-items'
-							}, [subcategories])
-							.thru (begins_with, 'loading')
-
-			status .thru (map, noop) .thru (tap, self .render)
-
-			args .cycle__from
-				.thru (tap, function () {
-					inquire (api () .questions)
-						.then (questions_info)
-				})
-
-	self .expressions = {};
-
-	self .expressions [0] = function (_item) { return  status () === 'loading'  };
-	self .expressions [1] = function (_item) { return  status () === 'loading'  };
-	self .expressions [2] = function (_item) { return  status () === 'no-items'  };
-	self .expressions [3] = function (_item) { return  item_height  };
-	self .expressions [4] = function (_item) { return  subcategories  };
-	self .expressions [5] = function (_item) { return  _item .item__from  };
-	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
-	}) (this, this .opts);
-});
-riot.tag2('page-quiz-subcategory', '<nav> <nav-bar> <nav-buttons> <a href="#portal"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Points: {expression:page-quiz-subcategory:1}/20</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <question> <number> <label>Q{expression:page-quiz-subcategory:2}.</label> </number> <label>{expression:page-quiz-subcategory:3}</label> <image-holder if="{expression:page-quiz-subcategory:4}"><img riot-src="{expression:page-quiz-subcategory:5}"></image-holder> <component-spacing height="20px"></component-spacing> <guesses> <guess><a href="#quiz/subcategory/#{expression:page-quiz-subcategory:6}">{expression:page-quiz-subcategory:7}</a></guess> <guess><a href="#quiz/subcategory/#{expression:page-quiz-subcategory:8}">{expression:page-quiz-subcategory:9}</a></guess> <guess><a href="#quiz/subcategory/#{expression:page-quiz-subcategory:10}">{expression:page-quiz-subcategory:11}</a></guess> <guess><a href="#quiz/subcategory/#{expression:page-quiz-subcategory:12}">{expression:page-quiz-subcategory:13}</a></guess> </guesses> </question> </component-main-content>', '', '', function(opts) {
+riot.tag2('page-account-quiz-subcategory', '<nav> <nav-bar> <nav-buttons> <a href="#account/quizes"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Points: {expression:page-account-quiz-subcategory:1}/20</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <question> <number> <label>Q{expression:page-account-quiz-subcategory:2}.</label> </number> <label>{expression:page-account-quiz-subcategory:3}</label> <image-holder if="{expression:page-account-quiz-subcategory:4}"><img riot-src="{expression:page-account-quiz-subcategory:5}"></image-holder> <component-spacing height="20px"></component-spacing> <guesses> <guess><a href="#account/quiz/subcategory/#{expression:page-account-quiz-subcategory:6}">{expression:page-account-quiz-subcategory:7}</a></guess> <guess><a href="#account/quiz/subcategory/#{expression:page-account-quiz-subcategory:8}">{expression:page-account-quiz-subcategory:9}</a></guess> <guess><a href="#account/quiz/subcategory/#{expression:page-account-quiz-subcategory:10}">{expression:page-account-quiz-subcategory:11}</a></guess> <guess><a href="#account/quiz/subcategory/#{expression:page-account-quiz-subcategory:12}">{expression:page-account-quiz-subcategory:13}</a></guess> </guesses> </question> </component-main-content>', '', '', function(opts) {
 	(function (self, args) {
 
 	 self ._loaded = true;
@@ -2032,7 +1999,168 @@ riot.tag2('page-quiz-subcategory', '<nav> <nav-bar> <nav-buttons> <a href="#port
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
-riot.tag2('page-ranking', '<nav> <nav-bar> <nav-buttons> </nav-buttons> <nav-title> <component-page-title>Hello World! Ready to Code?</component-page-title> </nav-title> <nav-buttons> <a href="#home"> <component-logout-button></component-logout-button> </a> </nav-buttons> </nav-bar> </nav> <component-main-content> <ranking> <table> <tr> <th>Rank</th> <th>Name</th> <th></th> <th>Score</th> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr active> <td>1</td> <td>You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> </table> </ranking> </component-main-content> <component-tabs tab="quizes"></component-tabs>', '', '', function(opts) {
+riot.tag2('page-account-quizes', '<nav> <nav-bar> <nav-buttons> <a> <component-custom-hamburger></component-custom-hamburger> </a> </nav-buttons> <nav-title> <component-page-title>Ready to code?</component-page-title> </nav-title> <nav-buttons> <a href="#home"> <component-logout-button></component-logout-button> </a> </nav-buttons> </nav-bar> </nav> <component-main-content> <page> <component-spacing height="10px"></component-spacing> <label> Choose a quiz! </label> <component-spacing height="20px"></component-spacing> <component-item if="{expression:page-account-quizes:1}">Fetching quizes...</component-item> <component-loading-item if="{expression:page-account-quizes:2}"></component-loading-item> <component-item if="{expression:page-account-quizes:3}">No courses found :(</component-item> <component-dynamic-load items_to_load="13" interval_for_loading="50" item_height="{expression:page-account-quizes:4}" items__from="{expression:page-account-quizes:5}"> <component-custom-subcategory-item item__from="{expression:page-account-quizes:6}"> </component-dynamic-load> </page> </component-main-content> <component-custom-tabs tab="quizes"></component-custom-tabs>', '', '', function(opts) {
+	(function (self, args) {
+
+	 self ._loaded = true;
+	 self ._scope = function () {};
+	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
+	self .on ("update", function () {args = self .opts});
+
+			args .cycle__from
+				.thru (tap, function () {
+					inquire (api () .questions)
+						.then (questions_info)
+				})
+			var questions_info = stream ()
+			var subcategories =	questions_info
+									.thru (map, function (question_list) {
+										var categories = {};
+										question_list .forEach (function (question) {
+											categories [question .category] = true;
+										});
+										return 	Object .keys (categories)
+													.sort (function (a, b) {
+														return a > b;
+													})
+													.map (function (category) {
+														return { category: category };
+													});
+									})
+									.thru (delay, 400)
+									.thru (dropRepeatsWith, json_equal)
+
+			var item_height = 	function (item) {
+									return 135;
+								}
+
+			var status =	mechanism (function () {
+								if (subcategories () .length)
+									return 'loaded';
+								else
+									return 'no-items'
+							}, [subcategories])
+							.thru (_begins_with, 'loading')
+
+			status .thru (map, noop) .thru (tap, self .render)
+
+	self .expressions = {};
+
+	self .expressions [0] = function (_item) { return  status () === 'loading'  };
+	self .expressions [1] = function (_item) { return  status () === 'loading'  };
+	self .expressions [2] = function (_item) { return  status () === 'no-items'  };
+	self .expressions [3] = function (_item) { return  item_height  };
+	self .expressions [4] = function (_item) { return  subcategories  };
+	self .expressions [5] = function (_item) { return  _item .item__from  };
+	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
+	}) (this, this .opts);
+});
+riot.tag2('page-account-ranking', '<nav> <nav-bar> <nav-buttons> <a> <component-custom-hamburger></component-custom-hamburger> </a> </nav-buttons> <nav-title> <component-page-title>Hello World! Ready to Code?</component-page-title> </nav-title> <nav-buttons> <a href="#home"> <component-logout-button></component-logout-button> </a> </nav-buttons> </nav-bar> </nav> <component-main-content> <ranking> <table> <tr> <th>Rank</th> <th>Name</th> <th></th> <th>Score</th> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr active> <td>1</td> <td>You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> </table> </ranking> </component-main-content> <component-custom-tabs tab="profile"></component-custom-tabs>', '', '', function(opts) {
+	(function (self, args) {
+
+	 self ._loaded = true;
+	 self ._scope = function () {};
+	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
+	self .on ("update", function () {args = self .opts});
+
+	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
+	}) (this, this .opts);
+});
+riot.tag2('page-account-subaccount-create', '<nav> <nav-bar> <nav-buttons> <a href="#account/profile"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Create New Player</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <page> <label> Please enter your email and create a password </label> <component-spacing height="20px"></component-spacing> <label>User Name:</label> <component-field-control type="text" placeholder="First Name" input__to=":firstname"></component-field-control> <component-field-control type="text" placeholder="Last Name" input__to=":lastname"></component-field-control> <label>Date of Birth:</label> <component-field-control placeholder="{expression:page-account-subaccount-create:1}" input__to="{expression:page-account-subaccount-create:2}" ref="{ref prefix}date-of-birth" readonly></component-field-control> <fullscreen-holder active="{expression:page-account-subaccount-create:3}"> <component-modal-holder> <component-date-picker date__to="{expression:page-account-subaccount-create:4}"></component-date-picker> </component-modal-holder> </fullscreen-holder> <label>Nationality:</label> <component-field-control type="password" placeholder="" input__to="{expression:page-account-subaccount-create:5}"></component-field-control> <label>School:</label> <component-field-control type="text" placeholder="" input__to="{expression:page-account-subaccount-create:6}"></component-field-control> <component-spacing height="40px"></component-spacing> <component-action> <a ref="{ref prefix}action" href="#account/quizes">Create</a> </component-action> <terms-of-agreement> <item> <component-checkbox check__to="{expression:page-account-subaccount-create:7}"></component-checkbox> </item> <label> I agree with the <a href="#disclaimer">Disclaimers and Terms of Agreement</a> </label> </terms-of-agreement> </register> </component-main-content> <component-custom-tabs tab="profile"></component-custom-tabs>', '', '', function(opts) {
+	(function (self, args) {
+
+	 self ._loaded = true;
+	 self ._scope = function () {};
+	var self_diff = stream ();
+	var yielded_diff = stream ();
+	self .yielded_diff = yielded_diff ;
+	var diffs = mergeAll ([ self_diff, yielded_diff ]);
+	var ref = function (name) { return ref_diff (name, diffs) };
+	var ref_set = function (name) { return ref_set_diff (name, diffs) };
+	var _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy)  ;
+	_refs .thru (map, self_refs) .thru (diff_refs) .thru (tap, self_diff);
+	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
+	self .on ("update", function () {args = self .opts});
+
+			self .temp = true;
+
+			var email = stream ();
+			var password = stream ();
+			var date_of_birth = stream ();
+			var agree = stream ();
+
+			var picking_date_of_birth = stream ();
+			picking_date_of_birth .thru (map, noop) .thru (tap, self .render);
+
+			ref ('date-of-birth')
+				.thru (tap, function (ref) {
+					ref .addEventListener ('click', function (e) {
+						picking_date_of_birth (true);
+					})
+				})
+
+			date_of_birth
+				.thru (delay, 150)
+				.thru (tap, function () {
+					picking_date_of_birth (false);
+				})
+
+			ref ('action')
+				.thru (tap, function (_ref) {
+					var errors =	function () {
+										if (! valid_email (email ()))
+											return 'Please enter a valid email address';
+										if (! password ())
+											return 'Please enter a password'
+										if (password () .length < 8)
+											return 'Please enter a password of at least 8 characters'
+										if (! agree ())
+											return 'You must agree to the terms of agreement'
+									}
+					_ref .addEventListener ('click', function (e) {
+						e .preventDefault ();
+						var _errors = errors ();
+						if (_errors)
+							toast (_errors)
+						else {
+							inquire (api () .register, {
+								email: email (),
+								password: password ()
+							})
+								.then (function () {
+									window .location .hash = _ref .hash;
+								})
+								.catch (function (err) {
+									if (err === 'unsuccessful')
+										toast ('This email has already been registered')
+									else
+										return Promise .reject (err)
+								})
+						}
+					})
+				})
+
+	self .expressions = {};
+
+	self .expressions [0] = function (_item) { return  date_of_birth  };
+	self .expressions [1] = function (_item) { return  date_of_birth  };
+	self .expressions [2] = function (_item) { return  picking_date_of_birth  };
+	self .expressions [3] = function (_item) { return  date_of_birth  };
+	self .expressions [4] = function (_item) { return  nationality  };
+	self .expressions [5] = function (_item) { return  school  };
+	self .expressions [6] = function (_item) { return  agree  };
+	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
+	}) (this, this .opts);
+});
+riot.tag2('page-disclaimer', '<nav> <nav-bar> <nav-buttons> <a href="#register"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title></nav-title> </nav-bar> </nav> <component-main-content> <register> <label> Disclaimer and Terms of Agreements </label> <component-spacing height="20px"></component-spacing> <disclaimer> <p>The information contained on www.kodingkingdom.com website and mobile app (the "Service") is for general information purposes only.</p> <p>Koding Kingdom (Hong Kong) Limited assumes no responsibility for errors or omissions in the contents on the Service.</p> <p>In no event shall Koding Kingdom (Hong Kong) Limited be liable for any special, direct, indirect, consequential, or incidental damages or any damages whatsoever, whether in an action of contract, negligence or other tort, arising out of or in connection with the use of the Service or the contents of the Service. Koding Kingdom (Hong Kong) Limited reserves the right to make additions, deletions, or modification to the contents on the Service at any time without prior notice.</p> <p>Koding Kingdom (Hong Kong) Limited does not warrant that the website is free of viruses or other harmful components.</p> <p>This Disclaimer is licensed by TermsFeed to Koding Kingdom (Hong Kong) Limited.</p> </disclaimer> </register> </component-main-content>', '', '', function(opts) {
+});
+riot.tag2('page-forget', '<nav> <nav-bar> <nav-buttons> <a href="#login"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Forget Password</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <forget> <label>Please enter your email to receive a new password.</label> <component-field-control placeholder="Email" type="email"></component-field-control> <component-spacing height="40px"></component-spacing> <component-action> <a href="#home">Send</a> </component-action> </forget> </component-main-content>', '', '', function(opts) {
+});
+riot.tag2('page-home', '<home> <label>CODE&#x3E;<br>&#x3C;WARS</label> <img src="https://ibin.co/3I5zb7FQHEYr.png"> <component-spacing height="40px"></component-spacing> <component-action> <a href="#login">Login</a> </component-action> <component-spacing height="10px"></component-spacing> <component-action> <a href="#register">Register</a> </component-action> </home>', '', '', function(opts) {
+});
+riot.tag2('page-login', '<nav> <nav-bar> <nav-buttons> <a href="#home"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Login</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <login> <component-field-control placeholder="Email" type="email"></component-field-control> <component-field-control type="password" placeholder="Password"></component-field-control> <a href="#forget"> Forget Password? </a> <component-spacing height="40px"></component-spacing> <component-action> <a href="#account/ranking">Login</a> </component-action> </login> </component-main-content>', '', '', function(opts) {
+});
+riot.tag2('page-logout', '', '', '', function(opts) {
 	(function (self, args) {
 
 	 self ._loaded = true;
@@ -2111,94 +2239,4 @@ riot.tag2('page-register', '<nav> <nav-bar> <nav-buttons> <a href="#home"> <comp
 	self .expressions [3] = function (_item) { return  agree_toa  };
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
-});
-riot.tag2('page-subaccount-create', '<nav> <nav-bar> <nav-buttons> <a href="#home"> <component-back-button></component-back-button> </a> </nav-buttons> <nav-title> <component-page-title>Create New Player</component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <register> <label> Please enter your email and create a password </label> <component-spacing height="20px"></component-spacing> <label>User Name:</label> <component-field-control type="text" placeholder="First Name" input__to=":firstname"></component-field-control> <component-field-control type="text" placeholder="Last Name" input__to=":lastname"></component-field-control> <label>Date of Birth:</label> <component-field-control placeholder="{expression:page-subaccount-create:1}" input__to=":date-of-birth" ref="{ref prefix}date-of-birth-ref" readonly></component-field-control> <fullscreen-holder active="{expression:page-subaccount-create:2}"> <component-modal-holder> <component-date-picker date__to=":date-of-birth"></component-date-picker> </component-modal-holder> </fullscreen-holder> <label>Nationality:</label> <component-field-control type="password" placeholder="" input__to=":nationality"></component-field-control> <label>School:</label> <component-field-control type="text" placeholder="" input__to=":school"></component-field-control> <component-spacing height="40px"></component-spacing> <component-action> <a ref="{ref prefix}action" href="#portal">Create</a> </component-action> <terms-of-agreement> <item> <component-checkbox check__to=":agree-toa"></component-checkbox> </item> <label> I agree with the <a href="#disclaimer">Disclaimers and Terms of Agreement</a> </label> </terms-of-agreement> </register> </component-main-content>', '', '', function(opts) {
-	(function (self, args) {
-
-	 self ._loaded = true;
-	 self ._scope = function () {};
-	var self_diff = stream ();
-	var yielded_diff = stream ();
-	self .yielded_diff = yielded_diff ;
-	var diffs = mergeAll ([ self_diff, yielded_diff ]);
-	var ref = function (name) { return ref_diff (name, diffs) };
-	var ref_set = function (name) { return ref_set_diff (name, diffs) };
-	var _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy)  ;
-	_refs .thru (map, self_refs) .thru (diff_refs) .thru (tap, self_diff);
-	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
-	self .on ("update", function () {args = self .opts});
-
-			self .temp = true;
-
-			self
-				.remembers (':email')
-				.remembers (':password')
-				.remembers (':date-of-birth')
-				.remembers (':agree-toa')
-
-			self .remembers ('picking-date-of-birth')
-			self .impressions ('picking-date-of-birth') .thru (map, noop) .thru (tap, self .render);
-
-			self .establish ('date-of-birth-ref', ref)
-				.impressions ('date-of-birth-ref')
-				.thru (map, function (tag) {
-					return tag .root;
-				})
-				.thru (tap, function (ref) {
-					ref .addEventListener ('click', function (e) {
-						self .mention ('picking-date-of-birth', true);
-					})
-				})
-
-			self .impressions (':date-of-birth')
-				.thru (delay, 150)
-				.thru (tap, function () {
-					self .mention ('picking-date-of-birth', false);
-				})
-
-			self
-				.establish ('action', ref)
-				.impressions ('action')
-					.thru (tap, function (_ref) {
-						var errors =	function () {
-											if (! valid_email (my (':email')))
-												return 'Please enter a valid email address';
-											if (! my (':password'))
-												return 'Please enter a password'
-											if (my (':password') .length < 8)
-												return 'Please enter a password of at least 8 characters'
-											if (! my (':agree-toa'))
-												return 'You must agree to the terms of agreement'
-										}
-						_ref .addEventListener ('click', function (e) {
-							e .preventDefault ();
-							var _errors = errors ();
-							if (_errors)
-								toast (_errors)
-							else {
-								inquire (self .affiliated ('::register'), {
-									email: my (':email'),
-									password: my (':password')
-								})
-									.then (function () {
-										window .location .hash = _ref .hash;
-									})
-									.catch (function (err) {
-										if (err === 'unsuccessful')
-											toast ('This email has already been registered')
-										else
-											return Promise .reject (err)
-									})
-							}
-						})
-					})
-
-	self .expressions = {};
-
-	self .expressions [0] = function (_item) { return  my (':date-of-birth')  };
-	self .expressions [1] = function (_item) { return  my ('picking-date-of-birth')  };
-	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
-	}) (this, this .opts);
-});
-riot.tag2('page-table', '<nav> <nav-bar> <nav-buttons> <a href="#team/profile"> <component-x-button></component-x-button> </a> </nav-buttons> <nav-title> <component-page-title> Let\'s Code! </component-page-title> </nav-title> </nav-bar> </nav> <component-main-content> <table> <tr> <th>Rank</th> <th>Name</th> <th></th> <th>Score</th> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr active> <td>1</td> <td>You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> <tr> <td>1</td> <td>Not You</td> <td><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon><icon class="fa-star"></icon></td> <td>1654</td> </tr> </table> </component-main-content> <component-tabs tab="teams"></component-tabs>', '', '', function(opts) {
 });

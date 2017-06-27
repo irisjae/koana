@@ -36,14 +36,14 @@
 	register {
 		@extend [padded-layout];
 		
-		> label {
+		-> {label} {
 			color: black;
 			font-weight: bold;
 			font-size: 1.4em;
 		}
 	
 		
-		> a {
+		-> {a} {
 			&[maybe] {
 		        &:after {
 	        	    border: 2px solid #dbdbdb;
@@ -67,7 +67,7 @@
 			}
 		}
 		
-		> disclaimer {
+		-> {disclaimer} {
 			color: rgba(0, 0, 0, 1);
 		}
 	}

@@ -272,7 +272,14 @@ var styles =	(function () {
 												
 												base_tree .push ({
 													depth: bottom_depth + 1,
-													metastyles: use_self (tag) (tag_metastyles),
+													metastyles: R .pipe (
+														/* implements custom selector */
+														function (meta) {
+															return meta .replace (/-> ?{([^}]+)}/g, '> $1');//:not(& $1 $1)');
+														},
+														//R .tap ((x) => console .log (x)),
+														use_self (tag)
+													) (tag_metastyles),
 													path: (new Array (bottom_depth + 1)) .fill ('leaves') .join ('/') + '/' + tag + '.css'
 												});
 
@@ -411,21 +418,6 @@ var render =	function (tag_name, tag_src, parent_name) {
 							) + '\n'
 				};
 
-			//var pages = files ('.ejs') (tags_src) .map (function (path) { return path .slice (tags_src .length + 1) .split ('/') .join ('-') .split ('.') [0] }) .filter (function (x) { return x .startsWith ('page') });
-			
-			
-/*
-var ejs = require ('ejs');
-var escape_string =	function (the_function) {
-						var function_source = the_function .toString ();
-						return function_source .match (/[^]*\/\*([^]*)\*\/\}$/) [1];
-					};
-var escape_function =	function (the_function) {
-							var function_source = the_function .toString ();
-							var function_arguments = /^[^(]*\(([^)]*)\)/ .exec (function_source) [1] .replace (/\s/g, '') .split (',');
-							var function_body = /^[^{]*{([^]*)}[^}]*$/ .exec (function_source) [1];
-							return 'new Function (' + function_arguments .concat ([function_body]) .map (JSON .stringify) .join (',') + ')';
-						};*/
 
 
 //build

@@ -1,33 +1,26 @@
 #!/usr/bin/env bash
-DIR="$(sudo dirname $(readlink -f $0))"
+DIR="$(sudo dirname "$(readlink -f "$0")")"
 cd "$DIR"
 
-. ~/.nvm/nvm.sh
-nvm use 7.1.0
+echo
+echo running prepare...
+./test/prepare.sh
 
-node --version
-
-screen -wipe
-if screen -list | grep -q "^neo4j"; then
-    echo
-    echo
-    echo closing screen neo4j...
-    screen -S "neo4j" -X quit
-fi
+echo
+echo running setup...
+./test/setup.sh
 
 echo
 echo
-if screen -list | grep -q "test-neo4j"; then
-    echo Screen test-neo4j already open
-else
-    echo opening screen test-neo4j...
-    screen -dmS test-neo4j sudo neo4j console
-fi
+echo waiting for neo4j to complete startup procedures...
+./test/wait.sh
 
 echo
 echo
-echo running tests...
+echo running tests proper...
+./test/go.sh
+
 echo
-cd ..
-shopt -s globstar
-tap test/**/*.js
+echo
+echo running teardown...
+./test/teardown.sh

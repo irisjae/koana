@@ -1,8 +1,15 @@
 var use_db = require ('api/use_db')
                 
-require ('./kk_index')
+Promise .resolve ()
+    .then (function (x) {
+        console .log ('fetching kk questions from google sheets...');
+    })
     .then (function () {
-        console .log ('got kk questions...');
+        return require ('./kk_index')
+    })
+    .then (function (x) {
+        console .log ('inserting questions into database...');
+        return x;
     })
     .then (function (kk_questions) {
         return  use_db (function (session) {
@@ -33,7 +40,7 @@ require ('./kk_index')
                 })
     })
     .then (function () {
-        console .log ('done')
+        console .log ('completed import')
     })
     .catch (function (err) {
         console .error ('ERRORED:', err)

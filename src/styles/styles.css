@@ -13389,6 +13389,10 @@ nav > nav-bar > nav-title {
   bottom: 20%;
 }
 
+nav > nav-bar > nav-buttons > * {
+  margin: 0 2px;
+}
+
 nav > nav-bar > nav-buttons:first-child {
   left: 10px;
   text-align: left;
@@ -13697,6 +13701,172 @@ component-create-button span {
   vertical-align: sub;
 }
 
+component-custom-hamburger > component-hamburger-button svg g {
+  fill: white;
+}
+
+component-custom-hamburger > component-custom-menu {
+  transition: transform 0.25s cubic-bezier(0, 0, 0.25, 1);
+}
+
+component-custom-hamburger > component-custom-menu[off] {
+  transform: translateX(-224px);
+  pointer-events: none;
+}
+
+component-custom-hamburger > component-custom-menu:not([off]) > pane {
+  box-shadow: rgba(0, 0, 0, 0.05) 1px 0px 35px;
+}
+
+component-custom-menu {
+  z-index: 99999999;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+component-custom-menu > pane {
+  display: block;
+  background: #fff;
+  z-index: 1000;
+  width: 224px;
+  height: 100%;
+}
+
+component-custom-menu > pane > item {
+  border: 10px;
+  box-sizing: border-box;
+  display: block;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0px;
+  padding: 0px 16px 0px 72px;
+  outline: none;
+  font-size: 16px;
+  font-weight: inherit;
+  position: relative;
+  z-index: 1;
+  color: rgba(0, 0, 0, 0.87);
+  line-height: 48px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  min-height: 48px;
+  white-space: nowrap;
+  background: none;
+}
+
+component-custom-menu > pane > item > icon {
+  display: block;
+  color: rgba(0, 0, 0, 0.87);
+  fill: #757575;
+  height: 24px;
+  width: 24px;
+  user-select: none;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  position: absolute;
+  top: 0px;
+  margin: 12px;
+  left: 4px;
+}
+
+component-custom-menu > pane > hr {
+  margin: 7px 0px 8px;
+  height: 1px;
+  border: none;
+  background-color: #e0e0e0;
+}
+
+component-custom-subcategory-item > a {
+  display: block;
+}
+
+component-custom-tabs {
+  color: rgba(0, 0, 0, 0.870588);
+  background-color: white;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+  box-sizing: border-box;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  border-radius: 2px;
+}
+
+component-custom-tabs tabs {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  height: 48px;
+}
+
+component-custom-tabs tabs > tab {
+  border: 10px;
+  display: inline-block;
+  font-family: Roboto, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 0px;
+  padding: 4px 12px 6px;
+  position: relative;
+  transition: padding-top 0.3s;
+  min-width: 80px;
+  max-width: 168px;
+  flex: 1 1 0%;
+  background: none;
+  overflow: hidden;
+}
+
+component-custom-tabs tabs > tab[active] {
+  padding: 2px 12px 6px;
+}
+
+component-custom-tabs tabs > tab[active] a {
+  font-size: 14px;
+  color: #00bcd4;
+}
+
+component-custom-tabs tabs > tab[active] a > svg {
+  color: white !important;
+}
+
+component-custom-tabs tabs > tab[active] a > svg {
+  fill: #00bcd4 !important;
+}
+
+component-custom-tabs tabs > tab[active] a > svg * {
+  fill: #00bcd4 !important;
+}
+
+component-custom-tabs tabs > tab a {
+  display: block;
+  font-size: 12px;
+  text-align: center;
+  transition: color 0.3s, font-size 0.3s;
+  color: rgba(0, 0, 0, 0.541176);
+}
+
+component-custom-tabs tabs > tab a > svg {
+  display: block;
+  color: rgba(0, 0, 0, 0.870588);
+  height: 24px;
+  width: 100%;
+  user-select: none;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+component-custom-tabs tabs > tab a > svg {
+  fill: #898989;
+}
+
+component-custom-tabs tabs > tab a > svg * {
+  fill: #898989;
+}
+
 component-date-bar {
   font-size: 13px;
   background: rgba(196, 196, 196, 0.8);
@@ -13943,6 +14113,10 @@ component-filter-button span {
   fill: rgba(255, 255, 255, 0.8);
   font-weight: bold;
   vertical-align: sub;
+}
+
+component-hamburger-button > svg {
+  transform: scale(1.4);
 }
 
 component-item {
@@ -14685,10 +14859,6 @@ component-pitch-picker > football-field-map {
   flex: 1;
 }
 
-component-portal-subcategory-item > a {
-  display: block;
-}
-
 component-prev-button {
   transform: scale(0.5);
 }
@@ -15010,90 +15180,6 @@ component-table-control > span {
 component-table-control > svg {
   vertical-align: sub;
   display: inline-block;
-}
-
-component-tabs {
-  color: rgba(0, 0, 0, 0.870588);
-  background-color: white;
-  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  box-sizing: border-box;
-  font-family: Roboto, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-  border-radius: 2px;
-}
-
-component-tabs tabs {
-  position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  height: 48px;
-}
-
-component-tabs tabs > tab {
-  border: 10px;
-  display: inline-block;
-  font-family: Roboto, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-  text-decoration: none;
-  margin: 0px;
-  padding: 4px 12px 6px;
-  position: relative;
-  transition: padding-top 0.3s;
-  min-width: 80px;
-  max-width: 168px;
-  flex: 1 1 0%;
-  background: none;
-  overflow: hidden;
-}
-
-component-tabs tabs > tab[active] {
-  padding: 2px 12px 6px;
-}
-
-component-tabs tabs > tab[active] a {
-  font-size: 14px;
-  color: #00bcd4;
-}
-
-component-tabs tabs > tab[active] a > svg {
-  color: white !important;
-}
-
-component-tabs tabs > tab[active] a > svg {
-  fill: #00bcd4 !important;
-}
-
-component-tabs tabs > tab[active] a > svg * {
-  fill: #00bcd4 !important;
-}
-
-component-tabs tabs > tab a {
-  display: block;
-  font-size: 12px;
-  text-align: center;
-  transition: color 0.3s, font-size 0.3s;
-  color: rgba(0, 0, 0, 0.541176);
-}
-
-component-tabs tabs > tab a > svg {
-  display: block;
-  color: rgba(0, 0, 0, 0.870588);
-  height: 24px;
-  width: 100%;
-  user-select: none;
-  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-component-tabs tabs > tab a > svg {
-  fill: #898989;
-}
-
-component-tabs tabs > tab a > svg * {
-  fill: #898989;
 }
 
 component-tag-control-item {
@@ -15918,7 +16004,7 @@ component-x-button icon-holder {
   font-size: 2.5em;
 }
 
-page-courses:after {
+page-account-courses:after {
   content: "";
   position: absolute;
   top: 0;
@@ -15930,69 +16016,69 @@ page-courses:after {
   background: white;
 }
 
-page-courses highscore {
+page-account-courses highscore {
   padding: 10px 15px 10px 15px;
   display: block;
 }
 
-page-courses highscore [unpadded-layouting] {
+page-account-courses highscore [unpadded-layouting] {
   margin-left: -15px;
   margin-right: -15px;
 }
 
-page-courses highscore > :first-child[unpadded-layouting] {
+page-account-courses highscore > :first-child[unpadded-layouting] {
   margin-top: -10px;
 }
 
-page-courses highscore > :first-child > :first-child[unpadded-layouting] {
+page-account-courses highscore > :first-child > :first-child[unpadded-layouting] {
   margin-top: -10px;
 }
 
-page-courses highscore > :first-child > :first-child > :first-child[unpadded-layouting] {
+page-account-courses highscore > :first-child > :first-child > :first-child[unpadded-layouting] {
   margin-top: -10px;
 }
 
-page-courses highscore > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
+page-account-courses highscore > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
   margin-top: -10px;
 }
 
-page-courses {
+page-account-courses {
   height: 100%;
   display: flex;
   flex-flow: column;
   transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 }
 
-page-courses > component-nav {
+page-account-courses > component-nav {
   flex: 0 1 auto;
 }
 
-page-courses > component-tabs {
+page-account-courses > component-tabs {
   flex: 0 1 auto;
 }
 
-page-courses > component-main-content {
+page-account-courses > component-main-content {
   flex: 1 1 auto;
   position: relative;
 }
 
-page-courses[no-background] {
+page-account-courses[no-background] {
   background: white;
 }
 
-page-courses[no-background]:after {
+page-account-courses[no-background]:after {
   content: unset;
 }
 
-page-courses[light-background] {
+page-account-courses[light-background] {
   background: rgba(255, 255, 255, 0.4);
 }
 
-page-courses highscore {
+page-account-courses highscore {
   font-family: CONSOLAS, COURIER;
 }
 
-page-courses highscore > my-highscore > score {
+page-account-courses highscore > my-highscore > score {
   color: #4FABFF;
   font-weight: bold;
   display: block;
@@ -16000,16 +16086,577 @@ page-courses highscore > my-highscore > score {
   text-align: center;
 }
 
-page-courses highscore > highscores {
+page-account-courses highscore > highscores {
   margin-top: 50px;
 }
 
-page-courses highscore > highscores > highscore {
+page-account-courses highscore > highscores > highscore {
   color: black;
   font-size: 1.15em;
   padding: 7px;
   justify-content: space-between;
   display: flex;
+}
+
+page-account-quiz-subcategory:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+  background: white;
+}
+
+page-account-quiz-subcategory {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+page-account-quiz-subcategory > component-nav {
+  flex: 0 1 auto;
+}
+
+page-account-quiz-subcategory > component-tabs {
+  flex: 0 1 auto;
+}
+
+page-account-quiz-subcategory > component-main-content {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+page-account-quiz-subcategory[no-background] {
+  background: white;
+}
+
+page-account-quiz-subcategory[no-background]:after {
+  content: unset;
+}
+
+page-account-quiz-subcategory[light-background] {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+page-account-quiz-subcategory question {
+  padding: 10px 15px 10px 15px;
+  display: block;
+  left: 0;
+  right: 0;
+  bottom: 95px;
+  top: 0;
+  position: absolute;
+  overflow: scroll;
+  color: #4FABFF;
+}
+
+page-account-quiz-subcategory question > number > label {
+  font-size: 6em;
+}
+
+page-account-quiz-subcategory question > label {
+  font-size: 1.4em;
+  display: block;
+}
+
+page-account-quiz-subcategory question > image-holder > img {
+  max-height: 40%;
+  width: auto;
+}
+
+page-account-quiz-subcategory question > guesses {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+page-account-quiz-subcategory question > guesses > guess {
+  flex-basis: calc(50% - 5px);
+  flex-grow: 0;
+  flex-shrink: 0;
+  min-height: 5em;
+  margin: 5px 0;
+  padding: 4px;
+  word-break: break-word;
+}
+
+page-account-quiz-subcategory question > guesses > guess > a {
+  background: #B8E4FA;
+  color: #888;
+  border-radius: 7px;
+  padding: 0.5em;
+  width: 100%;
+  height: 100%;
+  display: block;
+  text-align: center;
+}
+
+page-account-quiz-subcategory question > guesses > guess > a[active] {
+  color: #566573;
+  background: #b3daff;
+}
+
+page-account-quiz-subcategory question > guesses[completed] > guess > a[correct] {
+  color: #566573;
+  background: #4dffa3;
+}
+
+page-account-quiz-subcategory question > guesses[completed] > guess > a[active] {
+  color: #FFF;
+  background: red;
+}
+
+page-account-quiz-subcategory question > guesses[completed] > guess > a[correct][active] {
+  color: #566573;
+  background: #80ffbd;
+}
+
+page-account-quiz-subcategory navigation {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  position: absolute;
+  display: block;
+  opacity: 0.7;
+}
+
+page-account-quiz-subcategory navigation > component-prev-button {
+  position: absolute;
+  left: 25%;
+  bottom: 0;
+}
+
+page-account-quiz-subcategory navigation > component-next-button {
+  position: absolute;
+  right: 25%;
+  bottom: 0;
+}
+
+page-account-quizes:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+  background: white;
+}
+
+page-account-quizes {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+page-account-quizes > component-nav {
+  flex: 0 1 auto;
+}
+
+page-account-quizes > component-tabs {
+  flex: 0 1 auto;
+}
+
+page-account-quizes > component-main-content {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+page-account-quizes[no-background] {
+  background: white;
+}
+
+page-account-quizes[no-background]:after {
+  content: unset;
+}
+
+page-account-quizes[light-background] {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+page-account-quizes page {
+  display: block;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  top: 0;
+  position: absolute;
+  overflow: scroll;
+}
+
+page-account-quizes page > label {
+  color: #4FABFF;
+  font-weight: bold;
+  font-size: 1.4em;
+  display: block;
+  padding: 0 10px;
+}
+
+page-account-ranking ranking {
+  background-color: white;
+  color: #566573;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+page-account-ranking ranking td {
+  border: 1px solid #dbdbdb;
+  border-width: 0 0 1px;
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+page-account-ranking ranking th {
+  border: 1px solid #dbdbdb;
+  border-width: 0 0 1px;
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+page-account-ranking ranking th {
+  color: #566573;
+  text-align: left;
+}
+
+page-account-ranking ranking tr:hover {
+  background-color: whitesmoke;
+}
+
+page-account-ranking ranking thead td {
+  border-width: 0 0 2px;
+  color: #7a7a7a;
+}
+
+page-account-ranking ranking thead th {
+  border-width: 0 0 2px;
+  color: #7a7a7a;
+}
+
+page-account-ranking ranking tbody tr:last-child td {
+  border-bottom-width: 0;
+}
+
+page-account-ranking ranking tbody tr:last-child th {
+  border-bottom-width: 0;
+}
+
+page-account-ranking ranking tfoot td {
+  border-width: 2px 0 0;
+  color: #7a7a7a;
+}
+
+page-account-ranking ranking tfoot th {
+  border-width: 2px 0 0;
+  color: #7a7a7a;
+}
+
+page-account-ranking ranking td {
+  padding: 5px 10px;
+}
+
+page-account-ranking ranking th {
+  padding: 5px 10px;
+}
+
+page-account-ranking:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+  background: white;
+}
+
+page-account-ranking {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+page-account-ranking > component-nav {
+  flex: 0 1 auto;
+}
+
+page-account-ranking > component-tabs {
+  flex: 0 1 auto;
+}
+
+page-account-ranking > component-main-content {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+page-account-ranking[no-background] {
+  background: white;
+}
+
+page-account-ranking[no-background]:after {
+  content: unset;
+}
+
+page-account-ranking[light-background] {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+page-account-ranking ranking {
+  overflow: scroll;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: transparent;
+}
+
+page-account-ranking ranking > label {
+  color: #4FABFF;
+  font-weight: bold;
+  font-size: 1.4em;
+  display: block;
+  padding: 0 10px;
+}
+
+page-account-ranking ranking tr > td:nth-child(3) {
+  min-width: 75px;
+}
+
+page-account-ranking ranking tr td {
+  font-size: 0.9em;
+}
+
+page-account-ranking ranking tr td icon {
+  vertical-align: baseline;
+}
+
+page-account-ranking ranking tr th {
+  padding: 5px;
+  min-width: 40px;
+  font-weight: normal;
+  text-align: center;
+}
+
+page-account-ranking ranking tr td {
+  padding: 5px;
+  min-width: 40px;
+  font-weight: normal;
+  text-align: center;
+}
+
+page-account-ranking ranking tr:hover {
+  background-color: rgba(245, 245, 245, 0.2);
+}
+
+page-account-ranking ranking tr:first-child {
+  background: rgba(196, 196, 196, 0.2);
+}
+
+page-account-ranking ranking tr[active] {
+  background: rgba(153, 187, 199, 0.4);
+}
+
+page-account-subaccount-create page > component-input-control input {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #dbdbdb;
+  border-radius: 3px;
+  color: #566573;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 14px;
+  height: 32px;
+  -webkit-box-pack: start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  line-height: 24px;
+  padding-left: 8px;
+  padding-right: 8px;
+  position: relative;
+  vertical-align: top;
+  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
+  max-width: 100%;
+  width: 100%;
+}
+
+page-account-subaccount-create page > component-input-control input:hover {
+  border-color: #b5b5b5;
+}
+
+page-account-subaccount-create page > component-input-control input:active {
+  border-color: #00d1b2;
+  outline: none;
+}
+
+page-account-subaccount-create page > component-input-control input:focus {
+  border-color: #00d1b2;
+  outline: none;
+}
+
+page-account-subaccount-create page > component-input-control input[disabled] {
+  background-color: whitesmoke;
+  border-color: #dbdbdb;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+page-account-subaccount-create page > component-input-control input[disabled]::-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-account-subaccount-create page > component-input-control input[disabled]::-webkit-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-account-subaccount-create page > component-input-control input[disabled]:-moz-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-account-subaccount-create page > component-input-control input[disabled]:-ms-input-placeholder {
+  color: rgba(54, 54, 54, 0.3);
+}
+
+page-account-subaccount-create page > component-input-control input[type="search"] {
+  border-radius: 290486px;
+}
+
+page-account-subaccount-create:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  z-index: -1;
+  background: white;
+}
+
+page-account-subaccount-create page {
+  padding: 10px 15px 10px 15px;
+  display: block;
+}
+
+page-account-subaccount-create page [unpadded-layouting] {
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+page-account-subaccount-create page > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-account-subaccount-create page > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-account-subaccount-create page > :first-child > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-account-subaccount-create page > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
+  margin-top: -10px;
+}
+
+page-account-subaccount-create {
+  height: 100%;
+  display: flex;
+  flex-flow: column;
+  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+}
+
+page-account-subaccount-create > component-nav {
+  flex: 0 1 auto;
+}
+
+page-account-subaccount-create > component-tabs {
+  flex: 0 1 auto;
+}
+
+page-account-subaccount-create > component-main-content {
+  flex: 1 1 auto;
+  position: relative;
+}
+
+page-account-subaccount-create[no-background] {
+  background: white;
+}
+
+page-account-subaccount-create[no-background]:after {
+  content: unset;
+}
+
+page-account-subaccount-create[light-background] {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+page-account-subaccount-create page > label {
+  color: black;
+  font-weight: bold;
+  font-size: 1.4em;
+}
+
+page-account-subaccount-create page > component-input-control {
+  padding: 10px;
+  width: 100%;
+  display: block;
+  font-size: 1.5em;
+}
+
+page-account-subaccount-create page > component-field-control[ref="date-of-birth-ref"] > placeholder {
+  color: black;
+}
+
+page-account-subaccount-create page > a[maybe]:after {
+  border: 2px solid #dbdbdb;
+  border-radius: 290486px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  content: "";
+  display: block;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  position: absolute !important;
+  width: 32px;
+  height: 32px;
+  margin-left: -16px;
+  margin-top: -16px;
+  animation: spinAround 600ms infinite linear;
+  border: 5px solid #dbdbdb;
+  border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
+}
+
+page-account-subaccount-create page > terms-of-agreement {
+  display: flex;
+}
+
+page-account-subaccount-create page > terms-of-agreement > item {
+  flex-basis: 50px;
+  padding: 10px;
+}
+
+page-account-subaccount-create page > terms-of-agreement > label {
+  flex-grow: 1;
+  padding: 10px;
+}
+
+page-account-subaccount-create page > terms-of-agreement > label1 {
+  font-size: 5px;
 }
 
 page-disclaimer:after {
@@ -16112,75 +16759,6 @@ page-disclaimer register > disclaimer {
   color: black;
 }
 
-page-forget forget > component-input-control input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  border-radius: 3px;
-  color: #566573;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  font-size: 14px;
-  height: 32px;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  line-height: 24px;
-  padding-left: 8px;
-  padding-right: 8px;
-  position: relative;
-  vertical-align: top;
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
-  max-width: 100%;
-  width: 100%;
-}
-
-page-forget forget > component-input-control input:hover {
-  border-color: #b5b5b5;
-}
-
-page-forget forget > component-input-control input:active {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-forget forget > component-input-control input:focus {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-forget forget > component-input-control input[disabled] {
-  background-color: whitesmoke;
-  border-color: #dbdbdb;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-page-forget forget > component-input-control input[disabled]::-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-forget forget > component-input-control input[disabled]::-webkit-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-forget forget > component-input-control input[disabled]:-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-forget forget > component-input-control input[disabled]:-ms-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-forget forget > component-input-control input[type="search"] {
-  border-radius: 290486px;
-}
-
 page-forget:after {
   content: "";
   position: absolute;
@@ -16251,14 +16829,6 @@ page-forget[light-background] {
   background: rgba(255, 255, 255, 0.4);
 }
 
-page-forget forget > component-input-control {
-  padding: 10px;
-  width: 100%;
-  display: block;
-  font-size: 1.5em;
-  color: white;
-}
-
 page-forget forget > a[maybe]:after {
   border: 2px solid #dbdbdb;
   border-radius: 290486px;
@@ -16281,100 +16851,6 @@ page-forget forget > a[maybe]:after {
 
 page-forget forget > disclaimer {
   color: rgba(0, 0, 0, 0.298039);
-}
-
-page-highscore:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-  background: white;
-}
-
-page-highscore highscore {
-  padding: 10px 15px 10px 15px;
-  display: block;
-}
-
-page-highscore highscore [unpadded-layouting] {
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-page-highscore highscore > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-highscore highscore > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-highscore highscore > :first-child > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-highscore highscore > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-highscore {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-page-highscore > component-nav {
-  flex: 0 1 auto;
-}
-
-page-highscore > component-tabs {
-  flex: 0 1 auto;
-}
-
-page-highscore > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-page-highscore[no-background] {
-  background: white;
-}
-
-page-highscore[no-background]:after {
-  content: unset;
-}
-
-page-highscore[light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-page-highscore highscore {
-  font-family: CONSOLAS, COURIER;
-}
-
-page-highscore highscore > my-highscore > score {
-  color: #4FABFF;
-  font-weight: bold;
-  display: block;
-  font-size: 8em;
-  text-align: center;
-}
-
-page-highscore highscore > highscores {
-  margin-top: 50px;
-}
-
-page-highscore highscore > highscores > highscore {
-  color: black;
-  font-size: 1.15em;
-  padding: 7px;
-  justify-content: space-between;
-  display: flex;
 }
 
 page-home:after {
@@ -16456,75 +16932,6 @@ page-home home > img {
   margin-right: auto;
 }
 
-page-login login > component-input-control input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  border-radius: 3px;
-  color: #566573;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  font-size: 14px;
-  height: 32px;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  line-height: 24px;
-  padding-left: 8px;
-  padding-right: 8px;
-  position: relative;
-  vertical-align: top;
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
-  max-width: 100%;
-  width: 100%;
-}
-
-page-login login > component-input-control input:hover {
-  border-color: #b5b5b5;
-}
-
-page-login login > component-input-control input:active {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-login login > component-input-control input:focus {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-login login > component-input-control input[disabled] {
-  background-color: whitesmoke;
-  border-color: #dbdbdb;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-page-login login > component-input-control input[disabled]::-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-login login > component-input-control input[disabled]::-webkit-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-login login > component-input-control input[disabled]:-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-login login > component-input-control input[disabled]:-ms-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-login login > component-input-control input[type="search"] {
-  border-radius: 290486px;
-}
-
 page-login:after {
   content: "";
   position: absolute;
@@ -16595,14 +17002,6 @@ page-login[light-background] {
   background: rgba(255, 255, 255, 0.4);
 }
 
-page-login login > component-input-control {
-  padding: 10px;
-  width: 100%;
-  display: block;
-  font-size: 1.5em;
-  color: white;
-}
-
 page-login login > a[maybe]:after {
   border: 2px solid #dbdbdb;
   border-radius: 290486px;
@@ -16621,10 +17020,6 @@ page-login login > a[maybe]:after {
   animation: spinAround 600ms infinite linear;
   border: 5px solid #dbdbdb;
   border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
-}
-
-page-login login > disclaimer {
-  color: rgba(0, 0, 0, 0.298039);
 }
 
 page-logout:after {
@@ -16669,483 +17064,6 @@ page-logout[no-background]:after {
 
 page-logout[light-background] {
   background: rgba(255, 255, 255, 0.4);
-}
-
-page-portal:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-  background: white;
-}
-
-page-portal {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-page-portal > component-nav {
-  flex: 0 1 auto;
-}
-
-page-portal > component-tabs {
-  flex: 0 1 auto;
-}
-
-page-portal > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-page-portal[no-background] {
-  background: white;
-}
-
-page-portal[no-background]:after {
-  content: unset;
-}
-
-page-portal[light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-page-portal {
-  /*component-page-title{
-			
-			font-size: 1.4em;
-		
-		}*/
-}
-
-page-portal portal {
-  display: block;
-  left: 0;
-  right: 0;
-  bottom: 95px;
-  top: 0;
-  position: absolute;
-  overflow: scroll;
-}
-
-page-portal portal > label {
-  color: #4FABFF;
-  font-weight: bold;
-  font-size: 1.4em;
-  display: block;
-  padding: 0 10px;
-}
-
-page-portal links {
-  position: fixed;
-  bottom: 35px;
-  left: 0;
-  right: 0;
-  opacity: 0.7;
-  display: flex;
-  justify-content: space-around;
-}
-
-page-portal links > a {
-  color: black;
-  text-align: center;
-  width: 50px;
-  white-space: nowrap;
-  position: relative;
-}
-
-page-portal links > a:before {
-  content: '';
-  display: block;
-  margin: 0 auto;
-  padding: 25px;
-  background: #50abf1;
-  border-radius: 10px;
-}
-
-page-portal links > a > label {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-page-quiz-subcategory:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-  background: white;
-}
-
-page-quiz-subcategory {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-page-quiz-subcategory > component-nav {
-  flex: 0 1 auto;
-}
-
-page-quiz-subcategory > component-tabs {
-  flex: 0 1 auto;
-}
-
-page-quiz-subcategory > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-page-quiz-subcategory[no-background] {
-  background: white;
-}
-
-page-quiz-subcategory[no-background]:after {
-  content: unset;
-}
-
-page-quiz-subcategory[light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-page-quiz-subcategory question {
-  padding: 10px 15px 10px 15px;
-  display: block;
-  left: 0;
-  right: 0;
-  bottom: 95px;
-  top: 0;
-  position: absolute;
-  overflow: scroll;
-  color: #4FABFF;
-}
-
-page-quiz-subcategory question > number > label {
-  font-size: 6em;
-}
-
-page-quiz-subcategory question > label {
-  font-size: 1.4em;
-  display: block;
-}
-
-page-quiz-subcategory question > image-holder > img {
-  max-height: 40%;
-  width: auto;
-}
-
-page-quiz-subcategory question > guesses {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-page-quiz-subcategory question > guesses > guess {
-  flex-basis: calc(50% - 5px);
-  flex-grow: 0;
-  flex-shrink: 0;
-  min-height: 5em;
-  margin: 5px 0;
-  padding: 4px;
-  word-break: break-word;
-}
-
-page-quiz-subcategory question > guesses > guess > a {
-  background: #B8E4FA;
-  color: #888;
-  border-radius: 7px;
-  padding: 0.5em;
-  width: 100%;
-  height: 100%;
-  display: block;
-  text-align: center;
-}
-
-page-quiz-subcategory question > guesses > guess > a[active] {
-  color: #566573;
-  background: #b3daff;
-}
-
-page-quiz-subcategory question > guesses[completed] > guess > a[correct] {
-  color: #566573;
-  background: #4dffa3;
-}
-
-page-quiz-subcategory question > guesses[completed] > guess > a[active] {
-  color: #FFF;
-  background: red;
-}
-
-page-quiz-subcategory question > guesses[completed] > guess > a[correct][active] {
-  color: #566573;
-  background: #80ffbd;
-}
-
-page-quiz-subcategory navigation {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  position: absolute;
-  display: block;
-  opacity: 0.7;
-}
-
-page-quiz-subcategory navigation > component-prev-button {
-  position: absolute;
-  left: 25%;
-  bottom: 0;
-}
-
-page-quiz-subcategory navigation > component-next-button {
-  position: absolute;
-  right: 25%;
-  bottom: 0;
-}
-
-page-ranking ranking {
-  background-color: white;
-  color: #566573;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-page-ranking ranking td {
-  border: 1px solid #dbdbdb;
-  border-width: 0 0 1px;
-  padding: 8px 10px;
-  vertical-align: top;
-}
-
-page-ranking ranking th {
-  border: 1px solid #dbdbdb;
-  border-width: 0 0 1px;
-  padding: 8px 10px;
-  vertical-align: top;
-}
-
-page-ranking ranking th {
-  color: #566573;
-  text-align: left;
-}
-
-page-ranking ranking tr:hover {
-  background-color: whitesmoke;
-}
-
-page-ranking ranking thead td {
-  border-width: 0 0 2px;
-  color: #7a7a7a;
-}
-
-page-ranking ranking thead th {
-  border-width: 0 0 2px;
-  color: #7a7a7a;
-}
-
-page-ranking ranking tbody tr:last-child td {
-  border-bottom-width: 0;
-}
-
-page-ranking ranking tbody tr:last-child th {
-  border-bottom-width: 0;
-}
-
-page-ranking ranking tfoot td {
-  border-width: 2px 0 0;
-  color: #7a7a7a;
-}
-
-page-ranking ranking tfoot th {
-  border-width: 2px 0 0;
-  color: #7a7a7a;
-}
-
-page-ranking ranking td {
-  padding: 5px 10px;
-}
-
-page-ranking ranking th {
-  padding: 5px 10px;
-}
-
-page-ranking:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-  background: white;
-}
-
-page-ranking {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-page-ranking > component-nav {
-  flex: 0 1 auto;
-}
-
-page-ranking > component-tabs {
-  flex: 0 1 auto;
-}
-
-page-ranking > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-page-ranking[no-background] {
-  background: white;
-}
-
-page-ranking[no-background]:after {
-  content: unset;
-}
-
-page-ranking[light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-page-ranking ranking {
-  overflow: scroll;
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  background: transparent;
-}
-
-page-ranking ranking > label {
-  color: #4FABFF;
-  font-weight: bold;
-  font-size: 1.4em;
-  display: block;
-  padding: 0 10px;
-}
-
-page-ranking ranking tr > td:nth-child(3) {
-  min-width: 75px;
-}
-
-page-ranking ranking tr td {
-  font-size: 0.9em;
-}
-
-page-ranking ranking tr td icon {
-  vertical-align: baseline;
-}
-
-page-ranking ranking tr th {
-  padding: 5px;
-  min-width: 40px;
-  font-weight: normal;
-  text-align: center;
-}
-
-page-ranking ranking tr td {
-  padding: 5px;
-  min-width: 40px;
-  font-weight: normal;
-  text-align: center;
-}
-
-page-ranking ranking tr:hover {
-  background-color: rgba(245, 245, 245, 0.2);
-}
-
-page-ranking ranking tr:first-child {
-  background: rgba(196, 196, 196, 0.2);
-}
-
-page-ranking ranking tr[active] {
-  background: rgba(153, 187, 199, 0.4);
-}
-
-page-register register > component-input-control input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  border-radius: 3px;
-  color: #566573;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  font-size: 14px;
-  height: 32px;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  line-height: 24px;
-  padding-left: 8px;
-  padding-right: 8px;
-  position: relative;
-  vertical-align: top;
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
-  max-width: 100%;
-  width: 100%;
-}
-
-page-register register > component-input-control input:hover {
-  border-color: #b5b5b5;
-}
-
-page-register register > component-input-control input:active {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-register register > component-input-control input:focus {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-register register > component-input-control input[disabled] {
-  background-color: whitesmoke;
-  border-color: #dbdbdb;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-page-register register > component-input-control input[disabled]::-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-register register > component-input-control input[disabled]::-webkit-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-register register > component-input-control input[disabled]:-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-register register > component-input-control input[disabled]:-ms-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-register register > component-input-control input[type="search"] {
-  border-radius: 290486px;
 }
 
 page-register:after {
@@ -17224,13 +17142,6 @@ page-register register > label {
   font-size: 1.4em;
 }
 
-page-register register > component-input-control {
-  padding: 10px;
-  width: 100%;
-  display: block;
-  font-size: 1.5em;
-}
-
 page-register register > a[maybe]:after {
   border: 2px solid #dbdbdb;
   border-radius: 290486px;
@@ -17267,350 +17178,4 @@ page-register register > terms-of-agreement > label {
 
 page-register register > terms-of-agreement > label1 {
   font-size: 5px;
-}
-
-page-subaccount-create register > component-input-control input {
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  background-color: white;
-  border: 1px solid #dbdbdb;
-  border-radius: 3px;
-  color: #566573;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  font-size: 14px;
-  height: 32px;
-  -webkit-box-pack: start;
-  -ms-flex-pack: start;
-  justify-content: flex-start;
-  line-height: 24px;
-  padding-left: 8px;
-  padding-right: 8px;
-  position: relative;
-  vertical-align: top;
-  box-shadow: inset 0 1px 2px rgba(10, 10, 10, 0.1);
-  max-width: 100%;
-  width: 100%;
-}
-
-page-subaccount-create register > component-input-control input:hover {
-  border-color: #b5b5b5;
-}
-
-page-subaccount-create register > component-input-control input:active {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-subaccount-create register > component-input-control input:focus {
-  border-color: #00d1b2;
-  outline: none;
-}
-
-page-subaccount-create register > component-input-control input[disabled] {
-  background-color: whitesmoke;
-  border-color: #dbdbdb;
-  cursor: not-allowed;
-  pointer-events: none;
-}
-
-page-subaccount-create register > component-input-control input[disabled]::-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-subaccount-create register > component-input-control input[disabled]::-webkit-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-subaccount-create register > component-input-control input[disabled]:-moz-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-subaccount-create register > component-input-control input[disabled]:-ms-input-placeholder {
-  color: rgba(54, 54, 54, 0.3);
-}
-
-page-subaccount-create register > component-input-control input[type="search"] {
-  border-radius: 290486px;
-}
-
-page-subaccount-create:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-  background: white;
-}
-
-page-subaccount-create register {
-  padding: 10px 15px 10px 15px;
-  display: block;
-}
-
-page-subaccount-create register [unpadded-layouting] {
-  margin-left: -15px;
-  margin-right: -15px;
-}
-
-page-subaccount-create register > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-subaccount-create register > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-subaccount-create register > :first-child > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-subaccount-create register > :first-child > :first-child > :first-child > :first-child[unpadded-layouting] {
-  margin-top: -10px;
-}
-
-page-subaccount-create {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-page-subaccount-create > component-nav {
-  flex: 0 1 auto;
-}
-
-page-subaccount-create > component-tabs {
-  flex: 0 1 auto;
-}
-
-page-subaccount-create > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-page-subaccount-create[no-background] {
-  background: white;
-}
-
-page-subaccount-create[no-background]:after {
-  content: unset;
-}
-
-page-subaccount-create[light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-page-subaccount-create register > label {
-  color: black;
-  font-weight: bold;
-  font-size: 1.4em;
-}
-
-page-subaccount-create register > component-input-control {
-  padding: 10px;
-  width: 100%;
-  display: block;
-  font-size: 1.5em;
-}
-
-page-subaccount-create register > component-field-control[ref="date-of-birth-ref"] > placeholder {
-  color: black;
-}
-
-page-subaccount-create register > a[maybe]:after {
-  border: 2px solid #dbdbdb;
-  border-radius: 290486px;
-  border-right-color: transparent;
-  border-top-color: transparent;
-  content: "";
-  display: block;
-  position: relative;
-  left: 50%;
-  top: 50%;
-  position: absolute !important;
-  width: 32px;
-  height: 32px;
-  margin-left: -16px;
-  margin-top: -16px;
-  animation: spinAround 600ms infinite linear;
-  border: 5px solid #dbdbdb;
-  border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
-}
-
-page-subaccount-create register > terms-of-agreement {
-  display: flex;
-}
-
-page-subaccount-create register > terms-of-agreement > item {
-  flex-basis: 50px;
-  padding: 10px;
-}
-
-page-subaccount-create register > terms-of-agreement > label {
-  flex-grow: 1;
-  padding: 10px;
-}
-
-page-subaccount-create register > terms-of-agreement > label1 {
-  font-size: 5px;
-}
-
-page-table table {
-  background-color: white;
-  color: #566573;
-  margin-bottom: 20px;
-  width: 100%;
-}
-
-page-table table td {
-  border: 1px solid #dbdbdb;
-  border-width: 0 0 1px;
-  padding: 8px 10px;
-  vertical-align: top;
-}
-
-page-table table th {
-  border: 1px solid #dbdbdb;
-  border-width: 0 0 1px;
-  padding: 8px 10px;
-  vertical-align: top;
-}
-
-page-table table th {
-  color: #566573;
-  text-align: left;
-}
-
-page-table table tr:hover {
-  background-color: whitesmoke;
-}
-
-page-table table thead td {
-  border-width: 0 0 2px;
-  color: #7a7a7a;
-}
-
-page-table table thead th {
-  border-width: 0 0 2px;
-  color: #7a7a7a;
-}
-
-page-table table tbody tr:last-child td {
-  border-bottom-width: 0;
-}
-
-page-table table tbody tr:last-child th {
-  border-bottom-width: 0;
-}
-
-page-table table tfoot td {
-  border-width: 2px 0 0;
-  color: #7a7a7a;
-}
-
-page-table table tfoot th {
-  border-width: 2px 0 0;
-  color: #7a7a7a;
-}
-
-page-table table td {
-  padding: 5px 10px;
-}
-
-page-table table th {
-  padding: 5px 10px;
-}
-
-page-table:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  opacity: 0.1;
-  z-index: -1;
-  background: white;
-}
-
-page-table {
-  height: 100%;
-  display: flex;
-  flex-flow: column;
-  transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-}
-
-page-table > component-nav {
-  flex: 0 1 auto;
-}
-
-page-table > component-tabs {
-  flex: 0 1 auto;
-}
-
-page-table > component-main-content {
-  flex: 1 1 auto;
-  position: relative;
-}
-
-page-table[no-background] {
-  background: white;
-}
-
-page-table[no-background]:after {
-  content: unset;
-}
-
-page-table[light-background] {
-  background: rgba(255, 255, 255, 0.4);
-}
-
-page-table table {
-  background: transparent;
-}
-
-page-table table tr > td:nth-child(3) {
-  min-width: 75px;
-}
-
-page-table table tr td {
-  font-size: 0.9em;
-}
-
-page-table table tr td icon {
-  vertical-align: baseline;
-}
-
-page-table table tr th {
-  padding: 5px;
-  min-width: 40px;
-  font-weight: normal;
-  text-align: center;
-}
-
-page-table table tr td {
-  padding: 5px;
-  min-width: 40px;
-  font-weight: normal;
-  text-align: center;
-}
-
-page-table table tr:hover {
-  background-color: rgba(245, 245, 245, 0.2);
-}
-
-page-table table tr:first-child {
-  background: rgba(196, 196, 196, 0.2);
-}
-
-page-table table tr[active] {
-  background: rgba(153, 187, 199, 0.4);
 }
