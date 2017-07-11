@@ -58,21 +58,6 @@ fi
 
 echo
 echo
-if [ -e node_modules/package ]; then
-    echo temp remove linked package module...
-    rm node_modules/package
-fi
-if [ -e node_modules/api ]; then
-    echo temp remove linked api module...
-    rm node_modules/api
-fi
-if [ -e node_modules/test ]; then
-    echo temp remove linked api module...
-    rm node_modules/test
-fi
-
-echo
-echo
 echo checking cordova...
 if npm list -g cordova; then
     echo cordova already installed
@@ -98,18 +83,3 @@ echo
 echo
 echo installing npm packages...
 npm install
-
-echo
-echo
-if [ ! -e node_modules/package ]; then
-    echo linking package as module...
-    ln -s ../ node_modules/package
-fi
-if [ ! -e node_modules/api ]; then
-    echo linking api as module...
-    ln -s ../api node_modules/api
-fi
-if [ ! -e node_modules/test ]; then
-    echo linking test as module...
-    ln -s ../test node_modules/test
-fi

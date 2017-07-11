@@ -1,0 +1,28 @@
+<&>
+    <a href="#account/quiz/subcategory/#{ stringify (name ()) }" if={ subcategory () }>
+    	<img src="https://ibin.co/3I0i4laCon7P.png" >
+    </a>
+</&>
+
+<style>
+& {
+	> a {
+		display: block;
+	}
+}
+</style>
+	
+<script>
+    var item = args .item__from .thru (dropRepeatsWith, json_equal)
+
+    var subcategory = mechanism (function () {
+        if (item ())
+            return item () .category;
+    }, [item])
+	var name = mechanism (function () {
+		return subcategory ();
+	}, [subcategory])
+        
+        
+    item .thru (map, noop) .thru (tap, self .render)
+</script>

@@ -63,15 +63,6 @@ var styles =	(function () {
 													sourceMapRoot: false*/
 												})) .css .toString ();
 									};
-					/* Use self */
-					var use_self =	function (tag) {
-										return	function (tag_metastyles) {
-													/*return	tag + ',[data-is="' + tag + '"] {' + '\n' +*/
-													return	tag + ' {' + '\n' +
-																tag_metastyles + '\n' +
-															'}';
-												};
-									};
 					var stringify =	function (node_array) {
 										return	css .stringify ({
 													type: 'stylesheet',
@@ -275,10 +266,15 @@ var styles =	(function () {
 													metastyles: R .pipe (
 														/* implements custom selector */
 														function (meta) {
-															return meta .replace (/-> ?{([^}]+)}/g, '> $1');//:not(& $1 $1)');
+															return meta .replace (/-> ?{([^}]+)}/g, ' $1');//:not(& $1 $1)');
 														},
 														//R .tap ((x) => console .log (x)),
-														use_self (tag)
+														function (tag_metastyles) {
+															/*return	tag + ',[data-is="' + tag + '"] {' + '\n' +*/
+															return	tag + ' {' + '\n' +
+																		tag_metastyles + '\n' +
+																	'}';
+														}
 													) (tag_metastyles),
 													path: (new Array (bottom_depth + 1)) .fill ('leaves') .join ('/') + '/' + tag + '.css'
 												});

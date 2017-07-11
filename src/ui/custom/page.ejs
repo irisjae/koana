@@ -1,0 +1,32 @@
+<&>
+    <yield />
+</&>
+
+<style>
+    [page-layout] {
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        @extend .background-texture;
+        transition: opacity 2s cubic-bezier(0.23, 1, 0.32, 1) 0ms, transform 1s cubic-bezier(0.23, 1, 0.32, 1) 0ms;
+        
+        > [page-nav], > [page-nav] {
+            flex: 0 1 auto;
+        }
+        > component-main-content {
+            flex: 1 1 auto;
+            position: relative;
+        }
+        
+        &[no-background] {
+        	background: white;
+        	
+        	&:after {
+        		content: unset;
+        	}
+        }
+        &[light-background] {
+        	background: hsla(0,0%,100%,0.4);
+        }
+    }
+</style>

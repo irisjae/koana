@@ -1,0 +1,46 @@
+<component-field-control type="email" placeholder="Email" />
+<component-field-control type="password" placeholder="Password" />
+<a href="#forget">
+	Forget Password?
+</a>
+<component-spacing height="40px" />
+<component-action>
+	<a href="#explore">Login</a>
+</component-action>
+
+<style>
+& {
+	@extend [page-layout];
+
+	> component-main-content {
+		-> {items} {
+			padding: 10px 15px 10px 15px;
+			display: block;
+			
+			> a {
+				&[maybe] {
+			        &:after {
+		        	    border: 2px solid #dbdbdb;
+					    border-radius: 290486px;
+					    border-right-color: transparent;
+					    border-top-color: transparent;
+					    content: "";
+					    display: block;
+					    position: relative;
+					    left: 50%;
+					    top: 50%;
+					    position: absolute !important;
+			            width: 32px;
+			            height: 32px;
+			            margin-left: -16px;
+			            margin-top: -16px;
+			            animation: spinAround 600ms infinite linear;
+			            border: 5px solid #dbdbdb;
+			            border-color: transparent transparent rgba(0, 0, 0, 0.5) rgba(0, 0, 0, 0.5) !important;
+			        }
+				}
+			}
+		}
+	}
+}
+</style>

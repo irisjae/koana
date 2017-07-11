@@ -5,9 +5,14 @@
     "main": "index.js",
     "scripts": {
         "setup": "./package/setup.sh",
+        "restock": "./package/restock.sh",
         "build": "./package/build.sh",
         "serve": "./package/serve.sh",
-        "test": "./package/test.sh"
+        "test": "./package/test.sh",
+        "detach-link": "./package/detach-link.sh",
+        "attach-link": "./package/attach-link.sh",
+        "preinstall": "./package/detach-link.sh",
+        "postinstall": "./package/attach-link.sh"
     },
     "author": "",
     "license": "ISC",

@@ -77,7 +77,7 @@ document .addEventListener ('DOMContentLoaded', function () {
                         if (prop !== 'href')
                             node [prop] = node [prop] .replace (template_init, update_templates) .replace (update_templates, decks .location)
                         else
-                            node [prop] = encodeURI (decodeURI (node [prop]) .replace (template_init, update_templates) .replace (update_templates, decks .location))
+                            node [prop] = encodeURI (decodeURI (node [prop]) .replace (template_init .replace (/\s/, ''), update_templates .replace (/\s/, '')) .replace (update_templates .replace (/\s/, ''), decks .location .replace (/\s/, '')))
                     })
                 var started = false;
                 deck_nodes

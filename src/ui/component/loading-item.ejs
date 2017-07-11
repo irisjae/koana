@@ -1,0 +1,60 @@
+<&>
+    <div>
+    	<spinner />
+    </div>
+</&>
+
+<style>
+@at-root {
+    @keyframes spinAround {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(359deg);
+        }
+    }
+}
+
+& {
+    display: block;
+    padding: 1.25rem;
+    
+    display: block;
+    box-shadow: none;
+    background: transparent;
+    
+     > div {
+        align-items: flex-start;
+        display: flex;
+        text-align: left;
+        justify-content: center;
+        
+        > spinner:after {
+            
+            color: transparent;
+            pointer-events: none;
+            
+            border-radius: 290486px;
+            border-right-color: transparent;
+            border-top-color: transparent;
+            content: "";
+            display: block;
+            position: relative;
+            position: absolute;
+            left: calc(50% - (1em / 2));
+            top: calc(50% - (1em / 2));
+            position: absolute;
+            
+            width: 32px;
+            height: 32px;
+            margin-left: -16px;
+            margin-top: -16px;
+            animation: spinAround 600ms infinite linear;
+            border: 5px solid #dbdbdb;
+            border-color: transparent transparent rgba(0, 0, 0, 0.7) rgba(0, 0, 0, 0.7) !important;
+        }
+    }
+}
+</style>
+

@@ -4,3 +4,6 @@
 
 # cordova platforms
 /platforms/*/
+
+# test database
+/database/test/
