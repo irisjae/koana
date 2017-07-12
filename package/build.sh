@@ -5,6 +5,6 @@ cd "$DIR"
 . ~/.nvm/nvm.sh
 nvm use 7.1.0
 node --version
-node build.js
+node build.js || exit 1
 
 cordova build browser

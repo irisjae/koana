@@ -4,9 +4,9 @@ var _toast_last = Promise .resolve ();
 var toast = function (text) {
 				_toast_last =	_toast_last
 									.then (_toast_type === 'browser' &&  function () {
-										var root = document .createElement ('component-snackbar');
+										var root = document .createElement ('component-toast-snackbar');
 										root .textContent = text;
-										var component = riot .mount (root, 'component-snackbar') [0];
+										var component = riot .mount (root, 'component-toast-snackbar') [0];
 										document .body .insertBefore (root, null);
 										return	wait (100)
 													.then (function () {

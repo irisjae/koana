@@ -1,0 +1,27 @@
+<yield />
+
+<script>
+	var nth = stream (+ args .nth);
+	var item = stream (args .item);
+
+	self .nth__from = nth .thru (tap, known_as ('nth'));
+	self .item__from = item .thru (tap, known_as ('item'));
+	
+	self .on ('updated', function () {
+		if (! args .garbage) {
+			nth (+ args .nth);
+			item (args .item);
+		}
+	})
+
+	//self .on ('mount', function () { log ('args refreshed'); });
+	
+	/*self .update_strategy = function () {
+		args = self .opts;
+		if (! args .garbage) {
+			nth (+ args .nth);
+			item (args .item);
+		}
+		return false;
+	}//*/
+</script>

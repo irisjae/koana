@@ -1,92 +1,119 @@
-var alert_log =	function () {
-					var msg = '';
-					for (var key in arguments) {
-						var value = arguments [key];
-						msg = (msg ? msg + '\n\n......\n\n' : '') + value +'\n'+ circular_json (value, 4, 2);
+var null_range = { from: 0, to: -1 };
+
+var rangify =	function (array) {
+					if (array)
+						return	{
+									from: 0,
+									to: array .length - 1
+								};
+				};
+var arrayify =	function (range) {
+					if (range) {
+						var array = [];
+						for (var key = range .from; key <= range .to; key ++) {
+							array .push (key);
+						};
+						return array;
 					}
-					alert (msg);
 				};
-					var circular_json =	function (input, maxDepth, indent) {
-										    var output;
-										        
-										    maxDepth = maxDepth || 5;
-										        
-										    if (typeof input === "object") {
-										        output = recursion (maxDepth) (input);
-										    }
-										    else {
-										        output = input;
-										    }
-										    
-										    return JSON .stringify (output, null, indent);
-										};
-											var recursion =	function (maxDepth) {
-																var refs = [];
-																var refsPaths = [];
-																var self =	function (input, path, depth) {
-																		        var output = {},
-																		            pPath,
-																		            refIdx;
-																		        
-																		        path  = path  || "";
-																		        depth = depth || 0;
-																		        depth ++;
-																		        
-																		        if (maxDepth && depth > maxDepth) {
-																		            return "{depth over " + maxDepth + "}";
-																		        }
-																		        
-																		        for (var p in input) {
-																		            pPath = (path ? (path + ".") : "") + p;
-																		            if (typeof input [p] === "function") {
-																		                output [p] = "{function}";
-																		            }
-																		            else if (typeof input [p] === "object") {
-																		                refIdx = refs .indexOf (input [p]);
-																		                
-																		                if (-1 !== refIdx) {
-																		                    output [p] = "{reference to " + refsPaths [refIdx]  + "}";
-																		                }
-																		                else {
-																		                    refs .push (input [p]);
-																		                    refsPaths .push (pPath);
-																		                    output [p] = self (input [p], pPath, depth);
-																		                }
-																		            }
-																		            else {
-																		                output [p] = input [p];
-																		            }
-																		        }
-																		        
-																		        return output;
-																		    };
-																return self;
-														    };
-			
-			
-//log = alert_log;
-var log =	function () {
-				console .log .apply (console, arguments);	
+var objectify =	function (range) {
+					if (range) {
+						var object = {};
+						for (var key = range .from; key <= range .to; key ++) {
+							object [key] = key;
+						};
+						return object;
+					}
+				};
+var count =	function (range) {
+				return range .to - range .from + 1;
 			};
-
-log .error =	function (e) {
-					if (log === alert_log)
-						alert_log .apply (this, arguments);
-					else
-						throw e;
+var same =	function (place_one, place_two) {
+				return place_one && place_two && place_one .to === place_two .to && place_one .from === place_two .from;
+			};
+var proper =	function (range) {
+					return apply_sign (sign (range)) (range);
 				};
-
-var logged =	function (/* args */) {
-					log .apply (this, arguments);
-					return arguments [arguments .length - 1];
+var opposite =	function (range_one, range_two) {
+					var sign_one = sign (range_one);
+					var sign_two = sign (range_two);
+					return	(sign_one > 0 && sign_two < 0)
+							|| (sign_one < 0 && sign_two > 0);
 				};
-var logged_with =	function (/* args */) {
-						var args = [] .slice .call (arguments);
-						return	function (item) {
-									log .apply (null, args .concat (item));
-									return item;
+var left_and =	function (range_one, range_two) {
+					range_one = range_one || null_range;
+					range_two = range_two || null_range;
+
+					return	{
+								from: range_one .from,
+								to: range_two .to
+							};
+				};
+var left_difference =	function (range_one, range_two) {
+							range_one = range_one || null_range;
+							range_two = range_two || null_range;
+	
+							var middle = intersection (range_one, range_two);
+							if (sign (middle) <= 0)
+								return range_one;
+							else if (middle .from !== range_one .from)
+								return	{
+											from: range_one .from,
+											to: middle .from - 1
+										};
+							else
+								return null_range
+						};
+var right_difference =	function (range_one, range_two) {
+							range_one = range_one || null_range;
+							range_two = range_two || null_range;
+							
+							var middle = intersection (range_one, range_two);
+							if (sign (middle) <= 0)
+								return range_one;
+							else if (middle .to !== range_one .to)
+								return	{
+											from: middle .to + 1,
+											to: range_one .to
+										};
+							else
+								return null_range
+						};
+var invert =	function (range) {
+					return	{
+								from: range .to + 1,
+								to: range .from - 1
+							};
+				};
+var add =	function (range_one, range_two) {
+				if (range_one .to + 1 === range_two .from)
+					return	{
+								from: range_one .from,
+								to: range_two .to
+							};
+			};	
+var included_in =	function (bigger, smaller) {
+						return same (
+									intersection (bigger, smaller),
+									smaller);
+					};
+var intersection =	function (/*args*/) {
+						var args = [] .slice .call (arguments) .map (function (range) { return range || null_range });
+						/*log (range_one, range_two,	{
+														from: Math .max (range_one .from, range_two .from),
+														to: Math .min (range_one .to, range_two .to)
+													});*/
+						return	{
+									from: Math .max .apply (Math, args .map (function (range) { return range .from })),
+									to: Math .min .apply (Math, args .map (function (range) { return range .to }))
 								};
 					};
-var _debugger =	function () {
-					debugger;
-				};
+				var sign = count;
+				var apply_sign =	function (sign) {
+									return	function (range) {
+												if (sign >= 0)
+													return range;
+												else
+													return invert (range);
+											};
+								};
