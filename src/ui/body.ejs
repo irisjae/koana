@@ -35,6 +35,8 @@
 																});
 															}
 						window .addEventListener ('unhandledrejection', function (e) {
+						    e .preventDefault ();
+						    
 						    errors ({
 						    	source: 'promise',
 						    	data: e .detail

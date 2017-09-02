@@ -4,7 +4,7 @@ cd "$DIR"
 
 cd ../..
 echo cloning test database...
-cp -r ./database/test-proto ./database/test
+cp -r ./database/prototest ./database/test
 echo opening screen test-neo4j...
 screen -dmS test-neo4j sudo ./database/test/bin/neo4j console
 

@@ -256,3 +256,58 @@ var begins_with =	function (what, s) {
 						return s;
 					}
 var _begins_with = begins_with;
+
+var concat_on =	function (ender, s) {
+					var _ = stream (s);
+					s .end .thru (tap, function () {
+						_ (ender ());	
+					});
+					return _ .thru (switchLatest);
+				}
+				
+var split_on =	function (splitter, s) {
+	return	splitter .thru (map, function (x) {
+		return news (s) .thru (takeUntil, news (splitter));
+	})
+}
+
+var only_ =	function (x) {
+	var y = stream (x);
+	y .end (true);
+	return y;
+}
+
+var product =	function (ss) {
+	return stream_pushes (function (p) {
+		p ({});
+		R .forEachObjIndexed (function (s, k) {
+			s .thru (tap, function (x) {
+				p (
+					R .assoc (k, x) (p ()))
+			})
+		}) (ss)
+	})
+}
+
+
+var key_sum = function (s1) {
+	return function (s2) {
+		return stream_pushes (function (e) {
+			e ({});
+			s1 .thru (tap, function (s) {
+				var _ = e ();
+				R .forEachObjIndexed (function (v, k) {
+					_ = R .assoc (k, v) (_)
+				}) (s)
+				e (_);
+			});
+			s2 .thru (tap, function (s) {
+				var _ = e ();
+				R .forEachObjIndexed (function (v, k) {
+					_ = R .assoc (k, v) (_)
+				}) (s)
+				e (_);
+			})
+		})
+	}
+}

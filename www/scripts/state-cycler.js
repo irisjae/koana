@@ -14,11 +14,13 @@ var as_cycler =	function (to_cycle) {
 							var cycler =	function (_/* Cycle | Stream */) {
 												if (! _)
 													_ = {
-														to: stream ()
+														to: stream (),
+														from: stream ()
 													}
 												else if (typeof _ === 'function')
 													_ = {
-														to: _
+														to: _,
+														from: stream ()
 													};
 												else
 													_ = like (_);
@@ -35,15 +37,20 @@ var as_cycler =	function (to_cycle) {
 
 var cycle_by_fetch =	function (fetch) {
 							return as_cycler (function (cycle) {
-								return	{
+								var _ = {
 									from:	stream_pushes (function (push) {
 												cycle .to
 													.thru (tap, function (req) {
 														fetch (req)
 															.then (push)
 													});
-											})
+											}),
+									pair:	function (req) {
+												return fetch (req)
+													.then (R .tap (_ .from))
+											}
 								}
+								return _;
 							})
 						};//TODO: move pair into cycle_by_fetch
 
@@ -57,27 +64,26 @@ var cycle_from_network =	as_cycler (
 														return res;
 													})
 													.then (function () {
-														return res .json ()
+														return res .text ()
 													})
-													.then (function (json) {
-														res .json = json;
+													.then (function (text) {
+														try {
+															res .json = JSON .parse (text);
+														}
+														catch (e) {
+															res .json = undefined;
+														}
+														finally {
+															res .text = text;
+														}
 													})
 													.then (function () {
-														res .req = req;
+														//res .req = req;
 														log ('queryied network', req .path, req, res);
 													})
 													.then (function () {
 														return res;
 													})
-									}),
-									tap_ (function (cycle) {
-										cycle .pair = function (req) {
-											cycle .to (req);
-											return promise (cycle .from
-												.thru (filter, function (res) {
-													return res .req === req;
-												}))
-										}
 									})
 								)
 							)
@@ -108,46 +114,52 @@ var restoration =	localforage .keys ()
 											}))
 						})
 						.catch (constant ({}))
-var cycler_persisted =	function (key) {
-							return	function (cycler) {
-										return as_cycler (function (cycle) {
-											cycle = cycler (cycle);
-											var init = restoration
-														.then (function (initials) {
-															return initials [prefix_for_persistence + key]
-														});
-											var to_persist = cycle .from;
-											var persisting =	to_persist
-																	.thru (map, function (_val) {
-																		return	Promise .resolve (persisting && persisting ())
-																					.then (function () {
+var cycle_persisted =	function (key) {
+							return	as_cycler (function (cycle) {
+										var init = restoration
+													.then (function (initials) {
+														return initials [prefix_for_persistence + key]
+													});
+										var to_persist = cycle .from;
+										var persisting =	to_persist
+																.thru (map, function (_val) {
+																	return	Promise .resolve (persisting && persisting ())
+																				.then (function () {//log (_val)
+																					/*if (_val === undefined)
+																						return localforage .removeItem (prefix_for_persistence + key)
+																					else*/
 																						return localforage .setItem (prefix_for_persistence + key, _val)
-																					})
-																					.catch (noop)//todo: catch sth
-																					.then (constant (_val))
-																	});
-															
-											return	{
-														init: init,
-														to_persist: to_persist,
-														persisting: persisting,
-														from:	stream_pushes (function (push) {
-																	init
-																		.then (function (value) {
-																			if (value)
-																				begins_with (value, push)
-																		})
-																	persisting
-																		.thru (tap, function (persist) {
-																			persist
-																				.then (push)
-																		})
-																})
-													}
-										});
-									}
+																				})
+																				.catch (noop)//todo: catch sth
+																				.then (constant (_val))
+																});
+														
+										return	{
+													init: init,
+													to_persist: to_persist,
+													persisting: persisting,
+													from:	stream_pushes (function (push) {
+																init
+																	.then (function (value) {
+																		if (value)
+																			begins_with (value, push)
+																	})
+																persisting
+																	.thru (tap, function (persist) {
+																		persist
+																			.then (push)
+																	})
+															})
+												}
+									})
 						}
-								
+var re_cycle =  function () {
+    var x = stream ();
+    return {
+        to: x,
+        from: x
+    }
+}
 						
 
 //persisted (':login', cycle_by_translate (R .spec ({}), cycle_network ('path/to/api'), R .prop ('json')))

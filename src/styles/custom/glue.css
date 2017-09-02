@@ -28,3 +28,7 @@
 [scroll]::-webkit-scrollbar {
     display: none;
 }
+
+svg [template] {
+    display: none;
+}

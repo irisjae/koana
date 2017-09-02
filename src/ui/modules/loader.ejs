@@ -1,13 +1,13 @@
 <&>
-    <component-modal-holder>
-        <component-loading-item />
+    <modules-modal-holder>
+        <modules-loading-item />
         <yield />
-    </component-modal-holder>
+    </modules-modal-holder>
 </&>
 
 <style>
+@require css-components;
 & {
-	@require css-components;
     @extend fullscreen-holder;
     
 	&:not([active]) {
@@ -16,13 +16,18 @@
 		z-index: 99999;
 	}
 
-    > component-modal-holder {
+    > modules-modal-holder {
         > item {
             color: rgba(255, 255, 255, 0.85);
             text-align: center;
             
-            -> {component-loading-item} {
+            -> {modules-loading-item} {
                 > div > spinner:after {
+                    left: calc(50% - 16px);
+                    top: calc(50% - 16px);
+                    width: 64px;
+                    height: 64px;
+                    border: 7px solid #fbfbfb;
                     border-color: transparent transparent rgba(255, 255, 255, 0.85) rgba(255, 255, 255, 0.7) !important;
                 }
             }

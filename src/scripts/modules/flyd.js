@@ -425,14 +425,14 @@ function markListeners(s, lists) {
       if (list.depsChanged !== undefined) {
         list.depsChanged.push(s);
       }
-      try {
+      //try {
         updateStream(list)
-      }
-      catch (e) {
+      //}
+      /*catch (e) {
         setTimeout (function () {
           throw e;
         }, 0);
-      }
+      }*/
     } else {
       endStream(list);
     }

@@ -1,4 +1,5 @@
 var use_db = require ('api/use_db')
+var tokenizer = require ('api/tokenizer')
 
 module .exports =   function (ctx, next) {
                         var email = ctx .request .body .email;
@@ -13,11 +14,12 @@ module .exports =   function (ctx, next) {
                                                 })
                                                 .then (function () {
                                                     return  session .run (
-                                                                'CREATE (parent:Parent { email: { email }, password: { password } })',
+                                                                'CREATE (parent:Parent { email: { email }, password: { password } })' +
+                                                                'RETURN parent',
                                                                 { email: email, password: password })
                                                 })
-                                                .then (function () {
-                                                    return {}
+                                                .then (function (results) {
+                                                    return { id: tokenizer (results .records [0] ._fields [0]) }
                                                 })
                                 })
                                     .then (function (x) {

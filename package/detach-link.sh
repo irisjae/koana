@@ -12,6 +12,6 @@ if [ -e node_modules/api ]; then
     rm node_modules/api
 fi
 if [ -e node_modules/test ]; then
-    echo detaching linked api module...
+    echo detaching linked test module...
     rm node_modules/test
 fi

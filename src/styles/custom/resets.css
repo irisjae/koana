@@ -130,15 +130,11 @@ body {
 }
 
 a {
-  color: #00d1b2;
+  /*color: #00d1b2;*/
   cursor: pointer;
   text-decoration: none;
   -webkit-transition: none 86ms ease-out;
   transition: none 86ms ease-out;
-}
-
-a:hover {
-  color: #363636;
 }
 
 code {
@@ -232,7 +228,7 @@ html {
 small {
     vertical-align: middle;
 }
-svg {
+/*svg {
     pointer-events: none;
 }
 svg g {
@@ -240,7 +236,7 @@ svg g {
 }
 svg path {
     fill: currentColor;
-}
+}*/
 
 a {
 	color: #00d1b2;
