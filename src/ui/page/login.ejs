@@ -63,10 +63,8 @@
 			}
 		}));
 		
-		['touchend', 'click'] .forEach (function (click) {
-    		dom .querySelector ('[id="action"]') .addEventListener (click, function () {
-    			extension .intent ('login');
-    		})
+		click (dom .querySelector ('[id="action"]'), function () {
+			extension .intent ('login');
 		})
 		
 		return interaction_key_sum (components, interaction_product ({ _: extension }))
@@ -85,12 +83,10 @@
 			email = interaction_placeholder (email_dom .querySelector ('[id="placeholder"]'), interaction_input (email_dom .querySelector ('input')))
 			password = interaction_placeholder (password_dom .querySelector ('[id="placeholder"]'), interaction_input (password_dom .querySelector ('input')))
 			i = login (self .root, email, password);
-		})
+		});
 	
-	    ['touchend', 'click'] .forEach (function (click) {
-    		self .root .querySelector ('[id="side"]') .querySelector ('[id="make-account"]') .addEventListener (click, function () {
-    			window .location .href = '#make-account'
-    		})
+	    click (self .root .querySelector ('[id="side"]') .querySelector ('[id="make-account"]'), function () {
+			window .location .href = '#make-account'
 	    })
 	})
 </script>

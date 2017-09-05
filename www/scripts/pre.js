@@ -91,6 +91,27 @@ var text_ify = function (hint, text) {
         text .replace (/&/g, "&amp;") .replace (/</g, "&lt;") .replace (/>/g, "&gt;") +
     '</foreignObject>';
 };
+var image_ify = function (hint, src) {
+	var use_hint = hint .querySelector ('use');
+	var bounding_box = bound_rectangle (use_hint)
+	
+	return '<foreignObject ' +
+        ([] .map .call (
+            hint .attributes,
+            function (attr) {
+                return attr .nodeName + '="' + attr .nodeValue + '"'
+            }
+        ) .join (' ')) + ' ' +
+        'transform="' + use_hint .getAttribute ('transform') + '" ' +
+        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
+        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
+    '>' +
+        (src ?
+            '<img src="' + src + '">' :
+            '<img>'
+        ) +
+    '</foreignObject>';
+}
 var fulfill_scroll = function (scroll) {
 	var hinted = scroll .parentElement;
 	

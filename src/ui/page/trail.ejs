@@ -13,10 +13,8 @@
 
 <script>
     self .on ('mount', function () {
-        ['touchend', 'click'] .forEach (function (click) {
-            self .root .querySelector ('[id="point-now"]') .addEventListener (click, function () {
-                window .location .href = '#quizes';
-            })
+        click (self .root .querySelector ('[id="point-now"]'), function () {
+            window .location .href = '#quizes';
         })
     })
 </script>

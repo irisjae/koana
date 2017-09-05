@@ -69,7 +69,7 @@
 			}
 		}));
 		
-		dom .querySelector ('[id="action"]') .addEventListener ('click', function () {
+		click (dom .querySelector ('[id="action"]'), function () {
 			extension .intent ('make');
 		})
 		
@@ -93,7 +93,7 @@
 			i = make_account (self .root, email, password, retype_password);
 		})
 	
-		self .root .querySelector ('[id="header"]') .querySelector ('[id="back"]') .addEventListener ('click', function () {
+		click (self .root .querySelector ('[id="header"]') .querySelector ('[id="back"]'), function () {
 			window .location .href = '#login'
 		})
 	})

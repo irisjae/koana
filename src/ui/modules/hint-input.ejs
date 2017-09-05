@@ -14,13 +14,18 @@
 
 <script>
     self .on ('mount', function () {
+        var svg = /*document .body .querySelector ('svg');//*/self .root .closest ('svg');
 		var frag = function (html) {
-		    var container = document .createElement ('template');
+		    var container = document .createElement ('node');
 			container .innerHTML = html;
-			return container .content;
+			var frag = document .createDocumentFragment ();
+			for (var i = 0; i < container .childNodes .length; i ++) {
+			    frag .insertBefore (container .childNodes [i], null);
+			}
+			return frag;
 		}; 
 
-        self .root .appendChild (frag ('<overflow-clip style=" padding: 0; background: transparent; width: 100%; height: 100%; overflow: hidden; z-index: 9999; display: flex; flex-direction: column; align-content: space-around;"><input ' + ([] .map .call ([] .filter .call (self .root .attributes, function (attr) { return attr .nodeName === 'type' }), function (attr) { return attr .nodeName + '="' + attr .nodeValue + '"' }) .join (' ')) + ' style="outline: none; border: none; padding: 0px; margin: 0px; display: block; background: transparent; width: 1e+07vw; -webkit-appearance: none;"></overflow-clip>') .children [0]);
+        self .root .appendChild (frag ('<overflow-clip style=" padding: 0; background: transparent; width: 100%; height: 100%; overflow: hidden; z-index: 9999; display: flex; flex-direction: column; align-content: space-around;"><input ' + ([] .map .call ([] .filter .call (self .root .attributes, function (attr) { return attr .nodeName === 'type' }), function (attr) { return attr .nodeName + '="' + attr .nodeValue + '"' }) .join (' ')) + ' style="outline: none; border: none; padding: 0px; margin: 0px; display: block; background: transparent; width: 1e+07vw; -webkit-appearance: none;"></overflow-clip>') .childNodes [0]);
         
         var x = self .root .querySelector ('input');
         x .addEventListener ('focus', function (e) {//console.log(e)
@@ -30,12 +35,21 @@
         		x .removeEventListener ('blur', one_blur, true)
         	}
         	x .addEventListener ('blur', one_blur, true)
-        
-            var refresh = function (){
-                x .style .display = (x .style .display === 'block' ? 'flex' : 'block')
-                if (document .activeElement === x && unblurred) {
-                    requestAnimationFrame (refresh);
-            }};
+
+            if (!! window .chrome && !! window .chrome .webstore) {
+                var refresh = function (){
+                    x .style .display = (x .style .display === 'block' ? 'flex' : 'block')
+                    if (document .activeElement === x && unblurred) {
+                        requestAnimationFrame (refresh);
+                }};
+            }
+            else {
+                var refresh = function (){
+                    svg .style .display = (svg .style .display === 'run-in' ? '' : 'run-in');
+                    if (document .activeElement === x && unblurred) {
+                        requestAnimationFrame (refresh);
+                }};
+            }
             requestAnimationFrame (refresh);
         }, true)
     })
