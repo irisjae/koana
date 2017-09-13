@@ -33,32 +33,51 @@ var fulfill_input =	function (hint) {
 	var use_hint = hint .querySelector ('g') .querySelector ('use');
 	var bounding_box = bound_rectangle (use_hint)
 	
-	/*hint .outerHTML =
-	    `<foreignObject
-	        data-is="modules-hint-input"
-	        ${[] .map .call (
-	            hint .attributes,
-	            function (attr) {
-	                return `${attr .nodeName}="${attr .nodeValue}"` 
-                }
-            ) .join (' ')}
-	        transform="${use_hint .getAttribute ('transform')}"
-	        width="${bounding_box .x_max - bounding_box .x_min}"
-	        height="${bounding_box .y_max - bounding_box .y_min}"
-        />`/
-	/*/hint .outerHTML =
-	    '<foreignObject ' +
-	        'data-is="modules-hint-input" ' +
-	        ([] .map .call (
-	            hint .attributes,
-	            function (attr) {
-	                return attr .nodeName + '="' + attr .nodeValue + '"'
-                }
-            ) .join (' ')) + ' ' +
+    hint .outerHTML =
+        '<rect ' +
 	        'transform="' + use_hint .getAttribute ('transform') + '" ' +
 	        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
 	        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
-        '/>';//*/
+	        'fill-opacity="0.001"' +
+        '>' +
+            '<animate attributeName="fill" from="black" to="blue" dur="1s" repeatCount="indefinite" />' +
+        '</rect>' +
+	    '<foreignObject ' +
+            'style="' + hint .getAttribute ('style')+ '; display: block;" ' +
+	        'transform="' + use_hint .getAttribute ('transform') + '" ' +
+	        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
+	        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
+        '>' +
+            '<overflow-clip ' +
+                'style="' + 
+                    'padding: 0;' +
+                    'background: transparent;' + 
+                    'width: 100%;' +
+                    'height: 100%;' + 
+                    'overflow: hidden;' + 
+                    'z-index: 9999;' + 
+                    'display: flex;' + 
+                    'flex-direction: column;' +
+                    'align-content: space-around;' +
+            '">' +
+                '<input ' +
+                    ([] .filter .call (hint .attributes, function (attr) { return attr .nodeName !== 'style' })
+                        .map (function (attr) {
+                            return attr .nodeName + '="' + attr .nodeValue + '"'
+                        }
+                    ) .join (' ')) + ' ' +
+                    'style="' +
+                        'outline: none;' + 
+                        'border: none;' + 
+                        'padding: 0px;' + 
+                        'margin: 0px;' + 
+                        'display: block;' +
+                        'background: transparent;' +
+                        'width: 1e+07vw;' + 
+                        '-webkit-appearance: none;' +
+                '">' +
+            '</overflow-clip>' +
+        '</foreignObject>';//*/
 };
 var placeholder = function (hint) {
 	var use_hint = hint .querySelector ('use');
@@ -96,9 +115,8 @@ var image_ify = function (hint, src) {
 	var bounding_box = bound_rectangle (use_hint)
 	
 	return '<foreignObject ' +
-        ([] .map .call (
-            hint .attributes,
-            function (attr) {
+        ([] .filter .call (hint .attributes, function (attr) { return attr .nodeName !== 'style' })
+            .map (function (attr) {
                 return attr .nodeName + '="' + attr .nodeValue + '"'
             }
         ) .join (' ')) + ' ' +
@@ -106,10 +124,12 @@ var image_ify = function (hint, src) {
         'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
         'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
     '>' +
-        (src ?
-            '<img src="' + src + '">' :
-            '<img>'
-        ) +
+        '<positioner style="' + hint .getAttribute ('style') + '">' +
+            (src ?
+                '<img src="' + src + '">' :
+                '<img>'
+            ) +
+        '</positioner>' +
     '</foreignObject>';
 }
 var fulfill_scroll = function (scroll) {

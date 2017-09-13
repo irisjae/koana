@@ -14,7 +14,7 @@
 <script>
     self .on ('mount', function () {
         click (self .root .querySelector ('[id="point-now"]'), function () {
-            window .location .href = '#quizes';
+            window .location .href = routes .categories;
         })
     })
 </script>
@@ -383,7 +383,7 @@
     <g id="Ellipse" style="mix-blend-mode:lighten">
     <use xlink:href="#path10_fill" transform="translate(261 809)" fill="#BF3939"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 822.792)" fill="#2D0000"/>
@@ -422,7 +422,7 @@
     <g id="Ellipse" style="mix-blend-mode:lighten">
     <use xlink:href="#path10_fill" transform="translate(261 730)" fill="#BF3939"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 743.792)" fill="#2D0000"/>
@@ -458,10 +458,10 @@
     </g>
     </g>
     <g id="point-now" filter="url(#filter8_di)">
-    <g id="Ellipse">
+    <g id="Ellipse" style="mix-blend-mode:hard-light">
     <use xlink:href="#path10_fill" transform="translate(261 648)" fill="#FFCC00" fill-opacity="0.7"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 661.792)" fill="#2D0000"/>
@@ -500,7 +500,7 @@
     <g id="Ellipse">
     <use xlink:href="#path10_fill" transform="translate(261 567)" fill="#FFFFFF" fill-opacity="0.5"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 580.792)" fill="#2D0000"/>
@@ -539,7 +539,7 @@
     <g id="Ellipse">
     <use xlink:href="#path10_fill" transform="translate(261 487)" fill="#FFFFFF" fill-opacity="0.5"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 500.792)" fill="#2D0000"/>
@@ -578,7 +578,7 @@
     <g id="Ellipse">
     <use xlink:href="#path10_fill" transform="translate(261 407)" fill="#FFFFFF" fill-opacity="0.5"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 420.792)" fill="#2D0000"/>
@@ -617,7 +617,7 @@
     <g id="Ellipse">
     <use xlink:href="#path10_fill" transform="translate(261 327)" fill="#FFFFFF" fill-opacity="0.5"/>
     </g>
-    <g id="image2vector">
+    <g id="icon-template-hint">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path11_fill" transform="translate(274.547 340.792)" fill="#2D0000"/>
@@ -652,8 +652,8 @@
     </g>
     </g>
     </g>
-    <g id="avatar" filter="url(#filter13_dd)">
-    <g id="image2vector (2)">
+    <g id="avatar">
+    <g id="image2vector (2)" filter="url(#filter13_d)">
     <g id="svgg">
     <g id="path0">
     <use xlink:href="#path21_fill" transform="translate(189.141 655.857)" fill="#F9F9F9"/>
@@ -717,13 +717,11 @@
     </g>
     <g id="account-fab" filter="url(#filter15_d)">
     <g id="Group">
-    <g id="Group">
     <g id="Vector">
     <use xlink:href="#path36_fill" transform="translate(167.384 350.929)" fill="#EBEBEB"/>
     </g>
     <g id="Vector">
     <use xlink:href="#path37_fill" transform="translate(152 338)" fill="#78CEF0" fill-opacity="0.9"/>
-    </g>
     </g>
     </g>
     </g>
@@ -867,19 +865,14 @@
     <feBlend mode="normal" in2="effect1_backgroundBlur" result="effect2_dropShadow"/>
     <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
     </filter>
-    <filter id="filter13_dd" filterUnits="userSpaceOnUse" x="173" y="634" width="66" height="81" color-interpolation-filters="sRGB">
+    <filter id="filter13_d" filterUnits="userSpaceOnUse" x="179" y="634" width="54" height="53" color-interpolation-filters="sRGB">
     <feFlood flood-opacity="0" result="BackgroundImageFix"/>
     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
     <feOffset dx="0" dy="4"/>
     <feGaussianBlur stdDeviation="2"/>
     <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
     <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
-    <feOffset dx="0" dy="4"/>
-    <feGaussianBlur stdDeviation="2"/>
-    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-    <feBlend mode="normal" in2="effect1_dropShadow" result="effect2_dropShadow"/>
-    <feBlend mode="normal" in="SourceGraphic" in2="effect2_dropShadow" result="shape"/>
+    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
     </filter>
     <filter id="filter14_d" filterUnits="userSpaceOnUse" x="149" y="402" width="64" height="64" color-interpolation-filters="sRGB">
     <feFlood flood-opacity="0" result="BackgroundImageFix"/>
@@ -890,10 +883,10 @@
     <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
     <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
     </filter>
-    <filter id="filter15_d" filterUnits="userSpaceOnUse" x="148" y="338" width="62" height="62" color-interpolation-filters="sRGB">
+    <filter id="filter15_d" filterUnits="userSpaceOnUse" x="150" y="338" width="62" height="62" color-interpolation-filters="sRGB">
     <feFlood flood-opacity="0" result="BackgroundImageFix"/>
     <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 0"/>
-    <feOffset dx="0" dy="4"/>
+    <feOffset dx="2" dy="4"/>
     <feGaussianBlur stdDeviation="2"/>
     <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
     <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>

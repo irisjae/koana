@@ -24,7 +24,7 @@ var questions_schema =	function (rows) {
 										.map (function (row) {
 											return	{
 														id: row .id,
-														ref_difficulty: row .refdifficulty || 0,
+														difficulty: row .refdifficulty || 0,
 														text: row .text,
 														image: row .image,
 														answer: row .answer,
@@ -97,6 +97,9 @@ var kk_index =	function (id) {
 								})
 				};
 var kk_questions =	function (id) {
+                        if (! id) {
+                            return Promise .resolve ([]);
+                        }
 						var category = new spreadsheet (id);
 						return	promisify (category .useServiceAccountAuth) (kk_account)
 									.then (function () {

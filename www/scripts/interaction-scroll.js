@@ -21,7 +21,7 @@ var drags = R .memoize (function (dom) {
                     window .dragging = false;
                 }, 0)
             }
-        }) .dropzone (true);
+        })// .dropzone (true);
     })
 })
 

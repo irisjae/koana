@@ -5,7 +5,6 @@
     "main": "index.js",
     "scripts": {
         "setup": "./package/setup.sh",
-        "restock": "./package/restock.sh",
         "build": "./package/build.sh",
         "serve": "./package/serve.sh",
         "test": "./package/test.sh",
@@ -32,6 +31,7 @@
         "es6-map": "^0.1.4",
         "es6-promisify": "^5.0.0",
         "fs-extra": "^2.0.0",
+        "get-cursor-position": "^1.0.5",
         "google-spreadsheet": "^2.0.3",
         "jsdom": "^11.1.0",
         "koa": "^2.0.0-alpha.7",

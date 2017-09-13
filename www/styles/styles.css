@@ -1003,63 +1003,6 @@ modal {
   top: 50%;
   transform: translateX(-50%) translateY(-50%); }
 
-custom-menu {
-  z-index: 99999999;
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0; }
-
-custom-menu > pane {
-  display: block;
-  background: #fff;
-  z-index: 1000;
-  width: 224px;
-  height: 100%; }
-
-custom-menu > pane > item {
-  border: 10px;
-  box-sizing: border-box;
-  display: block;
-  font-family: Roboto, sans-serif;
-  -webkit-tap-highlight-color: transparent;
-  cursor: pointer;
-  text-decoration: none;
-  margin: 0px;
-  padding: 0px 16px 0px 72px;
-  outline: none;
-  font-size: 16px;
-  font-weight: inherit;
-  position: relative;
-  z-index: 1;
-  color: rgba(0, 0, 0, 0.87);
-  line-height: 48px;
-  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  min-height: 48px;
-  white-space: nowrap;
-  background: none;
-  overflow: hidden; }
-
-custom-menu > pane > item > icon-holder {
-  display: block;
-  color: rgba(0, 0, 0, 0.87);
-  fill: #757575;
-  height: 24px;
-  width: 24px;
-  user-select: none;
-  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  position: absolute;
-  top: 0px;
-  margin: 12px;
-  left: 4px; }
-
-custom-menu > pane > hr {
-  margin: 0;
-  height: 1px;
-  border: none;
-  background-color: #e0e0e0; }
-
 custom-page {
   display: flex; }
 
@@ -1115,46 +1058,6 @@ modules-checkbox:after {
 
 modules-checkbox[checked]:after {
   opacity: 1; }
-
-modules-dynamic-load {
-  width: 100%;
-  position: relative;
-  display: block;
-  animation-duration: 0.01s;
-  -o-animation-duration: 0.01s;
-  -ms-animation-duration: 0.01s;
-  -moz-animation-duration: 0.01s;
-  -webkit-animation-duration: 0.01s;
-  animation-name: dynamic-load-rendered;
-  -ms-animation-name: dynamic-load-rendered;
-  -moz-animation-name: dynamic-load-rendered;
-  -webkit-animation-name: dynamic-load-rendered; }
-
-modules-dynamic-load > component-dynamic-load-item {
-  display: block;
-  position: absolute;
-  width: 100%; }
-
-modules-dynamic-load > stretcher {
-  display: block; }
-
-@keyframes dynamic-load-rendered {
-  from {
-    outline-color: #fff; }
-  to {
-    outline-color: #000; } }
-
-@-webkit-keyframes dynamic-load-rendered {
-  from {
-    outline-color: #fff; }
-  to {
-    outline-color: #000; } }
-
-modules-hint-input {
-  display: block; }
-
-[data-is="modules-hint-input"] {
-  display: block; }
 
 modules-loader {
   position: fixed;
@@ -1245,122 +1148,6 @@ modules-modal-holder > item {
   position: absolute;
   transform: translateX(-50%) translateY(-50%); }
 
-modules-select-control > a {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  border-color: #5DADE2;
-  background: #FFF;
-  color: #5DADE2;
-  height: 1.5em;
-  line-height: 1.5em;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  align-items: center;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  box-shadow: none;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  font-size: 1rem;
-  height: 2.25em;
-  justify-content: flex-start;
-  line-height: 1.5;
-  padding-bottom: calc(0.375em - 1px);
-  padding-left: calc(0.625em - 1px);
-  padding-right: calc(0.625em - 1px);
-  padding-top: calc(0.375em - 1px);
-  position: relative;
-  vertical-align: top;
-  -webkit-touch-callout: none;
-  user-select: none;
-  background-color: white;
-  border-color: #dbdbdb;
-  color: #363636;
-  cursor: pointer;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  text-align: center;
-  white-space: nowrap; }
-
-modules-select-control [select-from] {
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  border-color: #5DADE2;
-  background: #FFF;
-  color: #5DADE2;
-  height: 1.5em;
-  line-height: 1.5em;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  align-items: center;
-  border: 1px solid transparent;
-  border-radius: 3px;
-  box-shadow: none;
-  display: -webkit-inline-box;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
-  font-size: 1rem;
-  height: 2.25em;
-  justify-content: flex-start;
-  line-height: 1.5;
-  padding-bottom: calc(0.375em - 1px);
-  padding-left: calc(0.625em - 1px);
-  padding-right: calc(0.625em - 1px);
-  padding-top: calc(0.375em - 1px);
-  position: relative;
-  vertical-align: top;
-  -webkit-touch-callout: none;
-  user-select: none;
-  background-color: white;
-  border-color: #dbdbdb;
-  color: #363636;
-  cursor: pointer;
-  -webkit-box-pack: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding-left: 0.75em;
-  padding-right: 0.75em;
-  text-align: center;
-  white-space: nowrap; }
-
-modules-select-control > a[active] {
-  background: #5DADE2;
-  color: #fff; }
-
-modules-select-control [active][select-from] {
-  background: #5DADE2;
-  color: #fff; }
-
-modules-select-control > a:hover:not([active]) {
-  border-color: #5DADE2;
-  color: #5DADE2; }
-
-modules-select-control [select-from]:hover:not([active]) {
-  border-color: #5DADE2;
-  color: #5DADE2; }
-
-modules-select-control {
-  -webkit-tap-highlight-color: transparent;
-  justify-content: space-between;
-  display: flex;
-  width: 100%; }
-
-modules-select-control > a + modules-select-control > a {
-  margin-left: 0.3em; }
-
-modules-select-control [select-from] + modules-select-control > a {
-  margin-left: 0.3em; }
-
-modules-select-control > a + modules-select-control [select-from] {
-  margin-left: 0.3em; }
-
-modules-select-control [select-from] + modules-select-control [select-from] {
-  margin-left: 0.3em; }
-
 modules-snackbar {
   position: fixed;
   bottom: 0;
@@ -1437,10 +1224,24 @@ modules-wavify > wave[move] {
   opacity: 0;
   transform: scale(1); }
 
+page-categories {
+  display: flex; }
+
+page-categories > svg {
+  width: 100%;
+  height: 100%; }
+
 page-login {
   display: flex; }
 
 page-login > svg {
+  width: 100%;
+  height: 100%; }
+
+page-logout {
+  display: flex; }
+
+page-logout > svg {
   width: 100%;
   height: 100%; }
 
@@ -1451,10 +1252,10 @@ page-make-account > svg {
   width: 100%;
   height: 100%; }
 
-page-quizes {
+page-quiz {
   display: flex; }
 
-page-quizes > svg {
+page-quiz > svg {
   width: 100%;
   height: 100%; }
 

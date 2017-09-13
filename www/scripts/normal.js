@@ -197,12 +197,7 @@ var pack =	function (aliases) {
 							})
 							return x;
 						};
-			};
-var make =	function (func) {
-				var x = {};
-				func (x);
-				return x;
-			}		
+			};	
 			
 			
 			

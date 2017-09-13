@@ -1,0 +1,10 @@
+<&custom-page>
+</&>
+<script>
+    args .cycle__from .thru (tap, function () {
+        inquire (api .logout) 
+            .then (function () {
+                window .location .href = routes .login;
+            })
+    })
+</script>

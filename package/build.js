@@ -504,6 +504,19 @@ time ('build', function () {
         	}) .unwrapped + '\n'
     }
 
+
+	fs .readdirSync (scripts_dist) .forEach (function (file) {
+		const file_path = path .resolve (scripts_dist, file);
+		const file_info = fs .statSync (file_path);
+		
+	    fs .renameSync (file_path, file_path + '.old')
+	});
+	files ('.js') (scripts_src)
+		.forEach (function (path_/* of file*/) {
+			var name = path_ .split ('/') .reverse () [0];
+			var dest_path = path .join (scripts_dist, name);
+			fs .copySync (path_, dest_path);
+		});
 	files ('.ejs') (tags_src)
 		.forEach (function (path) {
 			var tag_relative_path = path .slice (tags_src .length + 1);
@@ -545,12 +558,6 @@ time ('build', function () {
 		.map (compiler .compile)
 		.unwrapped
 	);
-	files ('.js') (scripts_src)
-		.forEach (function (path_/* of file*/) {
-			var name = path_ .split ('/') .reverse () [0];
-			var dest_path = path .join (scripts_dist, name);
-			fs .copySync (path_, dest_path);
-		});
 	write (styles_dist) (
 		mapper (
 			files ('.css') (styles_src) .concat (files ('.scss') (styles_src))
@@ -673,5 +680,13 @@ time ('build', function () {
 			throw 'can\'t find answer'
 		})
 		.unwrapped);
+	fs .readdirSync (scripts_dist) .forEach (function (file) {
+		const file_path = path .resolve (scripts_dist, file);
+		const file_info = fs .statSync (file_path);
+		
+		if (file_path .endsWith ('.old')) {
+			fs .unlinkSync (file_path)
+		}
+	});
 	fs .copySync (primary_src, primary_dist);
 });

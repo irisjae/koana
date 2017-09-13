@@ -18,7 +18,7 @@ echo waiting for neo4j to complete startup procedures...
 echo
 echo
 echo running tests proper...
-./test/go.sh
+./test/test.sh
 
 echo
 echo

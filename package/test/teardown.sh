@@ -27,7 +27,7 @@ fi
 screen -wipe
 
 cd ../..
-if [ -e ./database/test/ ]; then
+if [ -e ./temp/test/ ]; then
     echo wiping test database...
-    sudo rm -rf ./database/test/
+    sudo rm -rf ./temp/test/
 fi

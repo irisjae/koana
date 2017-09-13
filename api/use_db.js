@@ -33,16 +33,26 @@ var _port =  function (port) {
                                     }
                 
                 return   function (use_case) {
+                            var error_flag = false;
+                            var error;
                             return  fetch_session ()
                                         .then (function (session) {
                                             return  Promise .resolve (use_case (session))
-                                                        .catch (function (error) {
-                                                            console .error ('error', error);
+                                                        .catch (function (e) {
+                                                            //console .error ('error', e);
+                                                            error_flag = true;
+                                                            error = e;
                                                         })
                                                         .then (function (data) {
                                                             session .close ();
                                                             return data
                                                         })
+                                        })
+                                        .then (function (data) {
+                                            if (error_flag)
+                                                return Promise .reject (error);
+                                            else
+                                                return data;
                                         })
                         }
             };

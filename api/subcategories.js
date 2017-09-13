@@ -28,7 +28,7 @@ var subcategories_schema =	function (rows) {
 				.map (function (row) {
 					return	{
 								label: row .subcategory,
-								item: row .image
+								item: [row .image || 'http://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat.png', row .hyphenation || row .subcategory]
 							}
 				});
 };
@@ -67,12 +67,12 @@ var kk_index =	function (id) {
 									return categories_schema (rows);
 								})
 								.then (function (categories) {
-									return kk_subcategories (subcategories_id) .then (function (images) {
+									return kk_subcategories (subcategories_id) .then (function (info) {
 									    return categories .map (function (item) {
 									        return {
 									            label: item .label,
 									            items: item .items .map (function (subcategory) {
-									                return [subcategory, images [subcategory] || '']
+									                return [subcategory] .concat (info [subcategory] || ['http://www.pngall.com/wp-content/uploads/2016/06/Nyan-Cat.png', subcategory])
 									            }) 
 									        }
 									    })

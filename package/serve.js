@@ -3,17 +3,14 @@ require ('koa-qs') (new (require ('koa')) ())
 	.use (function (ctx, next) {
 		return	next ()
 					.catch (function (err) {
+						console .error (err)
+						
 						ctx .type = 'application/json'
 						ctx .status = /*err .code || */500
-						ctx .message = err .message || 'Internal Server Error'
+						//ctx .message = err .message || 'Internal Server Error'
 						ctx .body =	{
-										error:	{
-													code: ctx .status,
-													errors: err.errors || [{ reason: 'Internal Server Error', message: 'fuku' }]
-												}
+										error:	err .message
 									}
-						
-						console .error (err)
 					});
 	})
 	.use (require ('koa-morgan') ('combined'))

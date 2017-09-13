@@ -4,24 +4,31 @@ var tokenizer = require ('api/tokenizer')
 module .exports =   function (ctx, next) {
                         var email = ctx .request .body .email;
                         var password = ctx .request .body .password;
-                        return  use_db (function (session) {
-                                    return  session .run (
-                                                'MATCH (parent:Parent { email: { email }, password: { password } }) ' +
-                                                'RETURN parent',
-                                            {
-                                                email: email, password: password
-                                            })
-                                                .then (function (results) {
-                                                    if (! results .records .length)
-                                                        return Promise .reject (new Error ('User not found'))
-                                                    else
-                                                        return { id: tokenizer (results .records [0] ._fields [0]) }
-                                                })
+                        return use_db (function (session) {
+                            return Promise .resolve ()
+                                .then (function () {
+                                    return session .run (
+                                        'MATCH (user:User { email: { email }, password: { password } }) ' +
+                                        'RETURN user',
+                                        {
+                                            email: email, password: password
+                                        }
+                                    )
                                 })
-                                    .then (function (x) {
-                                        ctx .body = x;
-                                    })
-                                    .then (function () {
-                                        return next ();
-                                    })
+                                .then (function (results) {
+                                    if (! results .records .length)
+                                        return Promise .reject (new Error ('User not found'))
+                                    else
+                                        return { token: tokenizer (results .records [0] ._fields [0]) }
+                                })
+                                .catch (function (err) {
+                                    return {
+                                        error: err .message
+                                    }
+                                })
+                        })
+                        .then (function (x) {
+                            ctx .body = x;
+                        })
+                        .then (next)
                     };

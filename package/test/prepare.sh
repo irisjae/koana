@@ -2,6 +2,10 @@
 DIR="$(sudo dirname "$(readlink -f "$0")" | tee /dev/null)"
 cd "$DIR"
 
+#prepare temp dir
+echo claiming ownership of temp dir...
+sudo chown -R ubuntu ../../temp/.
+
 ./teardown.sh
 
 if screen -list | sed s/test-neo4j// | grep -q "neo4j"; then

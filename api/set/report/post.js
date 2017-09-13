@@ -1,107 +1,100 @@
 var use_db = require ('api/use_db')
 var detokenizer = require ('api/tokenizer');
+var neonum = require ('api/neonum');
+var elo_step = require ('api/elo_step');
 
-module .exports =   function (ctx, next) {
-                        var child_id = detokenizer (ctx .request .body .child_token);
-                        var subcategory = detokenizer (ctx .request .body .subcategory);
-                        return  use_db (function (session) {
-                            
-                                    var child_level;
-                            
-                                    return  Promise .resolve ()
-                                                .then (function () {
-                                                    return  session .run (
-                                                                'MATCH (child:Child) WHERE ID (child) = { child_id } ' +
-                                                                'RETURN child',
-                                                            {
-                                                                child_id: child_id
-                                                            })
-                                                })
-                                                .then (function (results) {
-                                                    if (! results .records .length)
-                                                        return Promise .reject (new Error ('Child not found'))
-                                                    child_level = results .records [0] .fields [0] .properties .level;
-                                                })
-                                                .then (function () {
-                                                    return  session .run (
-                                                                'MATCH (subcategory:Subcategory { name: { name } }) ' +
-                                                                'RETURN subcategory',
-                                                            {
-                                                                name: subcategory
-                                                            })
-                                                })
-                                                .then (function (results) {
-                                                    if (! results .records .length)
-                                                        return Promise .reject (new Error ('Subcategory not found'))
-                                                })
-                                                .then (function () {
-                                                    return  session .run (
-                                                                'MATCH (set:Set)<-[:Does]-(child:Child) WHERE ID (child) = { child_id } ' +
-                                                                'RETURN set',
-                                                            {
-                                                                child_id: child_id
-                                                            });
-                                                })
-                                                .then (function (results) {
-                                                    if (results .records .length)
-                                                        return Promise .reject (new Error ('Child already is doing set'))
-                                                })
-                                                .then (function () {
-                                                    return  session .run (
-                                                                'MATCH (child:Child) WHERE ID (child) = { child_id } ' +
-                                                                'MATCH (question:Question)<-[:Owns]-(subcategory:Subcategory { name: { name } }) ' +
-                                                                'WHERE NOT (child)-[:Finished]->(question) ' +
-                                                                'RETURN question',
-                                                            {
-                                                                child_id: child_id,
-                                                                name: subcategory
-                                                            });
-                                                })
-                                                .then (function (results) {
-                                                    return  results .records
-                                                                .sort (function (a, b) {
-                                                                    var a_difficulty = a .fields [0] .properties .difficulty;
-                                                                    var b_difficulty = b .fields [0] .properties .difficulty;
-                                                                    if (Math .abs (a_difficulty - child_level) < Math .abs (b_difficulty - child_level))
-                                                                        return -1;
-                                                                    if (Math .abs (a_difficulty - child_level) > Math .abs (b_difficulty - child_level))
-                                                                        return 1;
-                                                                    return 0;
-                                                                })
-                                                                .slice (0, 10)
-                                                })
-                                                .then (function (results) {
-                                                    return  Promise .all (
-                                                                results .map (function (record) {
-                                                                    var question_id = record .identity .toString ();
-                                                                    return  session .run (
-                                                                                'MATCH (child:Child) WHERE ID (child) = { child_id } ' +
-                                                                                'MATCH (question:Question) WHERE ID (question) = { question_id } ' +
-                                                                                'MERGE (set:Set { subcategory: { name } })<-[:Does]-(child) ' +
-                                                                                'MERGE (set)-[:Contains]->(question) ' +
-                                                                                'RETURN question',
-                                                                            {
-                                                                                child_id: child_id,
-                                                                                question_id: question_id,
-                                                                                name: subcategory
-                                                                            })
-                                                                })
-                                                            );
-                                                })
-                                                .then (function (results) {
-                                                    return  results
-                                                                .map (function (results) {
-                                                                    return results .records [0]
-                                                                })
-                                                                .map (function (record) {
-                                                                    return record .fields [0] .properties
-                                                                })
-                                                })
-                                })
-                                    .then (function (x) {
-                                        ctx .body = x;
-                                    })
-                                    .then (function () {
-                                        return next ();
-                                    })
-                    };
+module .exports = function (ctx, next) {
+    var user = { id: neonum (detokenizer (ctx .request .body .user .token)) };
+    var player = { id: neonum (detokenizer (ctx .request .body .player .token)) };
+    var set_ = ctx .request .body .set_;
+    var subcategory;
+    return  use_db (function (session) {
+                return  Promise .resolve ()
+                        .then (function () {
+                            return  session .run (
+                                        'MATCH (user:User) WHERE ID (user) = {user} .id ' +
+                                        'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
+                                        'MATCH (user)<-[:of]-(:is)-[:_]->(player) ' +
+                                        'RETURN player',
+                                        {
+                                            user: user,
+                                            player: player
+                                        })
+                        })
+                        .then (function (results) {
+                            if (! results .records .length)
+                                return Promise .reject (new Error ('Invalid user or player specified'))
+                            else
+                                user .level = results .records [0] .fields [0] .properties .level;
+                        })
+                        .then (function () {
+                            return  session .run (
+                                        'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
+                                        'MATCH (set:Set)<-[:to]-(:does)-[:_]->(player) ' +
+                                        'RETURN set',
+                                        {
+                                            player: player
+                                        });
+                        })
+                        .then (function (results) {
+                            if (! results .records .length)
+                                return Promise .reject (new Error ('Player is not doing set'))
+                        })
+                        .then (function () {
+                            return  session .run (
+                                        'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
+                                        'MATCH (set:Set)<-[:to]-[doing:does]-[:_]->(player) ' +
+                                        'REMOVE doing:does ' +
+                                        'SET doing:done ' +
+                                        'RETURN set ',
+                                        {
+                                            player: player
+                                        });
+                        })
+                        .then (function (results) {
+                            subcategory = results .records [0] .fields [0] .properties .subcategory;
+                        })
+                        .then (function () {
+                            return  session .run (
+                                        'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
+                                        'MATCH (subcategory:Subcategory { name: {subcategory} .name }) ' +
+                                        'MATCH (subcategory)<-[:in]-(achievement:achieves)-[:_]->(player)' +
+                                        'RETURN achievement',
+                                        {
+                                            player: player,
+                                            subcategory: subcategory
+                                        });
+                        })
+                        .then (function (results) {
+                            return results .records [0] .fields [0] .properties;
+                        })
+                        .then (function (achievement) {
+                            return  session .run (
+                                        'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
+                                        'MATCH (subcategory:Subcategory { name: {subcategory} .name }) ' +
+                                        'MATCH (subcategory)<-[:in]-(achievement:achieves)-[:_]->(player)' +
+                                        'SET achievement .level = {achievement} .level',
+                                        {
+                                            player: player,
+                                            subcategory: subcategory,
+                                            achievement: {
+                                                level: elo_step (set_, achievement)
+                                            }
+                                        });
+                        })
+                        .then (function () {
+                            return {};
+                        })
+                        .catch (function (err) {
+                            return {
+                                error: err .message
+                            }
+                        })
+            })
+            .then (function (x) {
+                ctx .body = x;
+            })
+            .then (function () {
+                return next ();
+            })
+};
