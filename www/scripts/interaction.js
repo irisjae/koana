@@ -36,6 +36,12 @@ var interaction_product =	function (interactions) {
 		state: product (R .map (R .prop ('state')) (interactions))
 	}
 }
+var interaction_product_array =	function (interactions) {
+	return {
+		intent: array_product (R .map (R .prop ('intent')) (interactions)),
+		state: array_product (R .map (R .prop ('state')) (interactions))
+	}
+}
 var interaction_key_sum = 	function (i1, i2) {
 	return {
 		intent: key_sum (i1 .intent) (i2 .intent),

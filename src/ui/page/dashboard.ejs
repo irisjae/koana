@@ -1,0 +1,14 @@
+<script>
+	pre (function () {
+		ui = frame ('dashboard');
+
+		def = serve (ui);
+	})
+</script>
+<script>
+    self .on ('mount', function () {
+        click (self .root .querySelector ('[id="point-now"]'), function () {
+            window .location .href = routes .categories;
+        })
+    })
+</script>

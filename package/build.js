@@ -6,6 +6,7 @@ var scss = require ('node-sass');
 var path = require ('path');
 var primary_src = path .join (__dirname, '/../src/&.html');
 var primary_dist = path .join (__dirname, '/../www/index.html');
+var frames_src = path .join (__dirname, '/../src/frames');
 var scripts_src = path .join (__dirname, '/../src/scripts');
 var scripts_dist = path .join (__dirname, '/../www/scripts');
 var tags_src = path .join (__dirname, '/../src/ui');
@@ -300,31 +301,9 @@ var refresh_cache =	function () {
 					
 					
 
-var left_right_match = function (str, left, right) {
-	var	g = true,
-		x = new RegExp(left + "|" + right, "g"),
-		l = new RegExp(left, ''),
-		a = [],
-		t, s, m;
-
-	do {
-		t = 0;
-		while (m = x.exec(str)) {
-			if (l.test(m[0])) {
-				if (!t++) s = x.lastIndex;
-			} else if (t) {
-				if (!--t) {
-					a.push(str.slice(s, m.index));
-					if (!g) return a;
-				}
-			}
-		}
-	} while (t && (x.lastIndex = s));
-
-	return a;
-}
-
-					
+var frame_string = function (_) {
+    return file (path .join (frames_src, _ + '.svg'));
+}					
 
 
 //build
@@ -523,7 +502,7 @@ time ('build', function () {
 			var tag_name =	tag_relative_path
 								.split ('/') .join ('-')
 								.split ('.') [0];
-			R .union ([tag_name, tag_name .split ('-') .reverse () [0]], [])
+			R .uniq ([tag_name, tag_name .split ('-') .reverse () [0]])
 				.forEach (function (name) {
 					if (! name_resolution [name]) name_resolution [name] = [];
 					name_resolution [name] .push (path)
@@ -543,6 +522,10 @@ time ('build', function () {
 										.join ('.');
 
 				var tag_src = file (tag_path);
+				
+				//UNTIL MAKE REAL PROTO MECHANISM
+				if (tag_name .startsWith ('page-'))
+				    tag_src = '<&custom-page>' + '\n' + '</&>' + '\n' + tag_src;
 
 				try {
 					console .log ('rendering ' + tag_name);

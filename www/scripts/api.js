@@ -11,15 +11,16 @@ var backend_path = window .location .protocol + '//briansark-mumenrider.c9users.
 
 var home_path = '#login';
 
-var no_errors = function (x) {
-    					    return ! x .error;
-    					}
+var no_errors = R .cond ([
+                    [ R .compose (R .not, R .is (Object)), R .F ],
+                    [ R .T, R .pipe (R .prop ('error'), R .not) ]
+                ]);
 
 var global_api =    R .tap (function (_) {
 						_ .user = cycle_persisted ('user') ();
 						_ .player =	cycle_persisted ('player') ();
 									
-						_ .user .from .thru (tap, R .cond ([
+						_ .user .to .thru (tap, R .cond ([
 					        [R .not, function () {
 					            api (default_api)
 					        }],
@@ -27,7 +28,7 @@ var global_api =    R .tap (function (_) {
 					            api (user_api (user))
 					        }]
 				        ]));
-						_ .player .from .thru (tap, R .cond ([
+						_ .player .to .thru (tap, R .cond ([
 					        [R .not, function () {
 					            api (user_api (_ .user .from ()))
 					        }],
@@ -53,9 +54,9 @@ var default_api =	R .tap (function (_) {
 									}), cycle_from_network, R .prop ('json')) ();
     										
     					mergeAll ([
-    					    _ .register .from .thru (filter, no_errors),
-    					    _ .login .from .thru (filter, no_errors)
-                        ]) .thru (tap, _ .user .to)
+    					    _ .register .from,
+    					    _ .login .from
+                        ]) .thru (filter, no_errors) .thru (tap, _ .user .to)
 					}) (global_api);
 						
 var user_api = function (user) {
@@ -65,29 +66,33 @@ var user_api = function (user) {
 		_ .add_player =	cycle_by_translate (R .applySpec ({
 							path: constant (backend_path + '/player/add'),
 							method: constant ('POST'),
-							headers: constant ({ 'Content-Type': 'application/json'}),
-							body: R .pipe (
-							    R .merge ({
-							        user: user
-							    }),
-							    stringify
-						    )
+							headers: R .pipe (
+							    R .applySpec ({
+    							    user: R .pipe (constant (JSON .stringify (user)), btoa)
+								}),
+								R .merge ({
+								    'Content-Type': 'application/json',
+								})
+						    ),
+							body: stringify
 						}), cycle_from_network, R .prop ('json')) ();
 		_ .remove_player =	cycle_by_translate (R .applySpec ({
     							path: constant (backend_path + '/player/remove'),
     							method: constant ('POST'),
-    							headers: constant ({ 'Content-Type': 'application/json'}),
-    							body: R .pipe (
-    							    R .merge ({
-    							        user: user
-    							    }),
-    							    stringify
-    						    )
+    							headers: R .pipe (
+								    R .applySpec ({
+        							    user: R .pipe (constant (JSON .stringify (user)), btoa)
+    								}),
+    								R .merge ({
+    								    'Content-Type': 'application/json',
+    								})
+							    ),
+    							body: stringify
     						}), cycle_from_network, R .prop ('json')) ();
 		_ .all_players =	R .pipe (
     		                    cycle_by_translate (R .applySpec ({
-    								path: constant (backend_path + '/register'),
-    								method: constant ('POST'),
+    								path: constant (backend_path + '/player/all'),
+    								method: constant ('GET'),
     								headers: constant ({ 'Content-Type': 'application/json'}),
     								body: stringify
     							}), cycle_from_network, R .prop ('json')),
@@ -109,9 +114,7 @@ var player_api = function (user, player) {
     	_ .subcategories = 	R .pipe (
     		                    cycle_by_translate (R .applySpec ({
     								path: constant (backend_path + '/subcategories'),
-    								method: constant ('GET'),
-    								headers: constant ({ 'Content-Type': 'application/json'}),
-    								body: stringify
+    								method: constant ('GET')
     							}), cycle_from_network, R .prop ('json')),
     							cycle_persisted ('subcategories')
     						) ();
@@ -121,16 +124,17 @@ var player_api = function (user, player) {
     	_ .take_set =	cycle_by_translate (R .applySpec ({
 								path: constant (backend_path + '/set/request'),
 								method: constant ('POST'),
-								headers: constant ({ 'Content-Type': 'application/json'}),
-								body: R .pipe (
-								    R .merge ({
-    								    user: user,
-    								    player: player
+								headers: R .pipe (
+								    R .applySpec ({
+        							    user: R .pipe (constant (JSON .stringify (user)), btoa),
+        							    player: R .pipe (constant (JSON .stringify (player)), btoa),
+        							    subcategory: R .pipe (function () { return _ .quiz .from () }, btoa)
     								}),
-    								R .juxt ([_ .quiz .from, R .identity]),
-    								R .apply (R .assoc ('subcategory')),
-    								stringify
-								)
+    								R .merge ({
+    								    'Content-Type': 'application/json',
+    								})
+							    ),
+								body: stringify
 							}), cycle_from_network, R .prop ('json')) ();
         _ .take_set .from .thru (tap, function (x) {
             _ .set .to (x);
@@ -138,14 +142,16 @@ var player_api = function (user, player) {
     	_ .give_set =	cycle_by_translate (R .applySpec ({
 							path: constant (backend_path + '/set/report'),
 							method: constant ('POST'),
-							headers: constant ({ 'Content-Type': 'application/json'}),
-							body: R .pipe (
-							    R .merge ({
-								    user: user,
-								    player: player
+							headers: R .pipe (
+							    R .applySpec ({
+    							    user: R .pipe (constant (JSON .stringify (user)), btoa),
+    							    player: R .pipe (constant (JSON .stringify (player)), btoa)
 								}),
-								stringify
-							)
+								R .merge ({
+								    'Content-Type': 'application/json',
+								})
+						    ),
+							body: stringify
 						}), cycle_from_network, R .prop ('json')) ();    
     	_ .give_set .from .thru (tap, function () {
     	    _ .set .to (undefined);

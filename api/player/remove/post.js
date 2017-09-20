@@ -1,11 +1,12 @@
 var use_db = require ('api/use_db');
 var tokenizer = require ('api/tokenizer');
+var decode = require ('api/decode');
 var detokenizer = require ('api/detokenizer');
 var neonum = require ('api/neonum');
 
 module .exports =   function (ctx, next) {
-                        var user = { id: neonum (detokenizer (ctx .request .body .user .token)) };
-                        var player = { id: neonum (detokenizer (ctx .request .body .player .token)) };
+                        var user = { id: detokenizer (decode (ctx .request .headers .user) .token) };
+                        var player = { id: detokenizer (decode (ctx .request .headers .player) .token) };
                         return  use_db (function (session) {
                                     return  Promise .resolve ()
                                         .then (function () {

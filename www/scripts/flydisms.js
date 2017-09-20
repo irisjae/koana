@@ -288,6 +288,17 @@ var product =	function (ss) {
 		}) (ss)
 	})
 }
+var array_product = function (ss) {
+	return stream_pushes (function (p) {
+		p (ss .map (R .always (undefined)));
+		R .forEach (function (s, k) {
+			s .thru (tap, function (x) {
+				p (
+					R .update (k, x) (p ()))
+			})
+		}) (ss)
+	})
+}
 
 
 var key_sum = function (s1) {

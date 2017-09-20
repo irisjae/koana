@@ -212,7 +212,17 @@ var promise_of = function (x) {
     return new Promise (x)
 }
 
-var _ael_ = {
+/*var _ael_ = {
     passive: false,
     capture: false
-}
+}*/
+
+
+var mapper =	function (x) {
+					return	{
+								unwrapped:	x,
+								map: function (fn) {
+									return mapper (fn (x));
+								}
+							}
+				}

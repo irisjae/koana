@@ -1,1 +1,1 @@
-module .exports = function (x) { return +x }
+module .exports = require ('api/neonum')

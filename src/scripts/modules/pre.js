@@ -1,4 +1,15 @@
 var ui;
+var frame = function (x) {
+    x = frag (frame_string (x)) .children [0];
+    recitify (x);
+    //console .log (x .outerHTML)
+    return x;
+}
+var serve = function (x) {
+    return '<' + _name + '>' + '\n' +
+        indent (x .outerHTML) + '\n' +
+    '</' + _name + '>';
+}
 var frag = function (html) {
     var container = document .createElement ('template');
 	container .innerHTML = html;
@@ -29,55 +40,54 @@ var bound_rectangle =	function (hint) {
 		y_max: Math .max .apply (null, point_ys),
 	}
 };
-var fulfill_input =	function (hint) {
+var input_ify = function (hint) {
 	var use_hint = hint .querySelector ('g') .querySelector ('use');
 	var bounding_box = bound_rectangle (use_hint)
 	
-    hint .outerHTML =
-        '<rect ' +
-	        'transform="' + use_hint .getAttribute ('transform') + '" ' +
-	        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
-	        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
-	        'fill-opacity="0.001"' +
-        '>' +
-            '<animate attributeName="fill" from="black" to="blue" dur="1s" repeatCount="indefinite" />' +
-        '</rect>' +
-	    '<foreignObject ' +
-            'style="' + hint .getAttribute ('style')+ '; display: block;" ' +
-	        'transform="' + use_hint .getAttribute ('transform') + '" ' +
-	        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
-	        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
-        '>' +
-            '<overflow-clip ' +
-                'style="' + 
-                    'padding: 0;' +
-                    'background: transparent;' + 
-                    'width: 100%;' +
-                    'height: 100%;' + 
-                    'overflow: hidden;' + 
-                    'z-index: 9999;' + 
-                    'display: flex;' + 
-                    'flex-direction: column;' +
-                    'align-content: space-around;' +
-            '">' +
-                '<input ' +
-                    ([] .filter .call (hint .attributes, function (attr) { return attr .nodeName !== 'style' })
-                        .map (function (attr) {
-                            return attr .nodeName + '="' + attr .nodeValue + '"'
-                        }
-                    ) .join (' ')) + ' ' +
-                    'style="' +
-                        'outline: none;' + 
-                        'border: none;' + 
-                        'padding: 0px;' + 
-                        'margin: 0px;' + 
-                        'display: block;' +
-                        'background: transparent;' +
-                        'width: 1e+07vw;' + 
-                        '-webkit-appearance: none;' +
+    return  '<rect ' +
+    	        'transform="' + use_hint .getAttribute ('transform') + '" ' +
+    	        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
+    	        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
+    	        'fill-opacity="0.001"' +
+            '>' +
+                '<animate attributeName="fill" from="black" to="blue" dur="1s" repeatCount="indefinite" />' +
+            '</rect>' +
+    	    '<foreignObject ' +
+                'style="' + hint .getAttribute ('style')+ '; display: block;" ' +
+    	        'transform="' + use_hint .getAttribute ('transform') + '" ' +
+    	        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
+    	        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
+            '>' +
+                '<overflow-clip ' +
+                    'style="' + 
+                        'padding: 0;' +
+                        'background: transparent;' + 
+                        'width: 100%;' +
+                        'height: 100%;' + 
+                        'overflow: hidden;' + 
+                        'z-index: 9999;' + 
+                        'display: flex;' + 
+                        'flex-direction: column;' +
+                        'align-content: space-around;' +
                 '">' +
-            '</overflow-clip>' +
-        '</foreignObject>';//*/
+                    '<input ' +
+                        ([] .filter .call (hint .attributes, function (attr) { return attr .nodeName !== 'style' })
+                            .map (function (attr) {
+                                return attr .nodeName + '="' + attr .nodeValue + '"'
+                            }
+                        ) .join (' ')) + ' ' +
+                        'style="' +
+                            'outline: none;' + 
+                            'border: none;' + 
+                            'padding: 0px;' + 
+                            'margin: 0px;' + 
+                            'display: block;' +
+                            'background: transparent;' +
+                            'width: 1e+07vw;' + 
+                            '-webkit-appearance: none;' +
+                    '">' +
+                '</overflow-clip>' +
+            '</foreignObject>';
 };
 var placeholder = function (hint) {
 	var use_hint = hint .querySelector ('use');
@@ -157,15 +167,33 @@ var fulfill_scroll = function (scroll) {
 	hinted .setAttribute ('scroll-y-max', bounding_box .y_max);
 };
 
-var recitify =  function (dom) {
-    [] .forEach .call (dom .querySelectorAll ('[id*=":"]'), function (node) {
+var recitify = function (dom) {
+    [] .forEach .call (dom .querySelectorAll ('[id*="/"]'), function (node) {
         var id = node .getAttribute ('id');
         var parts = id .split (' ');
-        node .setAttribute ('id', parts [0]);
-        parts .slice (1) .forEach (function (attr) {
-            var parts = attr .split (':');
-            node .setAttribute (parts [0], parts .slice (1) .join (':'))
-        })
+        if (parts [0] [0] !== '/') {
+            node .setAttribute ('id', parts [0]);
+            var attribute_string = parts .slice (1) .join (' ');
+        }
+        else {
+            var attribute_string = id;
+        }
+        
+        var attributes = [];
+        
+        while (attribute_string) {
+            var next_attribute = /^\/([^"/ =]+)(?:=([^"/ ]+)|="([^"/]+)")?/ .exec (attribute_string);
+            if (! next_attribute)
+                throw new Error ('invalid attribute string', id);
+            else {
+                var name = next_attribute [1];
+                var value = next_attribute [2] || next_attribute [3] || '';
+                node .setAttribute (name, value);
+                attribute_string = attribute_string .slice (next_attribute [0] .length);
+                if (attribute_string [0] === ' ')
+                    attribute_string = attribute_string .slice (1);
+            }
+        }
     })
 }
 
@@ -179,7 +207,7 @@ var exemplify = function (instances, processing) {
     })
     if (processing && ! processing .apply) processing [1] (x);
     else if (processing) processing (x);
-    [] .forEach .call (x .querySelectorAll ('[id*=template]:not([template])'), function (y) {
+    [] .forEach .call (x .querySelectorAll ('[template=""]'), function (y) {
         y .outerHTML = '';
     });
     return x;
