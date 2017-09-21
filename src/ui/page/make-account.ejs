@@ -2,8 +2,8 @@
 	pre (function () {
 		ui = frame ('make-account');
 
-		[] .forEach .call (ui .querySelectorAll ('hint[for=input]'), function (_) {
-		    _ .outerHTML = input_ify (_);
+		[] .forEach .call (ui .querySelectorAll ('#hint[for=input]'), function (_) {
+			_ .outerHTML = input_ify (_);
 		});
 		
 		def = serve (ui);
@@ -11,44 +11,87 @@
 </script>
 
 <script>
-	var make_account =	function (dom, email, password, retype_password) {
-		var components = interaction_product ({
-			dom: {
-				intent: stream (),
-				state: stream (dom)
-			},
-			email: email,
-			password: password,
-			retype_password: retype_password
-		});
+	var _interaction = interaction_to_be (promise_of (function (is) {
+		self .on ('mount', function () {
+			var make_account_dom = self .root .querySelector ('#make-account[action=focus]');
+			var back_dom = self .root .querySelector ('#back[action=nav]');
+			
+			var make_account_stream = stream_from_click_on (make_account_dom);
+			var back_stream = stream_from_click_on (back_dom);
+										
+										
+			var email_dom = self .root .querySelector ('#email');
+			var password_dom = self .root .querySelector ('#password');
+			var retype_password_dom = self .root .querySelector ('#retype-password');
+			
+			var email_interaction =	interaction_placeholder (
+										email_dom .querySelector ('#placeholder'),
+										interaction_input (email_dom .querySelector ('input'))
+									);
+			var password_interaction =	interaction_placeholder (
+											password_dom .querySelector ('#placeholder'), 
+											interaction_input (password_dom .querySelector ('input'))
+										);
+			var retype_password_interaction =	interaction_placeholder (
+													retype_password_dom .querySelector ('#placeholder'), 
+													interaction_input (retype_password_dom .querySelector ('input'))
+												);
+	
+			is (
+				_interaction_ ({
+					make_account: make_account_stream,
+					back: back_stream,
+					
+					email: email_interaction,
+					password: password_interaction,
+					retype_password: retype_password_interaction
+				})
+			)
+		})
+	}))
+	
+	
+	var _interaction_ =	function (components) {
+		var make_account = components .make_account;
+		var back = components .back;
+		
+		var email = components .email;
+		var password = components .password;
+		var retype_password = components .retype_password;
+		
 		var extension = interaction (transition (function (intent, license) {
 			if (intent === 'make') {
-			    if (! (email .state () ._ && email .state () .dom .checkValidity ())) {
-				    toast ('Please make sure you enter a valid email')
-				    return only_ ();
-				}
-			    else if (password .state () ._ !== retype_password .state () ._) {
-				    toast ('Please make sure your passwords match')
-				    return only_ ();
-				}
-			    else
-    				return from (function (tenure) {
-    					loader ();
-    					inquire (api () .register, {
-    						email: email .state () ._,
-    						password: password .state () ._
-    					})
-    						.then (function (res) {
-    							loader .stop ();
-    							tenure .end (true);
-    							if (res) {
-    								window .location .href = '#trail';
-    							}
-    							else {
-    								toast ('There was a problem creating the account');
-    							}
-    						})
-				    })
+				return 	from (function (tenure) {
+							if (! (email .state () ._ && email .state () .dom .checkValidity ())) {
+								toast ('Please make sure you enter a valid email');
+								tenure .end (true);
+							}
+							else if (password .state () ._ !== retype_password .state () ._) {
+								toast ('Please make sure your passwords match');
+								tenure .end (true);
+							}
+							else {
+								tenure ('making-account');
+								loader ();
+								inquire (api () .register, {
+									email: email .state () ._,
+									password: password .state () ._
+								})
+								.then (function (res) {
+									loader .stop ();
+									if (res .error) {
+										toast ('There was a problem creating the account');
+									}
+									else {
+										window .location .href = routes .dashboard;
+									}
+								})
+								.then (function () {
+									tenure (null);
+									tenure .end (true);
+								})
+							}
+						})
 			}
 			else {
 				console .error ('unknown intent passed', intent);
@@ -56,26 +99,21 @@
 			}
 		}));
 		
-		click (dom .querySelector ('[id="action"]'), function () {
+		extension .state (null);
+		
+		make_account .thru (tap, function () {
 			extension .intent ('make');
 		})
-		
-		return interaction_key_sum (components, interaction_product ({ _: extension }))
-	}
-	
-	var email, password, retype_password, i
-	self .on ('mount', function () {
-		var email_dom = self .root .querySelector ('[id="email"]');
-		var password_dom = self .root .querySelector ('[id="password"]');
-		var retype_password_dom = self .root .querySelector ('[id="retype-password"]');
-		
-		email = interaction_placeholder (email_dom .querySelector ('[id="placeholder"]'), interaction_input (email_dom .querySelector ('input')))
-		password = interaction_placeholder (password_dom .querySelector ('[id="placeholder"]'), interaction_input (password_dom .querySelector ('input')))
-		retype_password = interaction_placeholder (retype_password_dom .querySelector ('[id="placeholder"]'), interaction_input (retype_password_dom .querySelector ('input')))
-		i = make_account (self .root, email, password, retype_password);
-	
-		click (self .root .querySelector ('[id="header"]') .querySelector ('[id="back"]'), function () {
+		back .thru (tap, function () {
 			window .location .href = routes .login;
 		})
-	})
+		
+		return interaction_product ({
+			_: extension,
+			
+			input_email: email,
+			input_password: password,
+			input_retype_password: retype_password
+		})
+	}
 </script>

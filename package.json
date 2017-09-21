@@ -16,6 +16,7 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
+        "acorn": "^5.1.2",
         "casual": "^1.5.14",
         "cordova-android": "^6.2.3",
         "cordova-browser": "^4.1.0",

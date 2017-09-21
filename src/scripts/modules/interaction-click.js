@@ -6,3 +6,9 @@ var click = function (dom, handler) {
         ]))
     })
 }
+
+var stream_from_click_on = function (dom) {
+    return from (function (x) {
+        click (dom, x)
+    })
+}

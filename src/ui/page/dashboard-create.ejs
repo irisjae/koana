@@ -1,0 +1,91 @@
+<script>
+	pre (function () {
+		ui = frame ('dashboard-create-1');
+
+		[] .forEach .call (ui .querySelectorAll ('#hint[for=input]:not([type=date])'), function (_) {
+			_ .outerHTML = input_ify (_);
+		});
+
+		def = serve (ui);
+	})
+</script>
+<script>
+    var _interaction = interaction_to_be (promise_of (function (is) {
+		self .on ('mount', function () {
+			var back_dom = self .root .querySelector ('#back[action=nav]');
+			var done_dom = self .root .querySelector ('#done[action=focus]');
+			
+			var back_stream = stream_from_click_on (back_dom);
+			var done_stream = stream_from_click_on (done_dom);
+										
+										
+			var name_dom = self .root .querySelector ('#name');
+			var school_name_dom = self .root .querySelector ('#school-name');
+			var date_of_birth_dom = self .root .querySelector ('#date-of-birth');
+			
+			var name_interaction =	interaction_placeholder (
+										name_dom .querySelector ('#placeholder'),
+										interaction_input (name_dom .querySelector ('input'))
+									);
+			var school_name_interaction =	interaction_placeholder (
+											school_name_dom .querySelector ('#placeholder'), 
+											interaction_input (school_name_dom .querySelector ('input'))
+										);
+			var date_of_birth_interaction =	interaction_placeholder (
+												date_of_birth_dom .querySelector ('#placeholder'), 
+												interaction_date_picker (date_of_birth_dom .querySelector ('input'))
+											);
+	
+			is (
+				_interaction_ ({
+					back: back_stream,
+					done: done_stream,
+					
+					name: name_interaction,
+					school: school_name_interaction,
+					date_of_birth: date_of_birth_interaction
+				})
+			)
+		})
+	}))
+	
+	
+	var _interaction_ =	function (components) {
+		var back = components .back;
+		var done = components .done;
+		
+		var name = components .name;
+		var school = components .school;
+		var date_of_birth = components .date_of_birth;
+		
+		var extension = interaction (transition (function (intent, license) {
+			if (intent === 'done') {
+				return 	from (function (tenure) {
+						})
+			}
+			else {
+				console .error ('unknown intent passed', intent);
+				return only_ ()
+			}
+		}));
+		
+		extension .state (null);
+		
+		back .thru (tap, function () {
+			window .location .href = routes .dashboard;
+		})
+		done .thru (tap, function () {
+			extension .intent ('done');
+		})
+		
+		return interaction_product ({
+			_: extension,
+			
+			input: interaction_product ({
+			    name: name,
+			    school: school,
+			    date_of_birth: date_of_birth
+			})
+		})
+	}
+</script>

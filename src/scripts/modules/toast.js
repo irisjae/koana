@@ -48,4 +48,5 @@ var toast = function (text) {
 													return wait (500)
 												})
 									})
+				return null;
 			}

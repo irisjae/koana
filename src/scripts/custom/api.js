@@ -169,7 +169,10 @@ var routes = {
     login: '#login',
     make_account: '#make-account',
     logout: '#logout',
-    dashboard: '#trail',
+    dashboard: '#dashboard',
+    dashboard_create: '#dashboard-create',
+    dashboard_create_two: '#dashboard-create-two',
+    dashboard_create_three: '#dashboard-create-three',
     categories: '#categories',
     quiz: '#quiz'
 }

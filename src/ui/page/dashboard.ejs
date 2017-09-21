@@ -6,9 +6,9 @@
 	})
 </script>
 <script>
-    self .on ('mount', function () {
-        click (self .root .querySelector ('[id="point-now"]'), function () {
-            window .location .href = routes .categories;
-        })
+    args .cycle__from .thru (tap, function () {
+        if (! api () .player .from ()) {
+            window .location .href = routes .dashboard_create;
+        }
     })
 </script>

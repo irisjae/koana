@@ -13,6 +13,13 @@
 <script>
 	var _interaction = interaction_to_be (promise_of (function (is) {
 		self .on ('mount', function () {
+			var login_dom = self .root .querySelector ('#login[action=focus]');
+			var make_account_dom = self .root .querySelector ('#make-account[action=side]');
+			
+			var login_stream = stream_from_click_on (login_dom);
+			var make_account_stream = stream_from_click_on (make_account_dom);
+										
+										
 			var email_dom = self .root .querySelector ('#email');
 			var password_dom = self .root .querySelector ('#password');
 			
@@ -26,7 +33,10 @@
 										);
 	
 			is (
-				_interaction_ (self .root, {
+				_interaction_ ({
+					login: login_stream,
+					make_account: make_account_stream,
+					
 					email: email_interaction,
 					password: password_interaction
 				})
@@ -35,35 +45,42 @@
 	}))
 	
 	
-	var _interaction_ =	function (dom, components) {
+	var _interaction_ =	function (components) {
+		var login = components .login;
+		var make_account = components .make_account;
+		
 		var email = components .email;
 		var password = components .password;
 		
 		var extension = interaction (transition (function (intent, license) {
 			if (intent === 'login') {
-				return from (function (tenure) {
-					Promise .resolve ()
-					.then (function () {
-						if (! (email .state () ._ && email .state () .dom .checkValidity ())) {
-							toast ('Please make sure you enter a valid email');}
-						else {
-							tenure ('logging-in');
-							loader ();
-							return inquire (api () .login, {
-								email: email .state () ._,
-								password: password .state () ._
-							})
-							.then (function (res) {
-								loader .stop ();
-								if (res .error) {
-									toast ('There was a problem logging in');}
-								else {
-									window .location .href = routes .dashboard;}})
-							.then (function () {
-								tenure (null);})}})
-					.then (function () {
-						tenure .end (true) })
-				})
+				return	from (function (tenure) {
+							if (! (email .state () ._ && email .state () .dom .checkValidity ())) {
+								toast ('Please make sure you enter a valid email');
+								tenure .end (true);
+							}
+							else {
+								tenure ('logging-in');
+								loader ();
+								return inquire (api () .login, {
+									email: email .state () ._,
+									password: password .state () ._
+								})
+								.then (function (res) {
+									loader .stop ();
+									if (res .error) {
+										toast ('There was a problem logging in');
+									}
+									else {
+										window .location .href = routes .dashboard; 
+									}
+								})
+								.then (function () {
+									tenure (null);
+									tenure .end (true); 
+								})
+							}
+						})
 			}
 			else {
 				console .error ('unknown intent passed', intent);
@@ -72,19 +89,16 @@
 		}));
 		
 		extension .state (null);
-		click (dom .querySelector ('[action=focus]'), function () {
+		
+		login .thru (tap, function () {
 			extension .intent ('login');
 		})
-		click (dom .querySelector ('#make-account[action=side]'), function () {
+		make_account .thru (tap, function () {
 			window .location .href = routes .make_account
 		})
 		
 		return interaction_product ({
 			_: extension,
-			dom: {
-				intent: stream (),
-				state: stream (dom)
-			},
 			
 			input_email: email,
 			input_password: password

@@ -20,6 +20,7 @@ var loader =    function (msg) {
     						return wait (300)
     					})
         })
+    return null;
 }
 loader .stop =  function () {
     if (_loader_type === 'cordova')
@@ -41,4 +42,5 @@ loader .stop =  function () {
     					.then (function () {
     						_loader_on = false;
     					})
+    return null;
 }

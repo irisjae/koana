@@ -11,6 +11,7 @@ var scripts_src = path .join (__dirname, '/../src/scripts');
 var scripts_dist = path .join (__dirname, '/../www/scripts');
 var tags_src = path .join (__dirname, '/../src/ui');
 var tags_dist = path .join (__dirname, '/../www/scripts/ui.js');
+var tags_strs_dist = path .join (__dirname, '/../www/scripts/ui-strs.js');
 var styles_src = path .join (__dirname, '/../src/styles');
 var styles_cache = path .join (__dirname, '/../www/styles/cache');
 var styles_copy = path .join (__dirname, '/../www/styles/copy');
@@ -539,6 +540,27 @@ time ('build', function () {
 			.reduce (function (sum, next) { return sum + next; }, '')
 		)
 		.map (compiler .compile)
+		.map (function (src) {
+		    var acorn = require ('acorn');
+		    var tokens = acorn .tokenizer (src);
+		    var long_strings = [];
+		    var x;
+		    while ((x = tokens .getToken ()) .type .label !== 'eof') {
+		        if (x .type .label === 'string' && x .value .length > 1000)
+		            long_strings .unshift (x);
+		    }
+		    var long_obj = R .pipe (
+		        R .map (function (x) {
+		            return [x .start, x .value]
+		        }),
+		        R .fromPairs
+	        ) (long_strings);
+		    write (tags_strs_dist) (`var __strs = ${JSON .stringify (long_obj, null, 4)}`);
+		    long_strings .forEach (function (q) {
+		        src = src .slice (0, q .start) + '__strs [' + q .start + ']' + src .slice (q .end)
+		    })
+		    return src;
+		})
 		.unwrapped
 	);
 	write (styles_dist) (

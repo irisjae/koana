@@ -10,16 +10,33 @@ var interaction =	function (coupling) {
 	}
 }
 
-var transition =	function (fn) {
+var transition = function (fn) {
 	return function (intent, state) {
 		var last_segue = stream (undefined);
 		intent .thru (split_on, last_segue)
 			.thru (map, function (_intent) {
-				return	_intent .thru (trans, R .take (1))
+				return	_intent
+            				/*.thru (tap, function (x) {
+            				    log ('intent', x);
+            				})*/
+				            .thru (trans, R .take (1))
+            				/*.thru (tap, function (x) {
+            				    log ('intention', x);
+            				})*/
 							.thru (map, function (first) {
-								return fn (first, news (intent) .thru (takeUntil, news (last_segue)))
+							    var x = fn (first, news (intent) .thru (takeUntil, news (last_segue)))
+							    //HACK
+							    if (x .end () && x .hasVal) 
+							        return from (function (y) {
+							            y (x ())
+							            setTimeout (function () {
+							                y .end (true);
+							            }, 0);
+							        })
+							    else
+							        return x
 							})
-							.thru (switchLatest)
+							.thru (stream_merge)
 			})
 			.thru (tap, function (_state) {
 				_state .thru (tap, state);

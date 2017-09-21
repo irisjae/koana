@@ -27,10 +27,9 @@ var mergeAll =	function (streams) {
 							})
 						}
 						else {
-							streams .some (function (s) {
+							streams .forEach (function (s) {
 								if (s .hasVal) {
 									self (s ());
-									return true;
 								}
 							});
 						}
@@ -229,6 +228,31 @@ var switchLatest =	function (s) {
 										.thru (tap, self)
 								}, [s]);
 					};
+var stream_merge =	function (s) {
+                        var self = stream ();
+                        var n = stream (0);
+                        s .thru (tap, function () {
+                            n (n () + 1);
+                            s ()
+                                .thru (tap, self)
+                                .end
+                                    .thru (tap, function () {
+                                        n (n () - 1);
+                                    })
+                        });
+                        var ended = function () {
+                            return n () === 0 && s .end ()
+                        };
+                        mergeAll ([
+                            n .thru (map, ended),
+                            s .end .thru (map, ended)
+                        ]) .thru (filter, R .identity)
+                        .thru (trans, R .take (1))
+                        .thru (tap, function () {
+                            self .end (true);
+                        });
+						return self;
+					};
 					
 var from_promise =	function (p) {
 						var s = stream ();
@@ -279,7 +303,9 @@ var only_ =	function (x) {
 
 var product =	function (ss) {
 	return stream_pushes (function (p) {
-		p ({});
+		p (R .map (function (s) {
+		    return s ()
+		}, ss));
 		R .forEachObjIndexed (function (s, k) {
 			s .thru (tap, function (x) {
 				p (
@@ -290,7 +316,9 @@ var product =	function (ss) {
 }
 var array_product = function (ss) {
 	return stream_pushes (function (p) {
-		p (ss .map (R .always (undefined)));
+		p (ss .map (function (s) {
+		    return s ();
+		}));
 		R .forEach (function (s, k) {
 			s .thru (tap, function (x) {
 				p (

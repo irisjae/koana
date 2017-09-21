@@ -7,6 +7,18 @@ module .exports =   function (ctx, next) {
                         return use_db (function (session) {
                             return Promise .resolve ()
                                 .then (function () {
+                                    if (! email)
+                                        return Promise .reject (new Error ('Parameter missing: email'))
+                                })
+                                .then (function () {
+                                    if (! password)
+                                        return Promise .reject (new Error ('Parameter missing: password'))
+                                })
+                                .then (function () {
+                                    if (password .length < 8)
+                                        return Promise .reject (new Error ('Parameter length must be larger or equal to 8: password'))
+                                })
+                                .then (function () {
                                     return session .run (
                                         'MATCH (user:User { email: { email } })' +
                                         'RETURN user',
