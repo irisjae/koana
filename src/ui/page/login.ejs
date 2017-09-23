@@ -1,6 +1,6 @@
 <script>
 	pre (function () {
-		ui = frame ('login');
+		var ui = frame ('login');
 		
 		[] .forEach .call (ui .querySelectorAll ('#hint[for=input]'), function (_) {
 			_ .outerHTML = input_ify (_);
@@ -13,15 +13,17 @@
 <script>
 	var _interaction = interaction_to_be (promise_of (function (is) {
 		self .on ('mount', function () {
-			var login_dom = self .root .querySelector ('#login[action=focus]');
-			var make_account_dom = self .root .querySelector ('#make-account[action=side]');
+		    var dom = self .root;
+
+			var login_dom = dom .querySelector ('#login[action=focus]');
+			var make_account_dom = dom .querySelector ('#make-account[action=side]');
 			
 			var login_stream = stream_from_click_on (login_dom);
 			var make_account_stream = stream_from_click_on (make_account_dom);
 										
 										
-			var email_dom = self .root .querySelector ('#email');
-			var password_dom = self .root .querySelector ('#password');
+			var email_dom = dom .querySelector ('#email');
+			var password_dom = dom .querySelector ('#password');
 			
 			var email_interaction =	interaction_placeholder (
 										email_dom .querySelector ('#placeholder'),
@@ -54,7 +56,7 @@
 		
 		var extension = interaction (transition (function (intent, license) {
 			if (intent === 'login') {
-				return	from (function (tenure) {
+				return	function (tenure) {
 							if (! (email .state () ._ && email .state () .dom .checkValidity ())) {
 								toast ('Please make sure you enter a valid email');
 								tenure .end (true);
@@ -80,11 +82,13 @@
 									tenure .end (true); 
 								})
 							}
-						})
+						}
 			}
 			else {
 				console .error ('unknown intent passed', intent);
-				return only_ ()
+				return function (tenure) {
+				    tenure .end (true);
+				}
 			}
 		}));
 		

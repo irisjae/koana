@@ -226,3 +226,6 @@ var mapper =	function (x) {
 								}
 							}
 				}
+var just_call = function (fn) {
+    return function () { return fn () }
+}

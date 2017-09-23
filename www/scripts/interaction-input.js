@@ -8,8 +8,8 @@ var interaction_input = function (dom) {
     return interaction_product ({
         _: _,
         dom: {
-            intent: only_ (),
-            state: only_ (dom)
+            intent: none,
+            state: stream (dom)
         }
     });
 }
@@ -20,28 +20,28 @@ var interaction_placeholder = function (dom, input) {
 	    //license .thru (tap, logged_with ('what the fuck?'))
 	    
 		if (intent === 'appear') {
-			return from (function (tenure) {
+			return function (tenure) {
 				dom .style .opacity = 1;
 				wait (450)
 					.then (function () {
 					    tenure ('on');
 						tenure .end (true);
 					})
-			})
+			}
 		}
 		else if (intent === 'disappear') {
-			return from (function (tenure) {
+			return function (tenure) {
 				dom .style .opacity = 0;
 				wait (450)
 					.then (function () {
 					    tenure ('off');
 						tenure .end (true);
 					})
-			})
+			}
 		}
 		else {
 			console .error ('unknown intent passed', intent);
-			return only_ ()
+			return project (none)
 		}
 	}));
 	
@@ -58,8 +58,8 @@ var interaction_placeholder = function (dom, input) {
 	
 	return interaction_key_sum (input, interaction_product ({
 		placeholder_dom: {
-			intent: only_ (),
-			state: only_ (dom)
+			intent: none,
+			state: stream (dom)
 		},
 		placeholding: extension
 	}))

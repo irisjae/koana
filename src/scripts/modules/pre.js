@@ -1,13 +1,16 @@
-var ui;
 var frame = function (x) {
     x = frag (frame_string (x)) .children [0];
     recitify (x);
     //console .log (x .outerHTML)
     return x;
 }
-var serve = function (x) {
+var serve = function () {
     return '<' + _name + '>' + '\n' +
-        indent (x .outerHTML) + '\n' +
+        indent (
+            [] .map .call (arguments, function (x) {
+                return x .outerHTML
+            }) .join ('\n')
+        ) + '\n' +
     '</' + _name + '>';
 }
 var frag = function (html) {
@@ -16,8 +19,14 @@ var frag = function (html) {
 	return container .content;
 }; 
 var bound_rectangle =	function (hint) {
+    var svg = (function (el) {
+        while (el .tagName .toUpperCase () !== 'SVG') {
+            el = el .parentElement;
+        } 
+        return el;
+    }) (hint);
 	var id = hint .getAttribute ('xlink:href') || hint .getAttribute ('href');
-	var hint_path = ui .querySelector (id);
+	var hint_path = svg .querySelector (id);
 	var d = hint_path .getAttribute ('d');
 	var path_segments = require ('svg-path-parser') .makeAbsolute (require ('svg-path-parser') (d));
 	var path_points = path_segments .map (function (segment) {
@@ -89,17 +98,6 @@ var input_ify = function (hint) {
                 '</overflow-clip>' +
             '</foreignObject>';
 };
-var placeholder = function (hint) {
-	var use_hint = hint .querySelector ('use');
-	var bounding_box = bound_rectangle (use_hint)
-	
-	return '<rect ' +
-        'transform="' + use_hint .getAttribute ('transform') + '" ' +
-        'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
-        'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
-    '>' +
-    '</rect>';
-};
 var text_ify = function (hint, text) {
     text = text || '';
     
@@ -134,10 +132,10 @@ var image_ify = function (hint, src) {
         'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
         'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
     '>' +
-        '<positioner style="' + hint .getAttribute ('style') + '">' +
+        '<positioner style="' + (hint .getAttribute ('positioner-style') || '') + '">' +
             (src ?
-                '<img src="' + src + '">' :
-                '<img>'
+                '<img src="' + src + '" style="' + (hint .getAttribute ('style') || '') + '">' :
+                '<img style="' + (hint .getAttribute ('style') || '') + '">'
             ) +
         '</positioner>' +
     '</foreignObject>';

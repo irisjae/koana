@@ -1,36 +1,45 @@
 <script>
 	pre (function () {
-		ui = frame ('dashboard-create-1');
-
-		[] .forEach .call (ui .querySelectorAll ('#hint[for=input]:not([type=date])'), function (_) {
+		var uis = [frame ('dashboard-create-1'), frame ('dashboard-create-2')];
+		
+		[] .forEach .call (uis [0] .querySelectorAll ('#hint[for=input]:not([type=date])'), function (_) {
 			_ .outerHTML = input_ify (_);
 		});
 
-		def = serve (ui);
+		[] .forEach .call (uis [1] .querySelectorAll ('#hint[for=image]'), function (_) {
+			_ .outerHTML = image_ify (_);
+		});
+
+		def = serve (uis [0], uis [1]);
 	})
 </script>
 <script>
+
+    var doms = [ self .root .children [0], self .root .children [1] ];
+		    
     var _interaction = interaction_to_be (promise_of (function (is) {
 		self .on ('mount', function () {
-			var back_dom = self .root .querySelector ('#back[action=nav]');
-			var done_dom = self .root .querySelector ('#done[action=focus]');
+		    var dom = self .root;
+
+			var back_dom = dom .querySelector ('#back[action=nav]');
+			var done_dom = dom .querySelector ('#done[action=focus]');
 			
 			var back_stream = stream_from_click_on (back_dom);
 			var done_stream = stream_from_click_on (done_dom);
 										
 										
-			var name_dom = self .root .querySelector ('#name');
-			var school_name_dom = self .root .querySelector ('#school-name');
-			var date_of_birth_dom = self .root .querySelector ('#date-of-birth');
+			var name_dom = dom .querySelector ('#name');
+			var school_name_dom = dom .querySelector ('#school-name');
+			var date_of_birth_dom = dom .querySelector ('#date-of-birth');
 			
 			var name_interaction =	interaction_placeholder (
 										name_dom .querySelector ('#placeholder'),
 										interaction_input (name_dom .querySelector ('input'))
 									);
 			var school_name_interaction =	interaction_placeholder (
-											school_name_dom .querySelector ('#placeholder'), 
-											interaction_input (school_name_dom .querySelector ('input'))
-										);
+    											school_name_dom .querySelector ('#placeholder'), 
+    											interaction_input (school_name_dom .querySelector ('input'))
+    										);
 			var date_of_birth_interaction =	interaction_placeholder (
 												date_of_birth_dom .querySelector ('#placeholder'), 
 												interaction_date_picker (date_of_birth_dom .querySelector ('input'))
@@ -60,12 +69,36 @@
 		
 		var extension = interaction (transition (function (intent, license) {
 			if (intent === 'done') {
-				return 	from (function (tenure) {
-						})
+				return 	function (tenure) {
+				            if (! name .state () ._) {
+				                toast ('Please fill in your name')
+				                tenure .end (true);
+				            }
+				            else if (! school .state () ._) {
+				                toast ('Please fill in your school name')
+				                tenure .end (true);
+				            }
+				            else if (! date_of_birth .state () ._) {
+				                toast ('Please fill in your date of birth')
+				                tenure .end (true);
+				            }
+				            else {
+    				            api () .create_koder = re_cycle ();
+    				            api () .create_koder .to ({
+    				                name: name .state () ._,
+    				                school: school .state () ._,
+    				                date_of_birth: date_of_birth .state () ._
+    				            })
+    				            window .location .href = routes .dashboard_create_two
+				                tenure .end (true);
+				            }
+						};
 			}
 			else {
 				console .error ('unknown intent passed', intent);
-				return only_ ()
+				return function (tenure) {
+				    tenure .end (true);
+				}
 			}
 		}));
 		

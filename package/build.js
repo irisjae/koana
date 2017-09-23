@@ -303,7 +303,7 @@ var refresh_cache =	function () {
 					
 
 var frame_string = function (_) {
-    return file (path .join (frames_src, _ + '.svg'));
+	return file (path .join (frames_src, _ + '.svg'));
 }					
 
 
@@ -312,184 +312,184 @@ time ('build', function () {
 	
 	var name_resolution = {};
 	
-    					
-    var transform = function (src, name) {
-    	var subcomponents = {};
-    	var expressions = [];
-    	var eaches
-    	var loop_expressions = [];
-    	var scripts = [];
-    	var prescripts = [];
-    	var refs = /<[^>]+ ref=[^>]+>/ .test (src);
-    	var yield_tag = /<yield \/>/ .test (src);
-    	
-        return mapper ('<' + name + '>' + '\n' +
-        			indent (src) + '\n' +
-        		'</' + name + '>')
-        	/* Resolve & tags */
-        	.map (function (def) {
-        		var and_potential = true;
-        		var resolve_and =	function (match, parent, _yield) {
-        								and_potential = true;
-        								if (! name_resolution [parent])
-        									throw 'unresolved inheritance: ' + parent
-        								else
-        									return	file (name_resolution [parent] [0])
-        												.replace (/<yield \/>/g, function (match) {
-        													return _yield;
-        												});
-        							}
-        		while (and_potential) {
-        			and_potential = false;
-        			def = def
-        					.replace (/<&([^>\/\s]+)\s*>((?:(?!<\/&>)[^])+)<\/&>/g, resolve_and)
-        					.replace (/<&([^>\/\s]+)\s*()\/\s*>/g, resolve_and);
-        		}
-        		return def;
-        	})
-        	/* & tags erasure */
-        	.map (function (def) {
-        		return def .replace (/<&(?:[^>]*)>|<& \/>|<&\/>|<\/&>/g, function (match) {
-        			return '';
-        		})
-        	})
-        	/* Extract styles */
-        	.map (function (def) {
-        		return def .replace (/<style>((?:(?!<\/)[^])*)<\/style>/g, function (match, metastyles) {
-        			//styles .extend (tag_name, metastyles, parent_name);
-        			return '';
-        		})
-        	})
-        	/* Extract pre transforms  */
-        	.map (function (def) {
-        		return def .replace (/<script>\s*pre\s*(\(function\s*\((?:(?!<\/script>)[^)])*\)\s*\{(?:(?!<\/script>)[^])*}\))\s*<\/script>/g, function (match, prescript) {
-        			prescripts .push (prescript);
-        			return '';
-        		})
-        	})
-        	/* Extract scripts  */
-        	.map (function (def) {
-        		return def .replace (/<script>((?:(?!<\/script>)[^])*)<\/script>/g, function (match, metascript) {
-        			scripts .push (metascript);
-        			return '';
-        		})
-        	}) 
-        	/* Execute pre transforms  */
-        	.map (function (def) {
-        		if (prescripts .length) {
-    			    (function () {
-            			var window = (new jsdom .JSDOM ()) .window;
-            			var _name = name;
-            			with (window) {
-            				var node/* = (function (html) {
-            				    var container = document .createElement ('template');
-            					container .innerHTML = html;
-            					return container .content;
-            				}) (def) .childNodes [0]*/;
-            				eval (file (path .join (scripts_src, 'modules/pre.js')));
-            				for (var _ in prescripts) {
-            				    eval (prescripts [_]) (node);
-            				}
-            				//def = node .outerHTML;
-            			}
-    			    }) ();
-        		}
-        		return def;
-        	})
-        	/* Transform expressions  */
-        	.map (function (def) {
-        		return def .replace (/{((?=(?:(?:(?!\ in )[^({])*\()+(?:(?!\ in )[^({])*\ in[^{]+})(?:[^{]+)|(?:(?!\ in )[^{])+)}/g, function (match, expression) {
-        			expressions .push (expression);
-        			return '{ expression:' + name + ':' + expressions .length + ' }';
-        		})
-        	})
-        	/* Transform looper expressions  */
-        	.map (function (def) {
-        		return def .replace (/{((?:(?!\ in )[^{])*)\ in ([^{]+)}/g, function (match, loop_syntax, expression) {
-        			expressions .push (expression);
-        			return '{' + loop_syntax + ' in expression:' + name + ':' + expressions .length + ' }';
-        		})
-        	})
-        	/* Transform ref expressions  */
-        	.map (function (def) {
-        		return def .replace (/(<[^>]+ ref=")([^">]+)("[^>]*>)/g, function (match, before, ref, after) {
-        			return before + '{ ref prefix }' + ref + after;
-        		})
-        	})
-        	/* Inject scripts  */
-        	.map (function (def) {
-        		return def .replace (/\n<\/[^]+>$/g, function (match) {
-        			return ((scripts .length || expressions .length || yield_tag || refs) ?
-        				indent ('<script>\n(function (self, args) {\n'
-        					+ '\n self ._loaded = true;'
-        					+ '\n self ._scope = function () {};'
-        					/*+ '\n self .on ("before-mount", function () { log ("' + tag_name + ' enter mount"); });'
-        					+ '\n self .on ("mount", function () { log ("' + tag_name + ' exit mount"); });'
-        					+ '\n self .on ("update", function () { log ("' + tag_name + ' enter update"); });'
-        					+ '\n self .on ("updated", function () { log ("' + tag_name + ' exit update"); });'*/
-        					+ (yield_tag
-        						? '\nself ._yield_levels = 0;'
-        							+ '\nself ._yield_level = 0;'
-        							+ '\nself ._yield_on = function () { /*log ("' + name + ' yield enter");*/ self ._yielding = true; self ._yield_level++; if (self ._yield_level > self ._yield_levels) self ._yield_levels = self ._yield_level; return ""; };'
-        							+ '\nself ._yield_off = function () { /*log ("' + name + ' yield exit");*/ self ._yielding = false; self ._yield_level--; return ""; };'
-        						: '')
-        					+ (yield_tag
-        						? '\nvar _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy) /*.thru (tap, function (how) { log (self .root .localName, "cons refs", how);})*/;'
-        							+ '\nvar yield_scope = self .parent;'
-        							+ '\nwhile (yield_scope && yield_scope ._yield_levels) yield_scope = climb (yield_scope ._yield_levels, yield_scope);'
-        							//+ '\nlog (self .root .localName, "located father", yield_scope);'
-        							+ '\nif (yield_scope && yield_scope .yielded_diff) _refs .thru (map, yield_refs) .thru (diff_refs) .thru (tap, yield_scope .yielded_diff);'
-        						: '')
-        					+ (refs || yield_tag
-        						? '\nvar self_diff = stream ();'
-        							+ '\nvar yielded_diff = stream ();'
-        							+ '\nself .yielded_diff = yielded_diff/* .thru (tap, function (how) { log (self .root .localName, "recieved", how);})*/;'
-        							+ '\nvar diffs = mergeAll ([ self_diff, yielded_diff ]);'
-        							+ '\nvar ref = function (name) { return ref_diff (name, diffs) };'
-        							+ '\nvar ref_set = function (name) { return ref_set_diff (name, diffs) };'
-        							+ (! yield_tag
-        								? '\nvar _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy) /*.thru (tap, function (how) { log (self .root .localName, "cons refs", how);})*/;'
-        								: '')
-        							+ '\n_refs .thru (map, self_refs) .thru (diff_refs) .thru (tap, self_diff);'
-        						: '')
-        					+ (scripts .length
-        						? '\nvar known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };'
-        							+ '\nself .on ("update", function () {args = self .opts});\n'
-        						: '')
-        					+ scripts .join (';\n')
-        					+ (expressions .length
-        						? '\nself .expressions = {};\n'
-        							+ '\n' + expressions .map (function (expression, i) {
-        								return 'self .expressions [' + i + '] = function (_item) { return ' + expression + ' };';
-        							}) .join ('\n')
-        						: '')
-        					+ (yield_tag
-        						? '\nif (! self .update_strategy || self .update_strategy === "push") self .shouldUpdate = R .T;'
-        						: '')
-        					+ '\nif (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;'
-        					+ '\n}) (this, this .opts);\n</script>')
-        				: '') + match;
-        		})
-        	})
-        	/* Inject subcomponents  */
-        	.map (function (def) {
-        		return	[def] .concat (R. pipe (R .mapObjIndexed (transform), R .values) (subcomponents))
-        					.reduce (function (sum, next) { return next + sum; }, ''); 
-        	})
-        	/* Inject yield hooks  */
-        	.map (function (def) {
-        		return def .replace (/<yield><\/yield>/g, function (match) {
-        			return '{ enter yield }<yield></yield>{ exit yield }';
-        		})
-        	}) .unwrapped + '\n'
-    }
+						
+	var transform = function (src, name) {
+		var subcomponents = {};
+		var expressions = [];
+		var eaches
+		var loop_expressions = [];
+		var scripts = [];
+		var prescripts = [];
+		var refs = /<[^>]+ ref=[^>]+>/ .test (src);
+		var yield_tag = /<yield \/>/ .test (src);
+		
+		return mapper ('<' + name + '>' + '\n' +
+					indent (src) + '\n' +
+				'</' + name + '>')
+			/* Resolve & tags */
+			.map (function (def) {
+				var and_potential = true;
+				var resolve_and =	function (match, parent, _yield) {
+										and_potential = true;
+										if (! name_resolution [parent])
+											throw 'unresolved inheritance: ' + parent
+										else
+											return	file (name_resolution [parent] [0])
+														.replace (/<yield \/>/g, function (match) {
+															return _yield;
+														});
+									}
+				while (and_potential) {
+					and_potential = false;
+					def = def
+							.replace (/<&([^>\/\s]+)\s*>((?:(?!<\/&>)[^])+)<\/&>/g, resolve_and)
+							.replace (/<&([^>\/\s]+)\s*()\/\s*>/g, resolve_and);
+				}
+				return def;
+			})
+			/* & tags erasure */
+			.map (function (def) {
+				return def .replace (/<&(?:[^>]*)>|<& \/>|<&\/>|<\/&>/g, function (match) {
+					return '';
+				})
+			})
+			/* Extract styles */
+			.map (function (def) {
+				return def .replace (/<style>((?:(?!<\/)[^])*)<\/style>/g, function (match, metastyles) {
+					//styles .extend (tag_name, metastyles, parent_name);
+					return '';
+				})
+			})
+			/* Extract pre transforms  */
+			.map (function (def) {
+				return def .replace (/<script>\s*pre\s*(\(function\s*\((?:(?!<\/script>)[^)])*\)\s*\{(?:(?!<\/script>)[^])*}\))\s*<\/script>/g, function (match, prescript) {
+					prescripts .push (prescript);
+					return '';
+				})
+			})
+			/* Extract scripts  */
+			.map (function (def) {
+				return def .replace (/<script>((?:(?!<\/script>)[^])*)<\/script>/g, function (match, metascript) {
+					scripts .push (metascript);
+					return '';
+				})
+			}) 
+			/* Execute pre transforms  */
+			.map (function (def) {
+				if (prescripts .length) {
+					(function () {
+						var window = (new jsdom .JSDOM ()) .window;
+						var _name = name;
+						with (window) {
+							var node/* = (function (html) {
+								var container = document .createElement ('template');
+								container .innerHTML = html;
+								return container .content;
+							}) (def) .childNodes [0]*/;
+							eval (file (path .join (scripts_src, 'modules/pre.js')));
+							for (var _ in prescripts) {
+								eval (prescripts [_]) (node);
+							}
+							//def = node .outerHTML;
+						}
+					}) ();
+				}
+				return def;
+			})
+			/* Transform expressions  */
+			.map (function (def) {
+				return def .replace (/{((?=(?:(?:(?!\ in )[^({])*\()+(?:(?!\ in )[^({])*\ in[^{]+})(?:[^{]+)|(?:(?!\ in )[^{])+)}/g, function (match, expression) {
+					expressions .push (expression);
+					return '{ expression:' + name + ':' + expressions .length + ' }';
+				})
+			})
+			/* Transform looper expressions  */
+			.map (function (def) {
+				return def .replace (/{((?:(?!\ in )[^{])*)\ in ([^{]+)}/g, function (match, loop_syntax, expression) {
+					expressions .push (expression);
+					return '{' + loop_syntax + ' in expression:' + name + ':' + expressions .length + ' }';
+				})
+			})
+			/* Transform ref expressions  */
+			.map (function (def) {
+				return def .replace (/(<[^>]+ ref=")([^">]+)("[^>]*>)/g, function (match, before, ref, after) {
+					return before + '{ ref prefix }' + ref + after;
+				})
+			})
+			/* Inject scripts  */
+			.map (function (def) {
+				return def .replace (/\n<\/[^]+>$/g, function (match) {
+					return ((scripts .length || expressions .length || yield_tag || refs) ?
+						indent ('<script>\n(function (self, args) {\n'
+							+ '\n self ._loaded = true;'
+							+ '\n self ._scope = function () {};'
+							/*+ '\n self .on ("before-mount", function () { log ("' + tag_name + ' enter mount"); });'
+							+ '\n self .on ("mount", function () { log ("' + tag_name + ' exit mount"); });'
+							+ '\n self .on ("update", function () { log ("' + tag_name + ' enter update"); });'
+							+ '\n self .on ("updated", function () { log ("' + tag_name + ' exit update"); });'*/
+							+ (yield_tag
+								? '\nself ._yield_levels = 0;'
+									+ '\nself ._yield_level = 0;'
+									+ '\nself ._yield_on = function () { /*log ("' + name + ' yield enter");*/ self ._yielding = true; self ._yield_level++; if (self ._yield_level > self ._yield_levels) self ._yield_levels = self ._yield_level; return ""; };'
+									+ '\nself ._yield_off = function () { /*log ("' + name + ' yield exit");*/ self ._yielding = false; self ._yield_level--; return ""; };'
+								: '')
+							+ (yield_tag
+								? '\nvar _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy) /*.thru (tap, function (how) { log (self .root .localName, "cons refs", how);})*/;'
+									+ '\nvar yield_scope = self .parent;'
+									+ '\nwhile (yield_scope && yield_scope ._yield_levels) yield_scope = climb (yield_scope ._yield_levels, yield_scope);'
+									//+ '\nlog (self .root .localName, "located father", yield_scope);'
+									+ '\nif (yield_scope && yield_scope .yielded_diff) _refs .thru (map, yield_refs) .thru (diff_refs) .thru (tap, yield_scope .yielded_diff);'
+								: '')
+							+ (refs || yield_tag
+								? '\nvar self_diff = stream ();'
+									+ '\nvar yielded_diff = stream ();'
+									+ '\nself .yielded_diff = yielded_diff/* .thru (tap, function (how) { log (self .root .localName, "recieved", how);})*/;'
+									+ '\nvar diffs = mergeAll ([ self_diff, yielded_diff ]);'
+									+ '\nvar ref = function (name) { return ref_diff (name, diffs) };'
+									+ '\nvar ref_set = function (name) { return ref_set_diff (name, diffs) };'
+									+ (! yield_tag
+										? '\nvar _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy) /*.thru (tap, function (how) { log (self .root .localName, "cons refs", how);})*/;'
+										: '')
+									+ '\n_refs .thru (map, self_refs) .thru (diff_refs) .thru (tap, self_diff);'
+								: '')
+							+ (scripts .length
+								? '\nvar known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };'
+									+ '\nself .on ("update", function () {args = self .opts});\n'
+								: '')
+							+ scripts .join (';\n')
+							+ (expressions .length
+								? '\nself .expressions = {};\n'
+									+ '\n' + expressions .map (function (expression, i) {
+										return 'self .expressions [' + i + '] = function (_item) { return ' + expression + ' };';
+									}) .join ('\n')
+								: '')
+							+ (yield_tag
+								? '\nif (! self .update_strategy || self .update_strategy === "push") self .shouldUpdate = R .T;'
+								: '')
+							+ '\nif (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;'
+							+ '\n}) (this, this .opts);\n</script>')
+						: '') + match;
+				})
+			})
+			/* Inject subcomponents  */
+			.map (function (def) {
+				return	[def] .concat (R. pipe (R .mapObjIndexed (transform), R .values) (subcomponents))
+							.reduce (function (sum, next) { return next + sum; }, ''); 
+			})
+			/* Inject yield hooks  */
+			.map (function (def) {
+				return def .replace (/<yield><\/yield>/g, function (match) {
+					return '{ enter yield }<yield></yield>{ exit yield }';
+				})
+			}) .unwrapped + '\n'
+	}
 
 
 	fs .readdirSync (scripts_dist) .forEach (function (file) {
 		const file_path = path .resolve (scripts_dist, file);
 		const file_info = fs .statSync (file_path);
 		
-	    fs .renameSync (file_path, file_path + '.old')
+		fs .renameSync (file_path, file_path + '.old')
 	});
 	files ('.js') (scripts_src)
 		.forEach (function (path_/* of file*/) {
@@ -521,45 +521,48 @@ time ('build', function () {
 										.split ('.')
 											.slice (0, -1)
 										.join ('.');
-
-				var tag_src = file (tag_path);
-				
-				//UNTIL MAKE REAL PROTO MECHANISM
-				if (tag_name .startsWith ('page-'))
-				    tag_src = '<&custom-page>' + '\n' + '</&>' + '\n' + tag_src;
-
-				try {
-					console .log ('rendering ' + tag_name);
+											
+				return time ('rendering ' + tag_name, function () {
+	
+					var tag_src = file (tag_path);
+					
+					//UNTIL MAKE REAL PROTO MECHANISM
+					if (tag_name .startsWith ('page-'))
+						tag_src = '<&custom-page>' + '\n' + '</&>' + '\n' + tag_src;
+	
 					return transform (tag_src, tag_name);
-				}
-				catch (error) {
-					console .error ('failed!');
-					throw error;
-				}
+				})
 			})
 			.reduce (function (sum, next) { return sum + next; }, '')
 		)
 		.map (compiler .compile)
 		.map (function (src) {
-		    var acorn = require ('acorn');
-		    var tokens = acorn .tokenizer (src);
-		    var long_strings = [];
-		    var x;
-		    while ((x = tokens .getToken ()) .type .label !== 'eof') {
-		        if (x .type .label === 'string' && x .value .length > 1000)
-		            long_strings .unshift (x);
-		    }
-		    var long_obj = R .pipe (
-		        R .map (function (x) {
-		            return [x .start, x .value]
-		        }),
-		        R .fromPairs
-	        ) (long_strings);
-		    write (tags_strs_dist) (`var __strs = ${JSON .stringify (long_obj, null, 4)}`);
-		    long_strings .forEach (function (q) {
-		        src = src .slice (0, q .start) + '__strs [' + q .start + ']' + src .slice (q .end)
-		    })
-		    return src;
+			return time ('stripping long strings', function () {
+				/*var all_strs = {};
+				src = src .replace (/(riot\.tag2\('[^']+?', )('[^]+?')(, '', '', function\(opts\) \{\n	\(function \(self, args\) \{)/g,
+					function (match, before, str, after, offset) {
+						all_strs [offset] = eval (str);
+						return before + '__strs [' + offset + ']' + after;
+					})
+				write (tags_strs_dist) (`var __strs = ${JSON .stringify (all_strs, null, 4)}`);
+				return src;*/
+			    var esprima = require ('esprima');
+				var long_strings =	esprima .tokenize (src, {range: true})
+										.filter (function (x) {
+											return x .type === 'String' && x .value .length > 1000;
+										})
+				var long_obj = R .pipe (
+					R .map (function (x) {
+						return [x .range [0], x .value]
+					}),
+					R .fromPairs
+				) (long_strings .reverse ());
+				write (tags_strs_dist) (`var __strs = ${JSON .stringify (long_obj, null, 4)}`);
+				long_strings .forEach (function (q) {
+					src = src .slice (0, q .range [0]) + '__strs [' + q .range [0] + ']' + src .slice (q .range [1])
+				});
+				return src;
+			})
 		})
 		.unwrapped
 	);

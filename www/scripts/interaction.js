@@ -24,25 +24,19 @@ var transition = function (fn) {
             				    log ('intention', x);
             				})*/
 							.thru (map, function (first) {
-							    var x = fn (first, news (intent) .thru (takeUntil, news (last_segue)))
-							    //HACK
-							    if (x .end () && x .hasVal) 
-							        return from (function (y) {
-							            y (x ())
-							            setTimeout (function () {
-							                y .end (true);
-							            }, 0);
-							        })
-							    else
-							        return x
+							    return fn (first, news (intent) .thru (takeUntil, news (last_segue)))
 							})
-							.thru (stream_merge)
 			})
-			.thru (tap, function (_state) {
-				_state .thru (tap, state);
-				_state .end .thru (tap, function () {
-					last_segue (undefined);
-				})
+			.thru (tap, function (x) {
+			    promise (x)
+			        .then (function (tend) {
+			            var _state = stream ();
+        				_state .thru (tap, state);
+        				_state .end .thru (tap, function () {
+        					last_segue (undefined);
+        				})
+        				tend (_state);
+			        })
 			})
 	}
 }

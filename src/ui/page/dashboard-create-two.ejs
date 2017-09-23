@@ -1,0 +1,75 @@
+<script>
+	pre (function () {
+		ui = frame ('dashboard-create-2');
+
+		[] .forEach .call (ui .querySelectorAll ('#hint[for=image]'), function (_) {
+			_ .outerHTML = image_ify (_);
+		});
+
+		def = serve (ui);
+	})
+</script>
+<script>
+    var _interaction = interaction_to_be (promise_of (function (is) {
+		self .on ('mount', function () {
+			var go_dom = self .root .querySelector ('#go[action=focus]');
+			
+			var go_stream = stream_from_click_on (go_dom);
+										
+								
+			var koders_dom = self .root .querySelector ('#koders');		
+			var left_dom = koders_dom .querySelector ('#prev');
+			var right_dom = koders_dom .querySelector ('#next');
+			var image_dom = koders_dom .querySelector ('img');
+			var date_of_birth_dom = self .root .querySelector ('#date-of-birth');
+			
+			var koder_interaction =	interaction_select_koders (
+										left_dom, right_dom, image_dom,
+    									config .koder .choices
+									);
+	
+			is (
+				_interaction_ ({
+					go: go_stream
+				})
+			)
+		})
+	}))
+	
+	
+	var _interaction_ =	function (components) {
+		var go = components .go;
+		
+		var extension = interaction (transition (function (intent, license) {
+			if (intent === 'go') {
+				return 	function (tenure) {
+				            api () .create_koder .to ({
+				                name: name .state (),
+				                school: school .state (),
+				                date_of_birth: date_of_birth .state ()
+				            })
+				            window .location .href = routes .dashboard_create_two
+						}
+			}
+			else {
+				console .error ('unknown intent passed', intent);
+				return function (tenure) {
+				    tenure .end (true);
+				}
+			}
+		}));
+		
+		extension .state (null);
+		
+		go .thru (tap, function () {
+			extension .intent ('go');
+		})
+		
+		return interaction_product ({
+			_: extension,
+			
+			input: interaction_product ({
+			})
+		})
+	}
+</script>

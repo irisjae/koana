@@ -232,13 +232,15 @@ var stream_merge =	function (s) {
                         var self = stream ();
                         var n = stream (0);
                         s .thru (tap, function () {
-                            n (n () + 1);
-                            s ()
-                                .thru (tap, self)
-                                .end
-                                    .thru (tap, function () {
-                                        n (n () - 1);
-                                    })
+                            if (! s () .end ()) {
+                                n (n () + 1);
+                                s ()
+                                    .thru (tap, self)
+                                    .end
+                                        .thru (tap, function () {
+                                            n (n () - 1);
+                                        })
+                            }
                         });
                         var ended = function () {
                             return n () === 0 && s .end ()
@@ -259,14 +261,18 @@ var from_promise =	function (p) {
 						p .then (s) .then (function () { s .end (true) });
 						return s;
 					};
-var project =	function (to, s) {
-					s
-						.thru (tap, to)
-						.end .thru (tap, function () {
-							to .end (true);
-						})
+var project =	R .curry (function (to, s) {
+                    if (s .end ())
+                        to .end (true);
+                    else {
+    					s
+    						.thru (tap, to)
+    						.end .thru (tap, function () {
+    							to .end (true);
+    						})
+                    }
 					return s;
-				}
+				})
 				
 var from =	function (pushes) {
 				var s = stream ();
@@ -296,12 +302,13 @@ var split_on =	function (splitter, s) {
 }
 
 var only_ =	function (x) {
-	var y = stream (x);
-	y .end (true);
-	return y;
+	return function (_) {
+	    _ (x);
+	    _ .end (true);
+	};
 }
 
-var product =	function (ss) {
+var product = function (ss) {
 	return stream_pushes (function (p) {
 		p (R .map (function (s) {
 		    return s ()
@@ -311,7 +318,7 @@ var product =	function (ss) {
 				p (
 					R .assoc (k, x) (p ()))
 			})
-		}) (ss)
+		}) (ss);
 	})
 }
 var array_product = function (ss) {
