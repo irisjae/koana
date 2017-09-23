@@ -1,22 +1,19 @@
 <script>
 	pre (function () {
-		var uis = [frame ('dashboard-create-1'), frame ('dashboard-create-2')];
+		var ui = frame ('dashboard-create');
 		
-		[] .forEach .call (uis [0] .querySelectorAll ('#hint[for=input]:not([type=date])'), function (_) {
+		[] .forEach .call (ui .querySelectorAll ('#hint[for=input]:not([type=date])'), function (_) {
 			_ .outerHTML = input_ify (_);
 		});
 
-		[] .forEach .call (uis [1] .querySelectorAll ('#hint[for=image]'), function (_) {
+		[] .forEach .call (ui .querySelectorAll ('#hint[for=image]'), function (_) {
 			_ .outerHTML = image_ify (_);
 		});
 
-		def = serve (uis [0], uis [1]);
+		def = serve (ui);
 	})
 </script>
 <script>
-
-    var doms = [ self .root .children [0], self .root .children [1] ];
-		    
     var _interaction = interaction_to_be (promise_of (function (is) {
 		self .on ('mount', function () {
 		    var dom = self .root;
@@ -45,80 +42,206 @@
 												interaction_date_picker (date_of_birth_dom .querySelector ('input'))
 											);
 	
-			is (
-				_interaction_ ({
+	
+			var go_dom = self .root .querySelector ('#go[action=focus]');
+			
+			var go_stream = stream_from_click_on (go_dom);
+										
+								
+			var koders_dom = self .root .querySelector ('#koders');		
+			var left_dom = koders_dom .querySelector ('#prev');
+			var right_dom = koders_dom .querySelector ('#next');
+			var image_dom = koders_dom .querySelector ('img');
+			
+			var koder_interaction =	interaction_select_koders (
+										left_dom, right_dom, image_dom,
+    									config .koder .choices
+									);
+	
+			/*{
+			    1: _interaction_ ({
 					back: back_stream,
 					done: done_stream,
 					
 					name: name_interaction,
 					school: school_name_interaction,
 					date_of_birth: date_of_birth_interaction
+				}),
+			    2: _interaction_ ({
+					go: go_stream
 				})
-			)
+			};*/
 		})
 	}))
 	
 	
-	var _interaction_ =	function (components) {
-		var back = components .back;
-		var done = components .done;
-		
-		var name = components .name;
-		var school = components .school;
-		var date_of_birth = components .date_of_birth;
-		
-		var extension = interaction (transition (function (intent, license) {
-			if (intent === 'done') {
-				return 	function (tenure) {
-				            if (! name .state () ._) {
-				                toast ('Please fill in your name')
-				                tenure .end (true);
-				            }
-				            else if (! school .state () ._) {
-				                toast ('Please fill in your school name')
-				                tenure .end (true);
-				            }
-				            else if (! date_of_birth .state () ._) {
-				                toast ('Please fill in your date of birth')
-				                tenure .end (true);
-				            }
-				            else {
-    				            api () .create_koder = re_cycle ();
-    				            api () .create_koder .to ({
-    				                name: name .state () ._,
-    				                school: school .state () ._,
-    				                date_of_birth: date_of_birth .state () ._
-    				            })
-    				            window .location .href = routes .dashboard_create_two
-				                tenure .end (true);
-				            }
-						};
-			}
-			else {
-				console .error ('unknown intent passed', intent);
-				return function (tenure) {
-				    tenure .end (true);
-				}
-			}
-		}));
-		
-		extension .state (null);
-		
-		back .thru (tap, function () {
-			window .location .href = routes .dashboard;
-		})
-		done .thru (tap, function () {
-			extension .intent ('done');
-		})
-		
-		return interaction_product ({
-			_: extension,
-			
-			input: interaction_product ({
+</script>
+<script>
+    var step_procession = {
+        1: 2,
+        2: 3,
+        3: function (steps) {
+            return promise_of (function (done) {
+                var state = {
+                    name: steps [1] .state () .name ._,
+                    school_name: steps [1] .state () .school_name ._,
+                    date_of_birth: steps [1] .state () .date_of_birth ._,
+                    koder_image: steps [2] .state () .koder_image ._,
+                    koder_name: steps [3] .state () .koder_name ._,
+                }
+                //validation
+                //send api
+                //reject or accept
+            });
+        }
+    };
+    var _create_steps_interaction_ = function (components) {
+        var step = components .step;
+        var steps = R .dissoc ('step') (components);
+        
+        step .intent ([step .state (), 1]);
+        R .forEach (function (x, i) {
+            i = +i;
+            x .state .thru (filter, R .equals ('done')) .thru (tap, function (s) {
+                if (typeof (step_procession [i]) !== 'function')
+                    step .intent ([step .state (), step_procession [i]])
+                else {
+                    step_procession [i] (steps) .then (function () {
+                        R .forEach (function (x) {
+                            x .intent (['reset']);
+                        }) (steps)
+                    })
+                }
+            })
+        }) (steps)
+        
+        _ .intent (['go', 1])
+    }
+</script>
+<script>
+    var _step_interaction_ = function (dom) {
+        var stepped_nodes = [] .slice .call (dom .querySelectorAll ('[step]'));
+        var step = R .pipe (
+            R .map (function (node, i) {
+                return node .getAttribute ('step') .split (',') .map (function (x) {
+                    return [i, x]
+                });
+            }),
+            R .chain (R .identity),
+            R .pair,
+            R .invert,
+            R .map (function (xs) {
+                return xs .map (R .pipe (
+                    function (x) { return +x; },
+                    R .flip (R .prop) (stepped_nodes)
+                ))
+            })
+        ) (stepped_nodes);
+        
+        return interaction (transition (function (intent, license) {
+            var from = intent [0];
+            var to = intent [1];
+            if (from) step [from] .forEach (function (node) {
+                node .style .visibility = 'hidden';
+            });
+            step [to] .forEach (function (node) {
+                node .style .visibility = '';
+            });
+            return only_ (to);
+        }));
+    }
+</script>
+<script>
+    var _interaction_of_step_ = {
+        1: function (components) {
+    		var back = components .back;
+    		var done = components .done;
+    		
+    		var name = components .name;
+    		var school = components .school;
+    		var date_of_birth = components .date_of_birth;
+    		
+    		var extension = interaction (transition (function (intent, license) {
+    			if (intent [0] === 'done') {
+		            if (! name .state () ._) {
+		                toast ('Please fill in your name')
+		                tenure .end (true);
+		            }
+		            else if (! school .state () ._) {
+		                toast ('Please fill in your school name')
+		                tenure .end (true);
+		            }
+		            else if (! date_of_birth .state () ._) {
+		                toast ('Please fill in your date of birth')
+		                tenure .end (true);
+		            }
+		            else {
+		                return only_ ('done');
+		            }
+    			}
+    			else if (intent [0] === 'reset') {
+    			    name .intent (['reset']);
+    			    school .intent (['reset']);
+    			    date_of_birth .intent (['reset']);
+	                return only_ (null);
+    			}
+    			else {
+    				console .error ('unknown intent passed', intent);
+    				return project (none);
+    			}
+    		}));
+    		
+    		extension .state (null);
+    		
+    		back .thru (tap, function () {
+    			window .location .href = routes .dashboard;
+    		})
+    		done .thru (tap, function () {
+    			extension .intent (['done']);
+    		})
+    		
+    		return interaction_product ({
+    			_: extension,
+    			
 			    name: name,
 			    school: school,
 			    date_of_birth: date_of_birth
-			})
-		})
-	}
+    		})
+    	},
+    	2: function (components) {
+    		var go = components .go;
+    		
+    		var extension = interaction (transition (function (intent, license) {
+    			if (intent === 'go') {
+    				return 	function (tenure) {
+    				            api () .create_koder .to ({
+    				                name: name .state (),
+    				                school: school .state (),
+    				                date_of_birth: date_of_birth .state ()
+    				            })
+    				            window .location .href = routes .dashboard_create_two
+    						}
+    			}
+    			else {
+    				console .error ('unknown intent passed', intent);
+    				return function (tenure) {
+    				    tenure .end (true);
+    				}
+    			}
+    		}));
+    		
+    		extension .state (null);
+    		
+    		go .thru (tap, function () {
+    			extension .intent ('go');
+    		})
+    		
+    		return interaction_product ({
+    			_: extension,
+    			
+    			input: interaction_product ({
+    			})
+    		})
+    	}
+    }
 </script>

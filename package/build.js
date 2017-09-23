@@ -148,7 +148,7 @@ var grow_nodes =	function (baby_nodes, grown_nodes) {
 								return node .dependencies .join ('+')
 							}))
 							.map (R .mapObjIndexed (function (nodes, dependency_names) {
-								var dir_path = dependency_names ? path .join (styles_dir, md5 (dependency_names)) : path .join (styles_dir, '-');
+								var dir_path = dependency_names ? path .join (styles_dir, md5 (dependency_names)) : path .join (styles_dir, 'free');
 							
 								var dependencies =	(dependency_names ? dependency_names .split ('+') : [])
 														.map (function (name) {
@@ -163,9 +163,13 @@ var grow_nodes =	function (baby_nodes, grown_nodes) {
 															.map (function (node) { return node .styles })
 															.reduce (function (sum, next) { return sum + next; }, '');
 								var dependency_path = path .join (dir_path, 'dependency.css');
-								dependency_styles =	time ('cached dependency group ' + dependencies .map (function (node) {
-														return node .names [0]
-													}) .join (' + '), () =>
+								dependency_styles =	time ((
+                    								    dependencies .length
+                    								    ? 'cached dependency group ' + dependencies .map (function (node) {
+    														return node .names [0]
+    													}) .join (' + ')
+    													: 'cached free group'
+								                    ), () =>
 														cache_at (dependency_path .slice (styles_dir .length + 1),
 															dependency_styles,
 															() => union ([dependency_styles])
@@ -311,7 +315,7 @@ var frame_string = function (_) {
 time ('build', function () {
 	
 	var name_resolution = {};
-	
+	var metastyles_resolution = {};
 						
 	var transform = function (src, name) {
 		var subcomponents = {};
@@ -357,6 +361,7 @@ time ('build', function () {
 			.map (function (def) {
 				return def .replace (/<style>((?:(?!<\/)[^])*)<\/style>/g, function (match, metastyles) {
 					//styles .extend (tag_name, metastyles, parent_name);
+					metastyles_resolution [name] = (metastyles_resolution [name] || []) .concat ([metastyles]);
 					return '';
 				})
 			})
@@ -538,14 +543,6 @@ time ('build', function () {
 		.map (compiler .compile)
 		.map (function (src) {
 			return time ('stripping long strings', function () {
-				/*var all_strs = {};
-				src = src .replace (/(riot\.tag2\('[^']+?', )('[^]+?')(, '', '', function\(opts\) \{\n	\(function \(self, args\) \{)/g,
-					function (match, before, str, after, offset) {
-						all_strs [offset] = eval (str);
-						return before + '__strs [' + offset + ']' + after;
-					})
-				write (tags_strs_dist) (`var __strs = ${JSON .stringify (all_strs, null, 4)}`);
-				return src;*/
 			    var esprima = require ('esprima');
 				var long_strings =	esprima .tokenize (src, {range: true})
 										.filter (function (x) {
@@ -553,7 +550,7 @@ time ('build', function () {
 										})
 				var long_obj = R .pipe (
 					R .map (function (x) {
-						return [x .range [0], x .value]
+						return [x .range [0], eval (x .value)]
 					}),
 					R .fromPairs
 				) (long_strings .reverse ());
@@ -564,7 +561,7 @@ time ('build', function () {
 				return src;
 			})
 		})
-		.unwrapped
+		    .unwrapped
 	);
 	write (styles_dist) (
 		mapper (
@@ -577,90 +574,39 @@ time ('build', function () {
 						metastyles: file (path)
 					}
 				})
-				.concat (files ('.ejs') (tags_src)
-					.map (function (path) {
-						var tag_relative_path = path .slice (tags_src .length + 1);
-						var tag_name =	tag_relative_path
-											.split ('/') .join ('-')
-											.split ('.') [0];
-											
-						var tag_dir_path =	tag_relative_path
-												.split ('.')
-													.slice (0, -1)
-												.join ('.');
-		
-						var tag_src = file (path)
-						
-						var tag_metastyles = '';
-						
-						/* Resolve & tags */
-						tag_src = (function (def) {
-							var and_potential = true;
-							while (and_potential) {
-								and_potential = false;
-								def = def .replace (/<&([^>\/\s]+)\s*>/g, function (match, inheritance) {
-									and_potential = true;
-									if (! name_resolution [inheritance])
-										throw 'unresolved inheritance: ' + inheritance
-									else
-										return file (name_resolution [inheritance] [0]);
+				.concat (
+				    R .keys (metastyles_resolution) .map (function (name) {
+						return {
+							names: R .union ([name, name .split ('-') .reverse () [0]], []),
+							path: name + '.css',
+							dependencies: [],
+							metastyles: mapper ((metastyles_resolution [name] || []) .join ('\n'))
+								/* implements custom selector */
+								.map (function (def) {
+									return def .replace (/-> ?{([^}]+)}/g, ' $1');//:not(& $1 $1)');
 								})
-							}
-							return def;
-						}) (tag_src);
-						tag_src .replace (/<style>((?:(?!<\/)[^])*)<\/style>/g, function (match, metastyles) {
-							tag_metastyles += '\n' + metastyles;
-						})
-						
-						try {
-							console .log ('extracting styles in ' + tag_name);
-							return {
-								names: R .union ([tag_name, tag_name .split ('-') .reverse () [0]], []),
-								path: tag_name + '.css',
-								dependencies: [],
-								metastyles: mapper (tag_metastyles)
-									/* implements custom selector */
-									.map (function (def) {
-										return def .replace (/-> ?{([^}]+)}/g, ' $1');//:not(& $1 $1)');
-									})
-									//R .tap ((x) => console .log (x)),
-									.map (function (def) {
-										/*return	tag + ',[data-is="' + tag + '"] {' + '\n' +*/
-										return	tag_name + ' {' + '\n' +
-													def + '\n' +
-												'}';
-									})
-									.unwrapped
-							}
-						}
-						catch (error) {
-							console .error ('failed!');
-							throw error;
+								//R .tap ((x) => console .log (x)),
+								.map (function (def) {
+									/*return	tag + ',[data-is="' + tag + '"] {' + '\n' +*/
+									return	name + ' {' + '\n' +
+												def + '\n' +
+											'}';
+								})
+								.unwrapped
 						}
 					}))
 		)
 		.map (function (nodes) {
-			var resolution_list = {};
-			nodes .forEach (function (node) {
-				node .names .forEach (function (name) {
-					if (! resolution_list [name]) resolution_list [name]= [];
-					resolution_list [name] .push (name);
-				})
-			})
-			return	nodes
-					.map (function (node) {
+			return	nodes .map (function (node) {
 						var dependencies = [];
-						node .metastyles = node .metastyles .replace (/@require ([^;]+);/g, function (match, dependency) {
-							dependencies .push (dependency);
-							return '';
-						});
 						
-						var node_ = {};
-						for (var i in node) {
-							node_ [i] = node [i];
-						}
-						node_ .dependencies = dependencies;
-						return node_;
+						return mapper (node)
+						    .map (R .assoc ('metastyles', node .metastyles .replace (/@require ([^;]+);/g, function (match, dependency) {
+    							dependencies .push (dependency);
+    							return '';
+    						})))
+						    .map (R .assoc ('dependencies', dependencies))
+						    .unwrapped;
 					})
 					.concat ({
 						names: [],
@@ -670,11 +616,7 @@ time ('build', function () {
 						}),
 						metastyles: ''
 					})
-		})/*
-		.map (function (x) {
-			console .log (x .map (function (q) { var y = {}; for (var i in q) y [i] = q [i]; delete y .metastyles; return JSON .stringify(y) }));
-			return x;
-		})*/
+		})
 		.map (function (tree) {
 			fs .ensureDirSync (styles_copy)
 			fs .ensureDirSync (styles_cache)
@@ -687,7 +629,8 @@ time ('build', function () {
 					return answer [i] .styles
 			throw 'can\'t find answer'
 		})
-		.unwrapped);
+		    .unwrapped
+    );
 	fs .readdirSync (scripts_dist) .forEach (function (file) {
 		const file_path = path .resolve (scripts_dist, file);
 		const file_info = fs .statSync (file_path);

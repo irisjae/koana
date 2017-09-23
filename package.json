@@ -51,6 +51,7 @@
         "riot-compiler": "^3.2.1",
         "svg-path-parser": "^1.1.0",
         "tap": "^10.7.0",
+        "uuid": "^3.1.0",
         "xmldom": "^0.1.27"
     },
     "cordova": {

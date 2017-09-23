@@ -1,9 +1,18 @@
 var interaction_input = function (dom) {
     var _ = interaction (transition (function (intent, license) {
-        return only_ (intent);
+        if (intent [0] === 'input')
+            return only_ (intent [1]);
+        else if (intent [0] === 'reset') {
+            dom .value = '';
+            dom .dispatchEvent (new Event ('input'));
+        }
+		else {
+			console .error ('unknown intent passed', intent);
+			return project (none)
+		}
     }));
     dom .addEventListener ('input', function () {
-        _ .intent (dom .value);
+        _ .intent (['input', dom .value]);
     })
     return interaction_product ({
         _: _,
@@ -19,7 +28,7 @@ var interaction_placeholder = function (dom, input) {
 	var extension = interaction (transition (function (intent, license) {
 	    //license .thru (tap, logged_with ('what the fuck?'))
 	    
-		if (intent === 'appear') {
+		if (intent [0] === 'appear') {
 			return function (tenure) {
 				dom .style .opacity = 1;
 				wait (450)
@@ -29,7 +38,7 @@ var interaction_placeholder = function (dom, input) {
 					})
 			}
 		}
-		else if (intent === 'disappear') {
+		else if (intent [0] === 'disappear') {
 			return function (tenure) {
 				dom .style .opacity = 0;
 				wait (450)
@@ -37,6 +46,12 @@ var interaction_placeholder = function (dom, input) {
 					    tenure ('off');
 						tenure .end (true);
 					})
+			}
+		}
+		else if (intent [0] === 'reset') {
+			return function (tenure) {
+				input .intent (['reset']);
+				tenure .end (true);
 			}
 		}
 		else {
@@ -51,9 +66,9 @@ var interaction_placeholder = function (dom, input) {
 	    return !! x ._;
 	}) .thru (dropRepeats) .thru (tap, function (x) {
 	    if (x)
-	        extension .intent ('disappear')
+	        extension .intent (['disappear'])
         else
-	        extension .intent ('appear')
+	        extension .intent (['appear'])
 	})
 	
 	return interaction_key_sum (input, interaction_product ({

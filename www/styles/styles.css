@@ -686,7 +686,8 @@ fullscreen-holder:not([active]) {
   transition: z-index 0.1s step-end, opacity 0.1s ease-out; }
 
 custom-page {
-  display: flex; }
+  width: 100%;
+  height: 100%; }
 
 custom-page > svg {
   width: 100%;
@@ -733,13 +734,13 @@ modules-date-picker:not([active]) {
 modules-date-picker {
   transition-duration: 0.3s !important;
   /*
-            /*rtl:begin:ignore*/
+	            /*rtl:begin:ignore*/
   /*
-            /*rtl:end:ignore*/
+	            /*rtl:end:ignore*/
   /*
-            /*rtl:begin:ignore*/
+	            /*rtl:begin:ignore*/
   /*
-            /*rtl:end:ignore*/ }
+	            /*rtl:end:ignore*/ }
 
 modules-date-picker:not([active]) {
   opacity: 0;
@@ -748,11 +749,11 @@ modules-date-picker:not([active]) {
 
 modules-date-picker > modules-modal-holder {
   /*position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(0,0,0,0.5);*/ }
+	        top: 0;
+	        bottom: 0;
+	        left: 0;
+	        right: 0;
+	        background: rgba(0,0,0,0.5);*/ }
 
 modules-date-picker > modules-modal-holder input[date-picker] {
   opacity: 0;
@@ -928,47 +929,47 @@ modules-date-picker .flatpickr-next-month i {
 
 modules-date-picker .flatpickr-prev-month.flatpickr-prev-month {
   /*
-            /*rtl:begin:ignore*/
+	            /*rtl:begin:ignore*/
   /*
-            */
+	            */
   left: calc(3.57% - 1.5px);
   /*
-            /*rtl:end:ignore*/
+	            /*rtl:end:ignore*/
   /*
-            */ }
+	            */ }
 
 modules-date-picker .flatpickr-next-month.flatpickr-prev-month {
   /*
-            /*rtl:begin:ignore*/
+	            /*rtl:begin:ignore*/
   /*
-            */
+	            */
   left: calc(3.57% - 1.5px);
   /*
-            /*rtl:end:ignore*/
+	            /*rtl:end:ignore*/
   /*
-            */ }
+	            */ }
 
 modules-date-picker .flatpickr-prev-month.flatpickr-next-month {
   /*
-            /*rtl:begin:ignore*/
+	            /*rtl:begin:ignore*/
   /*
-            */
+	            */
   right: calc(3.57% - 1.5px);
   /*
-            /*rtl:end:ignore*/
+	            /*rtl:end:ignore*/
   /*
-            */ }
+	            */ }
 
 modules-date-picker .flatpickr-next-month.flatpickr-next-month {
   /*
-            /*rtl:begin:ignore*/
+	            /*rtl:begin:ignore*/
   /*
-            */
+	            */
   right: calc(3.57% - 1.5px);
   /*
-            /*rtl:end:ignore*/
+	            /*rtl:end:ignore*/
   /*
-            */ }
+	            */ }
 
 modules-date-picker .flatpickr-prev-month:hover {
   color: #959ea9; }
@@ -1721,3 +1722,51 @@ modules-snackbar[active] > snackbar {
     width: 100%; }
   modules-snackbar > snackbar {
     min-width: 280px; } }
+
+page-dashboard-create-two {
+  width: 100%;
+  height: 100%; }
+
+page-dashboard-create-two > svg {
+  width: 100%;
+  height: 100%; }
+
+page-dashboard-create {
+  width: 100%;
+  height: 100%; }
+
+page-dashboard-create > svg {
+  width: 100%;
+  height: 100%; }
+
+page-dashboard {
+  width: 100%;
+  height: 100%; }
+
+page-dashboard > svg {
+  width: 100%;
+  height: 100%; }
+
+page-login {
+  width: 100%;
+  height: 100%; }
+
+page-login > svg {
+  width: 100%;
+  height: 100%; }
+
+page-logout {
+  width: 100%;
+  height: 100%; }
+
+page-logout > svg {
+  width: 100%;
+  height: 100%; }
+
+page-make-account {
+  width: 100%;
+  height: 100%; }
+
+page-make-account > svg {
+  width: 100%;
+  height: 100%; }
