@@ -1,4 +1,5 @@
 # dest
+/www/*/
 /www/*
 
 # cordova platforms
