@@ -1,6 +1,5 @@
-# style cache
-/www/styles/cache/
-/www/styles/copy/
+# dest
+/www/*
 
 # cordova platforms
 /platforms/*/
