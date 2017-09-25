@@ -1,6 +1,9 @@
 # dest
-/www/*/
 /www/*
+/www/*/
+
+#temp
+/temp
 
 # cordova platforms
 /platforms/*/
