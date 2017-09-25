@@ -1,4 +1,5 @@
 var click = function (dom, handler) {
+    dom .setAttribute ('interactable', '');
     [document .ontouchend ? 'touchend' : 'click'] .forEach (function (click) {
         dom .addEventListener (click, R .cond ([
             [function () {return window .dragging}, noop],

@@ -104,7 +104,7 @@ var cycle_by_translate =	function (translate_from, cycler, translate_to) {
 										})
 							};
 
-var prefix_for_persistence = 'rest:cache;';
+var prefix_for_persistence = 'api:cache;';
 var restoration =	localforage .keys ()
 						.then (function (labels) {
 							return	R .fromPairs (

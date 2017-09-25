@@ -13,9 +13,7 @@ var routes = {
     make_account: '#make-account',
     logout: '#logout',
     dashboard: '#dashboard',
-    dashboard_create: '#dashboard-create',
-    dashboard_create_two: '#dashboard-create-two',
-    dashboard_create_three: '#dashboard-create-three',
+    dashboard_create: '#dashboard/create',
     categories: '#categories',
     quiz: '#quiz'
 }
@@ -103,9 +101,9 @@ var player_api = function (user, player) {
     							}), cycle_from_network, R .prop ('json')),
     							cycle_persisted ('subcategories')
     						) ();
-    	_ .quiz = cycle_persisted (prefix + '/quiz') ();
+    	_ .quiz = cycle_persisted (prefix + '/quiz') (re_cycle ());
     	
-    	_ .set = cycle_persisted (prefix + '/set') ();
+    	_ .set = cycle_persisted (prefix + '/set') (re_cycle ());
     	_ .take_set =	cycle_by_translate (R .applySpec ({
 								path: R .always (backend_path + '/set/request'),
 								method: R .always ('POST'),
@@ -151,8 +149,8 @@ var player_api = function (user, player) {
 };
                 
 var global_api =    R .tap (function (_) {
-						_ .user = cycle_persisted ('user') ();
-						_ .player =	cycle_persisted ('player') ();
+						_ .user = cycle_persisted ('user') (re_cycle ());
+						_ .player =	cycle_persisted ('player') (re_cycle ());
 									
 						promised_api .then (function () {
     						_ .user .from .thru (tap, R .cond ([

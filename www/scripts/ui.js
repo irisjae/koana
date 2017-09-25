@@ -305,7 +305,7 @@ riot.tag2('modules-snackbar', '<snackbar> <item> <yield></yield> </item> </snack
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
-riot.tag2('page-dashboard-create-two', __strs [13382], '', '', function(opts) {
+riot.tag2('page-dashboard-create', __strs [13378], '', '', function(opts) {
 	(function (self, args) {
 
 	 self ._loaded = true;
@@ -315,185 +315,318 @@ riot.tag2('page-dashboard-create-two', __strs [13382], '', '', function(opts) {
 
 		    var _interaction = interaction_to_be (promise_of (function (is) {
 				self .on ('mount', function () {
-					var go_dom = self .root .querySelector ('#go[action=focus]');
+				    var dom, _dom = self .root;
 
-					var go_stream = stream_from_click_on (go_dom);
+				    dom = _dom .querySelector ('#dialog[step="1"]');
 
-					var koders_dom = self .root .querySelector ('#koders');
-					var left_dom = koders_dom .querySelector ('#prev');
-					var right_dom = koders_dom .querySelector ('#next');
-					var image_dom = koders_dom .querySelector ('img');
-					var date_of_birth_dom = self .root .querySelector ('#date-of-birth');
+		    			var back_dom = dom .querySelector ('#back[action=nav]');
+		    			var done_dom = dom .querySelector ('#done[action=focus]');
 
-					var koder_interaction =	interaction_select_koders (
-												left_dom, right_dom, image_dom,
-		    									config .koder .choices
-											);
+		    			var back_stream = stream_from_click_on (back_dom);
+		    			var done_stream = stream_from_click_on (done_dom);
 
-					is (
-						_interaction_ ({
-							go: go_stream
-						})
-					)
-				})
-			}))
+		    			var name_dom = dom .querySelector ('#name');
+		    			var school_name_dom = dom .querySelector ('#school-name');
+		    			var date_of_birth_dom = dom .querySelector ('#date-of-birth');
 
-			var _interaction_ =	function (components) {
-				var go = components .go;
+		    			var name_interaction =	interaction_placeholder (
+		    										name_dom .querySelector ('#placeholder'),
+		    										interaction_input (name_dom .querySelector ('input'))
+		    									);
+		    			var school_name_interaction =	interaction_placeholder (
+		        											school_name_dom .querySelector ('#placeholder'),
+		        											interaction_input (school_name_dom .querySelector ('input'))
+		        										);
+		    			var date_of_birth_interaction =	interaction_placeholder (
+		    												date_of_birth_dom .querySelector ('#placeholder'),
+		    												interaction_date_picker (date_of_birth_dom .querySelector ('input'))
+		    											);
 
-				var extension = interaction (transition (function (intent, license) {
-					if (intent === 'go') {
-						return 	function (tenure) {
-						            api () .create_koder .to ({
-						                name: name .state (),
-						                school: school .state (),
-						                date_of_birth: date_of_birth .state ()
-						            })
-						            window .location .href = routes .dashboard_create_two
-								}
-					}
-					else {
-						console .error ('unknown intent passed', intent);
-						return function (tenure) {
-						    tenure .end (true);
-						}
-					}
-				}));
+			        dom = _dom;
 
-				extension .state (null);
+		    			var go_dom = dom .querySelector ('#go[action=focus]');
+		    			var go_stream = stream_from_click_on (go_dom);
 
-				go .thru (tap, function () {
-					extension .intent ('go');
-				})
+		    			var koders_dom = dom .querySelector ('#koders');
+		    			var left_dom = koders_dom .querySelector ('#prev');
+		    			var right_dom = koders_dom .querySelector ('#next');
+		    			var image_dom = koders_dom .querySelector ('img');
 
-				return interaction_product ({
-					_: extension,
+		    			var koder_interaction =	interaction_select_koders (
+		    										left_dom, right_dom, image_dom,
+		        									config .koder .choices
+		    									);
 
-					input: interaction_product ({
-					})
-				})
-			}
+				    dom = _dom .querySelector ('#dialog[step="3"]');
 
-	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
-	}) (this, this .opts);
-});
-riot.tag2('page-dashboard-create', __strs [2875955], '', '', function(opts) {
-	(function (self, args) {
+		    			var all_done_dom = dom .querySelector ('#all-done[action=focus]');
+		    			var all_done_stream = stream_from_click_on (all_done_dom);
 
-	 self ._loaded = true;
-	 self ._scope = function () {};
-	var known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };
-	self .on ("update", function () {args = self .opts});
+		    			var koder_name_dom = dom .querySelector ('#name');
+		    			var koder_name_interaction =	interaction_placeholder (
+		            										koder_name_dom .querySelector ('#placeholder'),
+		            										interaction_input (koder_name_dom .querySelector ('input'))
+		            									);
 
-		    var doms = [ self .root .children [0], self .root .children [1] ];
+			        dom = _dom;
 
-		    var _interaction = interaction_to_be (promise_of (function (is) {
-				self .on ('mount', function () {
-				    var dom = self .root;
-
-					var back_dom = dom .querySelector ('#back[action=nav]');
-					var done_dom = dom .querySelector ('#done[action=focus]');
-
-					var back_stream = stream_from_click_on (back_dom);
-					var done_stream = stream_from_click_on (done_dom);
-
-					var name_dom = dom .querySelector ('#name');
-					var school_name_dom = dom .querySelector ('#school-name');
-					var date_of_birth_dom = dom .querySelector ('#date-of-birth');
-
-					var name_interaction =	interaction_placeholder (
-												name_dom .querySelector ('#placeholder'),
-												interaction_input (name_dom .querySelector ('input'))
-											);
-					var school_name_interaction =	interaction_placeholder (
-		    											school_name_dom .querySelector ('#placeholder'),
-		    											interaction_input (school_name_dom .querySelector ('input'))
-		    										);
-					var date_of_birth_interaction =	interaction_placeholder (
-														date_of_birth_dom .querySelector ('#placeholder'),
-														interaction_date_picker (date_of_birth_dom .querySelector ('input'))
-													);
-
-					is (
-						_interaction_ ({
+			        is (_create_steps_interaction_ ({
+			            step: _step_interaction_ (dom),
+					    1: _interaction_of_step_ [1] ({
 							back: back_stream,
 							done: done_stream,
 
 							name: name_interaction,
 							school: school_name_interaction,
 							date_of_birth: date_of_birth_interaction
+						}),
+					    2: _interaction_of_step_ [2] ({
+							go: go_stream,
+							koder: koder_interaction
+						}),
+					    3: _interaction_of_step_ [3] ({
+							all_done: all_done_stream,
+							koder_name: koder_name_interaction
 						})
-					)
+			        }));
 				})
 			}))
 
-			var _interaction_ =	function (components) {
-				var back = components .back;
-				var done = components .done;
+		;
 
-				var name = components .name;
-				var school = components .school;
-				var date_of_birth = components .date_of_birth;
+		    var step_procession = {
+		        start: 1,
+		        1: 2,
+		        2: 3,
+		        3: function (steps) {
+		            return promise_of (function (done) {
+		                var _ = {
+		                    name: steps [1] .state () .name ._,
+		                    school_name: steps [1] .state () .school ._,
+		                    date_of_birth: steps [1] .state () .date_of_birth ._,
+		                    koder_archetype: steps [2] .state () .koder .name,
+		                    koder_name: steps [3] .state () .koder_name ._,
+		                };
+		                loader ();
+		                inquire (api () .add_player, _)
+							.then (function (res) {
+								loader .stop ();
+								if (res .error) {
+									toast ('There was a problem creating the Koder');
+								}
+								else {
+									toast ('Koder ' + _ .name + ' has been created!');
+								}
+								window .location .href = routes .dashboard;
+							})
 
-				var extension = interaction (transition (function (intent, license) {
-					if (intent === 'done') {
-						return 	function (tenure) {
-						            if (! name .state () ._) {
-						                toast ('Please fill in your name')
-						                tenure .end (true);
-						            }
-						            else if (! school .state () ._) {
-						                toast ('Please fill in your school name')
-						                tenure .end (true);
-						            }
-						            else if (! date_of_birth .state () ._) {
-						                toast ('Please fill in your date of birth')
-						                tenure .end (true);
-						            }
-						            else {
-		    				            api () .create_koder = re_cycle ();
-		    				            api () .create_koder .to ({
-		    				                name: name .state () ._,
-		    				                school: school .state () ._,
-		    				                date_of_birth: date_of_birth .state () ._
-		    				            })
-		    				            window .location .href = routes .dashboard_create_two
-						                tenure .end (true);
-						            }
-								};
+		            });
+		        }
+		    };
+		    var _create_steps_interaction_ = function (components) {
+		        var step = components .step;
+		        var steps = R .dissoc ('step') (components);
+
+		        var extension = interaction (transition (function (intent, license) {
+					if (intent [0] === 'step') {
+		                var step_ = intent [1];
+		                if (typeof (step_procession [step_]) !== 'function') {
+		                    step .intent ([step .state (), step_procession [step_]])
+		                }
+		                else {
+		                    step_procession [step_] (steps) .then (function () {
+		                        R .forEachObjIndexed (function (x) {
+		                            x .intent (['reset']);
+		                        }) (steps)
+		                    })
+		                }
+						return reflect (none);
 					}
 					else {
 						console .error ('unknown intent passed', intent);
-						return function (tenure) {
-						    tenure .end (true);
-						}
+						return reflect (none);
 					}
-				}));
+		        }))
 
-				extension .state (null);
+		        R .forEachObjIndexed (function (x, i) {
+		            i = +i;
+		            x .state .thru (filter, R .propEq ('_', 'done')) .thru (tap, function () {
+		                extension .intent (['step', i]);
+		            })
+		        }) (steps)
 
-				back .thru (tap, function () {
-					window .location .href = routes .dashboard;
-				})
-				done .thru (tap, function () {
-					extension .intent ('done');
-				})
+		        extension .intent (['step', 'start'])
 
-				return interaction_product ({
-					_: extension,
+		        return interaction_product (R .merge (components) ({
+		            stepper: extension
+		        }))
+		    }
+		;
 
-					input: interaction_product ({
+		    var _step_interaction_ = function (dom) {
+		        var stepped_nodes = [] .slice .call (dom .querySelectorAll ('[step]'));
+		        var step = R .pipe (
+		            R .chain (function (node) {
+		                return node .getAttribute ('step') .split (',') .map (function (x) {
+		                    return [node, x]
+		                });
+		            }),
+		            R .groupBy (R .prop (1)),
+		            R .map (R .map (R .prop (0)))
+		        ) (stepped_nodes);
+
+		        return interaction (transition (function (intent, license) {
+		            var from = intent [0];
+		            var to = intent [1];
+		            if (from) {
+		                step [from] .forEach (function (node) {
+		                    node .style .visibility = 'hidden';
+		                })
+		            }
+		            else {
+		                R .forEachObjIndexed (function (step, from) {
+		                    if (from !== to)
+		                        step .forEach (function (node) {
+		                            node .style .visibility = 'hidden';
+		                        })
+		                }) (step)
+		            }
+		            step [to] .forEach (function (node) {
+		                node .style .visibility = '';
+		            });
+		            return only_ (to);
+		        }));
+		    }
+		;
+
+		    var _interaction_of_step_ = {
+		        1: function (components) {
+		    		var back = components .back;
+		    		var done = components .done;
+
+		    		var name = components .name;
+		    		var school = components .school;
+		    		var date_of_birth = components .date_of_birth;
+
+		    		var extension = interaction (transition (function (intent, license) {
+		    			if (intent [0] === 'done') {
+				            if (! name .state () ._) {
+				                toast ('Please fill in your name')
+				                return reflect (none);
+				            }
+				            else if (! school .state () ._) {
+				                toast ('Please fill in your school name')
+				                return reflect (none);
+				            }
+				            else if (! date_of_birth .state () ._) {
+				                toast ('Please fill in your date of birth')
+				                return reflect (none);
+				            }
+				            else {
+				                return only_ ('done');
+				            }
+		    			}
+		    			else if (intent [0] === 'reset') {
+		    			    name .intent (['reset']);
+		    			    school .intent (['reset']);
+		    			    date_of_birth .intent (['reset']);
+			                return only_ (null);
+		    			}
+		    			else {
+		    				console .error ('unknown intent passed', intent);
+		    				return reflect (none);
+		    			}
+		    		}));
+
+		    		extension .state (null);
+
+		    		back .thru (tap, function () {
+		    			window .location .href = routes .dashboard;
+		    		})
+		    		done .thru (tap, function () {
+		    			extension .intent (['done']);
+		    		})
+
+		    		return interaction_product ({
+		    			_: extension,
+
 					    name: name,
 					    school: school,
 					    date_of_birth: date_of_birth
-					})
-				})
-			}
+		    		})
+		    	},
+		    	2: function (components) {
+		    		var go = components .go;
+
+		    		var koder = components .koder;
+
+		    		var extension = interaction (transition (function (intent, license) {
+		    			if (intent === 'go') {
+		    				return only_ ('done')
+						}
+		    			else if (intent [0] === 'reset') {
+		    			    koder .intent (['reset']);
+			                return only_ (null);
+		    			}
+		    			else {
+		    				console .error ('unknown intent passed', intent);
+			                return reflect (none);
+		    			}
+		    		}));
+
+		    		extension .state (null);
+
+		    		go .thru (tap, function () {
+		    			extension .intent ('go');
+		    		})
+
+		    		return interaction_key_sum (koder, interaction_product ({
+		    			_: extension
+		    		}))
+		    	},
+		    	3: function (components) {
+		    		var all_done = components .all_done;
+
+		    		var koder_name = components .koder_name;
+
+		    		var extension = interaction (transition (function (intent, license) {
+		    			if (intent [0] === 'done') {
+				            if (! koder_name .state () ._) {
+				                toast ('Please give a name to your Koder!')
+				                return reflect (none);
+				            }
+				            else {
+				                return only_ ('done');
+				            }
+		    			}
+		    			else if (intent [0] === 'reset') {
+		    			    koder_name .intent (['reset']);
+			                return only_ (null);
+		    			}
+		    			else {
+		    				console .error ('unknown intent passed', intent);
+		    				return reflect (none);
+		    			}
+		    		}));
+
+		    		extension .state (null);
+
+		    		all_done .thru (tap, function () {
+		    			extension .intent (['done']);
+		    		})
+
+		    		return interaction_product ({
+		    			_: extension,
+
+					    koder_name: koder_name
+		    		})
+		    	}
+		    }
 
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
-riot.tag2('page-dashboard', __strs [8620336], '', '', function(opts) {
+riot.tag2('page-dashboard', __strs [2979227], '', '', function(opts) {
 	(function (self, args) {
 
 	 self ._loaded = true;
@@ -502,15 +635,13 @@ riot.tag2('page-dashboard', __strs [8620336], '', '', function(opts) {
 	self .on ("update", function () {args = self .opts});
 
 		    args .cycle__from .thru (tap, function () {
-		        if (! api () .player .from ()) {
-		            window .location .href = routes .dashboard_create;
-		        }
+
 		    })
 
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
-riot.tag2('page-login', __strs [11512836], '', '', function(opts) {
+riot.tag2('page-login', __strs [5868449], '', '', function(opts) {
 	(function (self, args) {
 
 	 self ._loaded = true;
@@ -636,7 +767,7 @@ riot.tag2('page-logout', '', '', '', function(opts) {
 	if (typeof self .update_strategy === "function") self .shouldUpdate = self .update_strategy;
 	}) (this, this .opts);
 });
-riot.tag2('page-make-account', __strs [11589045], '', '', function(opts) {
+riot.tag2('page-make-account', __strs [5943176], '', '', function(opts) {
 	(function (self, args) {
 
 	 self ._loaded = true;

@@ -18,7 +18,7 @@ var interaction_date_picker = function (dom) {
         }
 		else {
 			console .error ('unknown intent passed', intent);
-			return project (none)
+			return reflect (none)
 		}
     }));
     click (dom, function () {

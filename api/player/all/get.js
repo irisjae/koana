@@ -1,12 +1,11 @@
+var R = require ('ramda');
 var use_db = require ('api/use_db');
 var tokenizer = require ('api/tokenizer');
 var decode = require ('api/decode');
 var detokenizer = require ('api/detokenizer');
-var neonum = require ('api/neonum');
 
 module .exports =   function (ctx, next) {
                         var user = { id: detokenizer (decode (ctx .request .headers .user) .token) };
-                        var name = ctx .request .body .name;
                         return  use_db (function (session) {
                                     return  Promise .resolve ()
                                         .then (function () {
@@ -24,17 +23,19 @@ module .exports =   function (ctx, next) {
                                         .then (function (results) {
                                             return  session .run (
                                                         'MATCH (user:User) WHERE ID (user) = {user} .id ' +
-                                                        'CREATE (player:Player { name: { name } }) ' +
-                                                        'MERGE (user)<-[:of]-(:is)-[:_]->(player) ' +
+                                                        'MATCH (player)<-[:_]-(:is)-[:of]->(user) ' +
                                                         'RETURN player',
                                                         {
-                                                            user: user,
-                                                            name: name
+                                                            user: user
                                                         }
                                                     )
                                         })
                                         .then (function (results) {
-                                            return { token: tokenizer (results .records [0] ._fields [0]) }
+                                            return results .records .map (function (record) {
+                                                return R. merge (record ._fields .properties) ({
+                                                    token: tokenizer (record ._fields [0])
+                                                })
+                                            })
                                         })
                                         .catch (function (err) {
                                             return {

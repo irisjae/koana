@@ -1,7 +1,7 @@
 var frame = function (x) {
     x = frag (frame_string (x)) .children [0];
     recitify (x);
-    uniqify (x);
+    //uniqify (x);
     //console .log (x .outerHTML)
     return x;
 }
@@ -231,6 +231,33 @@ var exemplify = function (instances, processing) {
     });
     return x;
 }
+
+/*var isolated_step = function (i) {
+    return function (dom, selector, depth) {
+        if (depth === undefined)
+            depth = dom_depth (dom);
+        if (depth === 0)
+            return null;
+        else {
+            
+        }
+    }
+}
+
+var dom_depth = function (x, depth) {
+    depth = depth || 5;
+    var max = Math .Infinity;
+    var min = 0;
+    while (max !== min) {
+        if (max === Math .Infinity) depth = depth * 2;
+        else depth = Math .ceiling ((max + min) / 2);
+        var works = x .querySelector ((new Array (depth)) .fill ('*') .join ('>'));
+        if (works) min = depth;
+        else max = depth - 1;
+    }
+    return max;
+}*/
+
 var y_translation = function (g) {
     return + g .querySelector ('use') .getAttribute ('transform') .match (/translate\(\d+ (\d+)\)/) [1]
 }
@@ -238,9 +265,9 @@ var x_translation = function (g) {
     return + g .querySelector ('use') .getAttribute ('transform') .match (/translate\((\d+) \d+\)/) [1]
 }
 var walk_dom = function (node, func) {
-    func (node);                     //What does this do?
+    var continue_ = (func (node) !== false);                     //What does this do?
     node = node .firstElementChild;
-    while (node) {
+    while (continue_ && node) {
         walk_dom (node, func);
         node = node .nextElementSibling;
     }

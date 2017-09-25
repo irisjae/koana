@@ -1,6 +1,30 @@
 svg [template] {
   display: none; }
 
+svg > :not(defs) {
+  pointer-events: none; }
+
+svg > :not(defs) * {
+  pointer-events: none; }
+
+svg [input] {
+  pointer-events: visiblePainted; }
+
+svg [input] * {
+  pointer-events: visiblePainted; }
+
+svg [scroll] {
+  pointer-events: visiblePainted; }
+
+svg [scroll] * {
+  pointer-events: visiblePainted; }
+
+svg [interactable] {
+  pointer-events: visiblePainted; }
+
+svg [interactable] * {
+  pointer-events: visiblePainted; }
+
 /* cyrillic-ext */
 @font-face {
   font-family: 'Merriweather';
@@ -1722,14 +1746,6 @@ modules-snackbar[active] > snackbar {
     width: 100%; }
   modules-snackbar > snackbar {
     min-width: 280px; } }
-
-page-dashboard-create-two {
-  width: 100%;
-  height: 100%; }
-
-page-dashboard-create-two > svg {
-  width: 100%;
-  height: 100%; }
 
 page-dashboard-create {
   width: 100%;

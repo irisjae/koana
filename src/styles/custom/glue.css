@@ -1,3 +1,15 @@
 svg [template] {
     display: none;
 }
+svg > :not(defs), svg > :not(defs) * {
+    pointer-events: none;
+}
+svg [input], svg [input] * {
+    pointer-events: visiblePainted;
+}
+svg [scroll], svg [scroll] * {
+    pointer-events: visiblePainted;
+}
+svg [interactable], svg [interactable] * {
+    pointer-events: visiblePainted;
+}

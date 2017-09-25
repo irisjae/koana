@@ -273,6 +273,7 @@ var project =	R .curry (function (to, s) {
                     }
 					return s;
 				})
+var reflect = R .flip (project);
 				
 var from =	function (pushes) {
 				var s = stream ();
