@@ -1,3 +1,4 @@
+var R = require ('ramda');
 var use_db = require ('api/use_db');
 var config = require ('api/config');
 var decode = require ('api/decode');
@@ -16,12 +17,16 @@ module .exports = function (ctx, next) {
                                             user: user
                                         })
                         })
+                        .then (R .tap (function (results) {
+                            if (! results .records .length)
+                                throw new Error ('Invalid user specified');
+                        }))
                         .then (function (results) {
                             var now = new Date ();
                             var today = new Date (now .getFullYear (), now .getMonth (), now .getDate ());
                             var timestamp = today / 1000;
                             
-                            var latest_quizes = results .records [0] .fields [0] .properties .latest_quizes || [];;
+                            var latest_quizes = results .records [0] ._fields [0] .properties .latest_quizes || [];;
                             return 6 - latest_quizes .filter (function (date) {
                                     return date > today;
                             }) .length;

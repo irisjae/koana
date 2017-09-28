@@ -76,9 +76,9 @@
     				nav_of (curr) .state
                     	.thru (dropRepeats)
                     	.thru (filter, R .identity)
-    				    .thru (map, 
-    				        R .juxt (
-    				            [
+    				    .thru (tap, 
+    				        R .converge (extension .intent,
+    				            [R .juxt ([
     				                R .always ('nav'),
         				            R .converge (R .merge, 
             				            [
@@ -96,9 +96,8 @@
                                             	}))
                                     	]),
                                     just_call (extension .state)
-                            	]
+                            	])]
 				            ))
-    				    .thru (tap, extension .intent)
         				    
     				//HACK: riot data-is bug, not firing mount
     				if (self .isMounted) {
@@ -151,7 +150,7 @@
 	
 	
 	var silent_replace_hash = function (x) {
-        history .pushState (null, null, x);
+        history .replaceState (null, null, x);
 	};
 	
 	from (function (nav) {
@@ -172,11 +171,12 @@
 	}))
 	.thru (dropRepeatsWith, json_equal)
 	.thru (filter, R .pipe (R .prop ('name'), page_exists))
-	.thru (map, 
-	    R .juxt (
-	        [R .always ('nav'), R .identity, just_call (extension .state)])
-    )
-    .thru (tap, extension .intent);
+	.thru (tap,
+	    R .converge (extension .intent,
+	        [R .juxt (
+    	        [R .always ('nav'), R .identity, just_call (extension .state)])
+            ])
+    );
 
 
 	extension .state

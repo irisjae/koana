@@ -1,5 +1,8 @@
 svg [template] {
-    display: none;
+    visibility: hidden;
+}
+svg [example] {
+    visibility: hidden;
 }
 svg > :not(defs), svg > :not(defs) * {
     pointer-events: none;

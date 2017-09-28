@@ -6,7 +6,7 @@
 			_ .outerHTML = image_ify (_);
 		});
 		
-		def = serve (frame ('dashboard'));
+		def = serve (ui);
 	})
 </script>
 <script>
@@ -70,7 +70,7 @@
 	};
 </script>
 <script>
-    var _interaction_ = function (components, nav) {
+    var _interaction_ = function (components, unions) {
         var nav = unions .nav;
         
         var go = components .go;
@@ -110,26 +110,26 @@
 			            tenure .end (true);
 			        }
 			        else {
-			            var all_players = inquire (api () .all_players);
-			            var chances = inquire (api () .chances);
-			            
 			            Promise .all (
-			                [all_players .then (function (x) {
+			                [inquire (api () .all_players) .then (function (x) {
         			            if (! x ._ .length) {
-			                        nav .state (['first_player']);
                                     return Promise .reject ('no players');
         			            }
         			            else {
                                     koder .intent (['data', x ._]);
         			            }
         			        }),
-    		                chances .then (function (x) {
+    		                inquire (api () .chances) .then (function (x) {
                                 chances .intent (['chances', x ._]);
     		                })]
 		                )
-    			        .catch (function () { })
     			        .then (function () {
 		                    loader .stop ();
+                            tenure .end (true);
+    			        })
+    			        .catch (function () {
+		                    loader .stop ();
+	                        nav .state (['first_player']);
                             tenure .end (true);
     			        })
     			        
@@ -154,7 +154,7 @@
         }));
 
         extension .intent (['reset']);
-        koder .state .from 
+        koder .state 
             .thru (tap, function (x) {
                 extension .intent (['player', x]);
             })
@@ -181,7 +181,7 @@
     }
 </script>
 <script>
-	var interaction_chances = function (pieces) {
+	var interaction_chances = function (dom) {
         var mark_nodes = [] .slice .call (dom .querySelectorAll ('[part]'));
         var mark_on = R .pipe (
             R .map (function (node) {
@@ -191,12 +191,12 @@
         ) (mark_nodes);
 	    return interaction (transition (function (intent, state) {
 	        if (intent [0] === 'chances') {
-	            var mark = intent [0]
+	            var mark = intent [1]
         	            
                 mark_nodes .forEach (function (node) {
                     node .style .visibility = 'hidden';
                 })
-                mark_on [mark] .forEach (function (node) {
+                [mark_on [mark]] .forEach (function (node) {
                     node .style .visibility = '';
                 });
 	            

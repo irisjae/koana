@@ -1,3 +1,6 @@
 module .exports = function (x) {
-    return JSON .parse (Buffer .from (x, 'base64'))
+    if (typeof x !== 'string')
+        throw new Error ('invalid token');
+    else
+        return JSON .parse (Buffer .from (x, 'base64'))
 }

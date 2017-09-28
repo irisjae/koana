@@ -121,7 +121,14 @@ var user_api = function (user) {
     		                    cycle_by_translate (R .applySpec ({
     								path: R .always (backend_path + '/player/all'),
     								method: R .always ('GET'),
-    								headers: R .always ({ 'Content-Type': 'application/json'}),
+    								headers:  R .pipe (
+        							    R .applySpec ({
+            							    user: R .pipe (R .always (stringify (user)), btoa)
+        								}),
+        								R .merge ({
+        								    'Content-Type': 'application/json',
+        								})
+        						    ),
     								body: stringify
     							}), cycle_from_network, R .prop ('json')),
     			                cycle_persisted (prefix + '/all-players')
@@ -130,7 +137,14 @@ var user_api = function (user) {
 		                    cycle_by_translate (R .applySpec ({
 								path: R .always (backend_path + '/chances'),
 								method: R .always ('GET'),
-								headers: R .always ({ 'Content-Type': 'application/json'}),
+								headers:  R .pipe (
+    							    R .applySpec ({
+        							    user: R .pipe (R .always (stringify (user)), btoa)
+    								}),
+    								R .merge ({
+    								    'Content-Type': 'application/json',
+    								})
+    						    ),
 								body: stringify
 							}), cycle_from_network, R .prop ('json')),
 			                cycle_persisted (prefix + '/chances')

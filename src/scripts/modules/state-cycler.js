@@ -120,8 +120,7 @@ var cycle_persisted =	function (key) {
 													.then (function (initials) {
 														return initials [prefix_for_persistence + key]
 													});
-										var to_persist = cycle .from;
-										var persisting =	to_persist
+										var persisting =	cycle .from
 																.thru (map, function (_val) {
 																	return	Promise .resolve (persisting && persisting ())
 																				.then (function () {//log (_val)
@@ -136,9 +135,8 @@ var cycle_persisted =	function (key) {
 														
 										return	{
 													init: init,
-													to_persist: to_persist,
-													persisting: persisting,
-													from:	stream_pushes (function (push) {
+            										persisting: persisting,
+													persisted:	stream_pushes (function (push) {
 																init
 																	.then (function (value) {
 																		if (value)
