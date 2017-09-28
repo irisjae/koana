@@ -3,7 +3,7 @@ var _loader_ok = Promise .resolve ();
 var _loader_on = false;
 
 
-var loader =    function (msg) {
+var loader = function (msg) {
     if (_loader_type === 'cordova')
         window .plugins .spinnerDialog .show (null, msg || null, true);    
     else if (! _loader_on)
@@ -22,7 +22,7 @@ var loader =    function (msg) {
         })
     return null;
 }
-loader .stop =  function () {
+loader .stop = function () {
     if (_loader_type === 'cordova')
         window .plugins .spinnerDialog .hide ();
     else if (_loader_on)

@@ -1,4 +1,5 @@
 require ('koa-qs') (new (require ('koa')) ())
+	.use (require ('koa-compress') ())
 	.use (require ('koa-cors') ())
 	.use (function (ctx, next) {
 		return	next ()

@@ -9,8 +9,35 @@ module .exports = function (ctx, next) {
     var player = { id: detokenizer (decode (ctx .request .headers .player) .token) };
     var subcategory = { name: ctx .request .body .subcategory };
     var achievement;
+    var latest_quizes;
     return  use_db (function (session) {
                 return  Promise .resolve ()
+                        .then (function () {
+                            return  session .run (
+                                        'MATCH (user:User) WHERE ID (user) = {user} .id ' +
+                                        'RETURN user',
+                                        {
+                                            user: user
+                                        })
+                        })
+                        .then (function (results) {
+                            var now = new Date ();
+                            var today = new Date (now .getFullYear (), now .getMonth (), now .getDate ());
+                            var timestamp = today / 1000;
+                            
+                            latest_quizes = results .records [0] .fields [0] .properties .latest_quizes || [];;
+                            
+                            if (! results .records .length)
+                                return Promise .reject (new Error ('Invalid player specified'))
+                            else if (latest_quizes .length === 6
+                                && latest_quizes .every (function (date) {
+                                    return date > today;
+                            }))
+                                return Promise .reject (new Error ('No koding chances remaining today'))
+                            else {
+                                latest_quizes = latest_quizes .concat ([ + (new Date ()) ]) .slice (-6)
+                            }
+                        })
                         .then (function () {
                             return  session .run (
                                         'MATCH (user:User) WHERE ID (user) = {user} .id ' +
@@ -24,7 +51,7 @@ module .exports = function (ctx, next) {
                         })
                         .then (function (results) {
                             if (! results .records .length)
-                                return Promise .reject (new Error ('Invalid user or player specified'))
+                                return Promise .reject (new Error ('Invalid player specified'))
                         })
                         .then (function () {
                             return  session .run (
@@ -50,6 +77,15 @@ module .exports = function (ctx, next) {
                         .then (function (results) {
                             if (results .records .length)
                                 return Promise .reject (new Error ('Player already doing another set'))
+                        })
+                        .then (function () {
+                            return  session .run (
+                                        'MATCH (user:User) WHERE ID (user) = {user} .id ' +
+                                        'SET user .latest_quizes = {latest_quizes} ',
+                                        {
+                                            user: user,
+                                            latest_quizes: latest_quizes
+                                        });
                         })
                         .then (function () {
                             return  session .run (
@@ -97,7 +133,7 @@ module .exports = function (ctx, next) {
                                             return  session .run (
                                                         'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
                                                         'MATCH (question:Question) WHERE ID (question) = {question} .id ' +
-                                                        'MERGE (set:Set { subcategory: { name: {subcategory} .name } })<-[:to]-(:does)-[:_]->(player) ' +
+                                                        'MATCH (set:Set { subcategory: { name: {subcategory} .name } })<-[:to]-(:does)-[:_]->(player) ' +
                                                         'MERGE (question)<-[:_]-(:is)-[:in]->(set) ' +
                                                         'RETURN question',
                                                     {

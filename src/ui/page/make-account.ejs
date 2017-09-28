@@ -15,6 +15,8 @@
 		self .on ('mount', function () {
 		    var dom = self .root;
 		    
+		    var nav_interaction = interaction (noop);
+		    
 			var make_account_dom = dom .querySelector ('#make-account[action=focus]');
 			var back_dom = dom .querySelector ('#back[action=nav]');
 			
@@ -39,21 +41,37 @@
 													interaction_input (retype_password_dom .querySelector ('input'))
 												);
 	
-			is (
-				_interaction_ ({
-					make_account: make_account_stream,
-					back: back_stream,
-					
-					email: email_interaction,
-					password: password_interaction,
-					retype_password: retype_password_interaction
+			is (interaction_key_sum (
+			    _interaction_ ({
+    					make_account: make_account_stream,
+    					back: back_stream,
+    					
+    					email: email_interaction,
+    					password: password_interaction,
+    					retype_password: retype_password_interaction
+    				},
+    				{
+    				    nav: nav_interaction
+    				}),
+				interaction_product ({
+				    nav: nav_interaction
 				})
-			)
+		    ))
 		})
 	}))
 	
+	var _nav_interaction_ = function () {
+	    return interaction (transition (function (intent, state) {
+	        if (intent [0] === 'prepare')
+	            return only_ (null);
+	        else
+    	        return reflect (none);
+	    }))
+	};
 	
-	var _interaction_ =	function (components) {
+	var _interaction_ =	function (components, unions) {
+	    var nav = unions .nav;
+	    
 		var make_account = components .make_account;
 		var back = components .back;
 		
@@ -85,7 +103,7 @@
 										toast ('There was a problem creating the account');
 									}
 									else {
-										window .location .href = routes .dashboard;
+										nav .state (['logged_in'])
 									}
 								})
 								.then (function () {
@@ -109,7 +127,7 @@
 			extension .intent ('make');
 		})
 		back .thru (tap, function () {
-			window .location .href = routes .login;
+			nav .state (['back'])
 		})
 		
 		return interaction_product ({

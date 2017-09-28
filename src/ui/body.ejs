@@ -1,4 +1,30 @@
 <script>
+	pre (function () {
+		var pages =	files ('.ejs') (tags_src)
+						.map (function (tag_path) {
+							var tag_relative_path = tag_path .slice (tags_src .length + 1);
+							var tag_name =	tag_relative_path
+												.split ('/') .join ('-')
+												.split ('.') [0];
+							if (tag_name .startsWith ('page-'))
+								return tag_name .slice ('page-' .length)
+						})
+						.filter (R .identity);
+		scripts .unshift (
+			`var all_pages = ${JSON .stringify (pages)};`
+		);
+	})
+</script>
+<script>
+    window .page_components = R .pipe (
+        R .map (
+            R .juxt ([R .identity, just_call (stream)])
+        ),
+        R .fromPairs
+    ) (all_pages);
+	window .page_cache = stream ({});
+
+
 	var tag_label =	function (page_name) {
 						return 'page-' + replace_all ('/', '-') (trim_trailing_slash (page_name));
 					};
@@ -17,155 +43,171 @@
 							return (path .indexOf ('/#') !== -1 ? path .slice (path .indexOf ('/#') + 2) .split ('/') : []);
 						};
 	var page_label = 	function (path) {
-							return page_name (path) + '/#' + page_params (path) .join ('/')		
-						}
-	var tag_exists =	function (tag) {
-							return riot .util .tags .selectTags () .split (',') .indexOf (tag) !== -1
+	                        var params = page_params (path);
+							return '#' + page_name (path) + (params .length ? '/#' + params .join ('/') : '')
 						};
 	var page_exists =	function (page_name) {
-							return tag_exists (tag_label (page_name))
+							return all_pages .indexOf (page_name) !== -1;
 						};
-						
-						
-	var exception =	from (function (errors) {
-						riot .util .tmpl .errorHandler = 	function (err) {
-																errors ({
-																	source: 'riot-tmpl',
-																	data: err
-																});
-															}
-						window .addEventListener ('unhandledrejection', function (e) {
-						    e .preventDefault ();
-						    
-						    errors ({
-						    	source: 'promise',
-						    	data: e .detail
-						    });
-						});
-						window .onerror = 	function (message, source, lineno, colno, error) {
-												errors ({
-													source: 'window',
-													data: arguments
-												});
-											};
-											
-						//errors .thru (tap, _debugger)
-					}) .thru (tap, known_as ('exception'))
+	var nav_of = function (x) {
+	    if (x && x .interaction)
+	        return interaction_prop ('nav') (x .interaction);
+	}
 		
-	var	page_cache = stream ({}) .thru (tap, known_as ('page cache'))
-	var page_cycle = R .memoize (function (id) {
-		return stream () .thru (tap, known_as ('page cycle ' + id));
-	})
 		
-	var page =	from (function (nav) {
-					window .addEventListener ('hashchange', function () {
-						nav (window .location .hash)
-					});
-					if (page_exists (page_name (window .location .hash))) {
-						nav (window .location .hash)
-					}
-					else {
-						window .location .hash = routes .default;
-					}
-				})
-					.thru (map, function (path) {
-						return {
-							name: page_name (path),
-							params: page_params (path),
-							id: page_label (path)
-						};
-					})
-					.thru (dropRepeatsWith, json_equal)
-					.thru (filter, function (page) {
-						return page_exists (page .name)
-					})
-					.thru (map, function (new_page) {
-						return Promise .resolve (page && page ())
-							.then (function (prev) {
-								var time = new Date ()
-								
-								if (page_cache () [new_page .id]) {
-									var curr = page_cache () [new_page .id];
-								}
-								else {
-									var _tag_label = tag_label (new_page .name);
-									var root = document .createElement (_tag_label);
-									var curr = 	retaining (new_page) (
-													riot .mount (root, _tag_label, having (new_page .params) ({
-														parent: self,
-														cycle__from: page_cycle (new_page .id)
-													})) [0]);
-									//HACK: riot data-is bug, not firing mount
-									if (self .isMounted) {
-										self .renders .push ('now');
-										self .update ();
-										self .renders .pop ();
-									}
-								}
-								
-								page_cycle (curr .id) (stream ());
-								if (curr .id === page_label (window .location .hash)) {
-									if (prev !== curr) {
-										var _time = new Date ()
-										
-										self .root .insertBefore (curr .root, self .root .firstElementChild);
-										if (prev) {
-											self .root .removeChild (prev .root);
-										}
-										
-										log ('mounted page time ' + (new Date () - _time) + 'ms', curr);	
-									}
-									var last_loaded = curr;
-								}
-								else {
-									var last_loaded = prev;
-								}
-								if (prev) {
-									page_cycle (prev .id) .end (true);
-								}
-	
-								log ('process page time ' + (new Date () - time) + 'ms', curr);	
-								return last_loaded;
-							})
-							.catch (
-								R .pipe (
-									exception,
-									noop
-								)
-							)//TODO: make report to exception
-					}) .thru (tap, known_as ('page'));
-		
+	var extension = interaction (transition (function (intent, license) {
+	    if (intent [0] === 'nav') {
+	        var nav_data = intent [1];
+	        var last_state = intent [2];
+	        
+	        return function (tenure) {
+    			var time = new Date ()
+    			
+				var curr = page_cache () [nav_data .id];
+    			if (! curr) {
+    				var _tag_label = tag_label (nav_data .name);
+    				curr = 	retaining (nav_data) (
+    							riot .mount (
+    							    document .createElement (_tag_label),
+    							    _tag_label,
+    							    having (nav_data .params) ({
+        								parent: self
+    							    })) [0]);
+    				nav_of (curr) .state
+                    	.thru (dropRepeats)
+                    	.thru (filter, R .identity)
+    				    .thru (map, 
+    				        R .juxt (
+    				            [
+    				                R .always ('nav'),
+        				            R .converge (R .merge, 
+            				            [
+            				                R .pipe (
+                				                R .converge (routing, [R .always (curr .name), R .prop (0)]),
+                				                R .applySpec ({
+                                            		name: page_name,
+                                            		params: page_params,
+                                            		id: page_label
+                                            	})),
+                                        	R .pipe (
+                                        	    R .prop (1),
+                                            	R .applySpec ({
+                                            		args: R .identity
+                                            	}))
+                                    	]),
+                                    just_call (extension .state)
+                            	]
+				            ))
+    				    .thru (tap, extension .intent)
+        				    
+    				//HACK: riot data-is bug, not firing mount
+    				if (self .isMounted) {
+    					self .renders .push ('now');
+    					self .update ();
+    					self .renders .pop ();
+    				}
+    			}
+    			
+    			if (nav_of (curr)) {
+    			    nav_of (curr) .intent (['prepare']);
+        			if (curr .args)
+        		    	nav_of (curr) .intent (curr .args);
+    			}
+    			if (! license ()/* || curr .id === license () [1] .id*/) {
+    				if (last_state !== curr) {
+    					var _time = new Date ()
+    					
+    					silent_replace_hash (curr .id);
+    					
+    					self .root .insertBefore (curr .root, self .root .firstElementChild);
+    					if (last_state) {
+    						self .root .removeChild (last_state .root);
+    					}
+    					
+    					log ('mounted page time ' + (new Date () - _time) + 'ms', curr);	
+    				}
+    				var last_loaded = curr;
+    			}
+    			else {
+    				var last_loaded = last_state;
+    			}
+    			
+    			if (last_state) {
+    				nav_of (last_state) .intent (['reset']);
+    			}
+    
+    			log ('process page time ' + (new Date () - time) + 'ms', curr);	
 
-	page
-		.thru (function (pages) {
-			return from (function (loadings) {
-				pages .thru (tap, function (page) {
-					page .then (loadings)
-				})
-			});
-		})
-		.thru (filter, id)
-		.thru (dropRepeats)
-		.thru (tap, function (page) {
-			if (! page_cache () [page .id] && ! page .temp)
-				page_cache (
-					with_ (page .id, page) (page_cache ()))
-		})
+    			tenure (last_loaded);
+    			tenure .end (true);
+    			if (license ())
+    			    extension .intent (license ());
+	        }
+	    }
+	    else {
+	        return decline_ (intent);
+	    }
+	}));
 	
-		
 	
+	var silent_replace_hash = function (x) {
+        history .pushState (null, null, x);
+	};
+	
+	from (function (nav) {
+		window .addEventListener ('hashchange', function () {
+    		nav (window .location .hash)
+		});
+		if (page_exists (page_name (window .location .hash))) {
+			nav (window .location .hash)
+		}
+		else {
+			window .location .hash = routes .default;
+		}
+	})
+	.thru (map, R .applySpec ({
+		name: page_name,
+		params: page_params,
+		id: page_label
+	}))
+	.thru (dropRepeatsWith, json_equal)
+	.thru (filter, R .pipe (R .prop ('name'), page_exists))
+	.thru (map, 
+	    R .juxt (
+	        [R .always ('nav'), R .identity, just_call (extension .state)])
+    )
+    .thru (tap, extension .intent);
+
+
+	extension .state
+    	.thru (filter, R .identity)
+    	.thru (dropRepeats)
+    	.thru (tap, function (page) {
+    		if (! page_cache () [page .id] && ! page .temp)
+    			page_cache (
+    				R .assoc (page .id, page) (page_cache ()))
+    	});
+    	
+	window ._interaction = interaction_key_sum (
+	    interaction_product ({
+    	    _: extension
+    	}),
+    	interaction_flatten (page_cache .thru (map, R .map (R .prop ('interaction'))) .thru (map, interaction_product))
+	)
+</script>
+<script>
 	from (function (widths) {
 		widths (window .innerWidth);
 		window .addEventListener ('resize', function () {
 			widths (window .innerWidth);
 		});
 	})
-		.thru (dropRepeats)
-		.thru (map, function (width) {
-			return { width: width, height: window .innerHeight };
-		})
-		.thru (tap, function (size) {
-			self .root .style .setProperty ('width', size .width + 'px', 'important');
-			self .root .style .setProperty ('height', size .height + 'px', 'important');
-		});
+	.thru (dropRepeats)
+	.thru (map, function (width) {
+		return { width: width, height: window .innerHeight };
+	})
+	.thru (tap, function (size) {
+		self .root .style .setProperty ('width', size .width + 'px', 'important');
+		self .root .style .setProperty ('height', size .height + 'px', 'important');
+	});
 </script>

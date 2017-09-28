@@ -45,8 +45,11 @@ module .exports = function (ctx, next) {
                             return  session .run (
                                         'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
                                         'MATCH (set:Set)<-[:to]-[doing:does]-[:_]->(player) ' +
+                                        'MATCH (prev:Set)<-[x:to]-[having_done:did]-[y:_]->(player) ' +
+                                        'MERGE (set)<-[:_]-[:suceeds]-[:to]->(prev) ' +
+                                        'DELETE x, y, having_done ' +
                                         'REMOVE doing:does ' +
-                                        'SET doing:done ' +
+                                        'SET doing:did ' +
                                         'RETURN set ',
                                         {
                                             player: player

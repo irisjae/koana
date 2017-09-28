@@ -157,7 +157,10 @@ var re_cycle =  function () {
     var x = stream ();
     return {
         to: x,
-        from: x
+        from: x,
+        pair: function (_) {
+            return Promise .resolve (x (_) ());
+        }
     }
 }
 						

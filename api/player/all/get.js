@@ -37,6 +37,11 @@ module .exports =   function (ctx, next) {
                                                 })
                                             })
                                         })
+                                        .then (function (_) {
+                                            return {
+                                                _: _
+                                            }
+                                        })
                                         .catch (function (err) {
                                             return {
                                                 error: err .message

@@ -41,27 +41,48 @@ var transition = function (fn) {
 	}
 }
 
+var interaction_prop = function (k) {
+    return function (interaction) {
+    	return {
+    		intent: stream () .thru (tap, function (x) {
+    		    interaction .intent (R .assoc (k, x) ({}));
+    		}),
+    		state: interaction .state .thru (map, R .prop (k))
+    	}
+    }
+}
 var interaction_product =	function (interactions) {
 	return {
-		intent: product (R .map (R .prop ('intent')) (interactions)),
+		intent: stream () .thru (tap, R .forEachObjIndexed (function (x, k) {
+		    interactions [k] .intent (x);
+		})),
 		state: product (R .map (R .prop ('state')) (interactions))
 	}
 }
 var interaction_product_array =	function (interactions) {
 	return {
-		intent: array_product (R .map (R .prop ('intent')) (interactions)),
+		intent: stream () .thru (tap, R .forEach (function (x, k) {
+		    interactions [k] .intent (x);
+		})),
 		state: array_product (R .map (R .prop ('state')) (interactions))
 	}
 }
 var interaction_key_sum = 	function (i1, i2) {
 	return {
-		intent: key_sum (i1 .intent) (i2 .intent),
+		intent: stream () .thru (tap, R .forEachObjIndexed (function (x, k) {
+		    if (i1 .state () [k])
+    		    i1 .intent (R .assoc (k, x) ({}));
+		    else if (i2 .state () [k])
+    		    i2 .intent (R .assoc (k, x) ({}));
+		})),
 		state: key_sum (i1 .state) (i2 .state)
 	}
 }
 var interaction_flatten = function (stream_of_interactions) {
     return {
-        intent: stream_of_interactions .thru (map, R .prop ('intent')) .thru (switchLatest),
+        intent: stream () .thru (tap, function (x) {
+		    stream_of_interactions () .intent (x);
+		}),
         state: stream_of_interactions .thru (map, R .prop ('state')) .thru (switchLatest)
     }
 }

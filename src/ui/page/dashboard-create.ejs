@@ -18,6 +18,8 @@
 		self .on ('mount', function () {
 		    var dom, _dom = self .root;
 		    
+		    var nav_interaction = _nav_interaction_ ();
+		    
 		    //TODO: general rule for getting isolated fragments of stepped dom
 		    dom = _dom .querySelector ('#dialog[step="1"]');
 
@@ -73,85 +75,114 @@
 	
 	        dom = _dom;
 	
-	        is (_create_steps_interaction_ ({
-	            step: _step_interaction_ (dom),
-			    1: _interaction_of_step_ [1] ({
-					back: back_stream,
-					done: done_stream,
-					
-					name: name_interaction,
-					school: school_name_interaction,
-					date_of_birth: date_of_birth_interaction
-				}),
-			    2: _interaction_of_step_ [2] ({
-					go: go_stream,
-					koder: koder_interaction
-				}),
-			    3: _interaction_of_step_ [3] ({
-					all_done: all_done_stream,
-					koder_name: koder_name_interaction
-				})
-	        }));
+	        is (interaction_key_sum (
+	            _interaction_ (
+    	            {
+        	            step: interaction_step (dom),
+        			    1: _interaction_of_step_ [1] ({
+        					back: back_stream,
+        					done: done_stream,
+        					
+        					name: name_interaction,
+        					school: school_name_interaction,
+        					date_of_birth: date_of_birth_interaction
+        				},
+        				{
+        				    nav: nav_interaction
+        				}),
+        			    2: _interaction_of_step_ [2] ({
+        					go: go_stream,
+        					koder: koder_interaction
+        				}),
+        			    3: _interaction_of_step_ [3] ({
+        					all_done: all_done_stream,
+        					koder_name: koder_name_interaction
+        				})
+        	        },
+        	        {
+        	            nav: nav_interaction
+        	        }),
+        	   interaction_product ({
+        	       nav: nav_interaction
+        	   })
+	        ));
 		})
 	}))
-	
-	
+</script>
+<script>
+	var _nav_interaction_ = function () {
+	    return interaction (transition (function (intent, state) {
+	        if (intent [0] === 'prepare')
+	            return only_ (null);
+	        else
+    	        return reflect (none);
+	    }))
+	};
 </script>
 <script>
     var step_procession = {
         start: 1,
         1: 2,
         2: 3,
-        3: function (steps) {
-            return promise_of (function (done) {
-                var _ = {
-                    name: steps [1] .state () .name ._,
-                    school_name: steps [1] .state () .school ._,
-                    date_of_birth: steps [1] .state () .date_of_birth ._,
-                    koder_archetype: steps [2] .state () .koder .name,
-                    koder_name: steps [3] .state () .koder_name ._,
-                };
-                loader ();
-                inquire (api () .add_player, _)
-					.then (function (res) {
-						loader .stop ();
-						if (res .error) {
-							toast ('There was a problem creating the Koder');
-						}
-						else {
-							toast ('Koder ' + _ .koder_name + ' has been created!');
-						}
-						window .location .href = routes .dashboard; 
-					})
-                
-                //validation
-                //send api
-                //reject or accept
-            });
-        }
+        3: 'done'
     };
-    var _create_steps_interaction_ = function (components) {
+    var _interaction_ = function (components, unions) {
+        var nav = unions .nav;
+        
         var step = components .step;
         var steps = R .dissoc ('step') (components);
         
+
         var extension = interaction (transition (function (intent, license) {
 			if (intent [0] === 'step') {
                 var step_ = intent [1];
-                if (typeof (step_procession [step_]) !== 'function') {
+                if (step_procession [step_] !== 'done') {
                     step .intent ([step .state (), step_procession [step_]])
+			    	return reflect (none);
                 }
                 else {
-                    step_procession [step_] (steps) .then (function () {
-                        R .forEachObjIndexed (function (x) {
-                            x .intent (['reset']);
-                        }) (steps)
-                    })
+                    return function (tenure) {
+                        var _ = {
+                            name: steps [1] .state () .name ._,
+                            school_name: steps [1] .state () .school ._,
+                            date_of_birth: steps [1] .state () .date_of_birth ._,
+                            koder_archetype: steps [2] .state () .koder .name,
+                            koder_name: steps [3] .state () .koder_name ._,
+                        };
+                        loader ();
+                        inquire (api () .add_player, _)
+        					.then (tap_promise (function (res) {
+        						if (! res .error) {
+        							return inquire (api () .player, res)
+        						}
+        					}))
+        					.then (function (res) {
+        						if (res .error) {
+        							toast ('There was a problem creating the Koder');
+        						}
+        						else {
+        							toast ('Koder ' + _ .koder_name + ' has been created!');
+        						}
+        					})
+        					.catch (function () {
+        						toast ('We could not connect to the server. Are you offline?')
+        					})
+        					.then (function () {
+        						loader .stop ();
+        						nav .state (['done']);
+        					})
+                            .then (function () {
+                                R .forEachObjIndexed (function (x) {
+                                    x .intent (['reset']);
+                                }) (steps);
+                                tenure .end (true);
+                                extension .intent (['step', 'start'])
+                            })
+                    }
                 }
-				return reflect (none);
 			}
 			else {
-				console .error ('unknown intent passed', intent);
-				return reflect (none);
+                return decline_ (intent);
 			}
         }))
         
@@ -165,49 +196,17 @@
         extension .intent (['step', 'start'])
         
         return interaction_product (R .merge (components) ({
+            _: extension,
+            
             stepper: extension
         }))
     }
 </script>
 <script>
-    var _step_interaction_ = function (dom) {
-        var stepped_nodes = [] .slice .call (dom .querySelectorAll ('[step]'));
-        var step = R .pipe (
-            R .chain (function (node) {
-                return node .getAttribute ('step') .split (',') .map (function (x) {
-                    return [node, x]
-                });
-            }),
-            R .groupBy (R .prop (1)),
-            R .map (R .map (R .prop (0)))
-        ) (stepped_nodes);
-        
-        return interaction (transition (function (intent, license) {
-            var from = intent [0];
-            var to = intent [1];
-            if (from) {
-                step [from] .forEach (function (node) {
-                    node .style .visibility = 'hidden';
-                })
-            }
-            else {
-                R .forEachObjIndexed (function (step, from) {
-                    if (from !== to)
-                        step .forEach (function (node) {
-                            node .style .visibility = 'hidden';
-                        })
-                }) (step)
-            }
-            step [to] .forEach (function (node) {
-                node .style .visibility = '';
-            });
-            return only_ (to);
-        }));
-    }
-</script>
-<script>
     var _interaction_of_step_ = {
-        1: function (components) {
+        1: function (components, unions) {
+            var nav = unions .nav;
+            
     		var back = components .back;
     		var done = components .done;
     		
@@ -239,16 +238,19 @@
     			    date_of_birth .intent (['reset']);
 	                return only_ (null);
     			}
-    			else {
-    				console .error ('unknown intent passed', intent);
+    			else if (intent [0] === 'back') {
+    		    	nav .state (['back']);
     				return reflect (none);
+    			}
+    			else {
+	                return decline_ (intent);
     			}
     		}));
     		
     		extension .state (null);
     		
     		back .thru (tap, function () {
-    			window .location .href = routes .dashboard;
+    			extension .intent (['back']);
     		})
     		done .thru (tap, function () {
     			extension .intent (['done']);
@@ -268,7 +270,7 @@
     		var koder = components .koder;
     		
     		var extension = interaction (transition (function (intent, license) {
-    			if (intent === 'go') {
+    			if (intent [0] === 'go') {
     				return only_ ('done')
 				}
     			else if (intent [0] === 'reset') {
@@ -276,15 +278,14 @@
 	                return only_ (null);
     			}
     			else {
-    				console .error ('unknown intent passed', intent);
-	                return reflect (none);
+	                return decline_ (intent);
     			}
     		}));
     		
     		extension .state (null);
     		
     		go .thru (tap, function () {
-    			extension .intent ('go');
+    			extension .intent (['go']);
     		})
     		
     		return interaction_key_sum (koder, interaction_product ({
@@ -311,8 +312,7 @@
 	                return only_ (null);
     			}
     			else {
-    				console .error ('unknown intent passed', intent);
-    				return reflect (none);
+	                return decline_ (intent);
     			}
     		}));
     		

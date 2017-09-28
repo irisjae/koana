@@ -17,6 +17,31 @@ var routes = {
     categories: '#categories',
     quiz: '#quiz'
 }
+var _routing = {
+    login: {
+        logged_in: routes .dashboard,
+        need_account: routes .make_account
+    },
+    logout: {
+        logged_out: routes .login
+    },
+    make_account: {
+        logged_in: routes .dashboard,
+        back: routes .login
+    },
+    dashboard: {
+        unauthorized: routes .login,
+        first_player: routes .dashboard_create,
+        
+        go: routes .categories,
+        profile: routes .profile,
+        map: routes .map
+    },
+    dashboard_create: {
+        back: routes .dashboard,
+        done: routes .dashboard
+    }
+};
 
 var config = {
     koder: {
@@ -40,6 +65,26 @@ var no_errors = R .cond ([
                     [ R .compose (R .not, R .is (Object)), R .F ],
                     [ R .T, R .pipe (R .prop ('error'), R .not) ]
                 ]);
+
+var logs = stream ();
+
+var __routing = R .pipe (
+    R .map (function (x) {
+        return x .slice (1)
+    }),
+    R .invert,
+    R .map (
+        R .pipe (
+            R .map (R .flip (R .prop) (_routing)),
+            R .mergeAll)
+    )
+) (routes);
+var routing = R .pipe (function (name_wherefrom, role) {
+    return __routing [name_wherefrom] [role];
+}, R .tap (function (x) {
+    if (! x)
+        throw new Error ('route not found')
+}))
 
 						
 var user_api = function (user) {
@@ -81,7 +126,16 @@ var user_api = function (user) {
     							}), cycle_from_network, R .prop ('json')),
     			                cycle_persisted (prefix + '/all-players')
     						) ();
-    	
+		_ .chances =	R .pipe (
+		                    cycle_by_translate (R .applySpec ({
+								path: R .always (backend_path + '/chances'),
+								method: R .always ('GET'),
+								headers: R .always ({ 'Content-Type': 'application/json'}),
+								body: stringify
+							}), cycle_from_network, R .prop ('json')),
+			                cycle_persisted (prefix + '/chances')
+						) ();
+	
     	_ .logout = re_cycle ();
     	_ .logout .from .thru (tap, function () {
     	    _ .player .to (undefined);
@@ -161,14 +215,15 @@ var global_api =    R .tap (function (_) {
     					            api (user_api (user))
     					        }]
     				        ]));
-    						_ .player .from .thru (tap, R .cond ([
-    					        [R .not, function () {
-    					            api (user_api (_ .user .from ()))
-    					        }],
-    					        [R .T, function (player) {
-    					            api (player_api (_ .user .from (), player))
-    					        }]
-    				        ]));
+    				        mechanism (just_call (_ .player .from), [_ .player .from, _ .user .from .thru (filter, R .identity)])
+    						    .thru (tap, R .cond ([
+        					        [R .not, function () {
+        					            api (user_api (_ .user .from ()))
+        					        }],
+        					        [R .T, function (player) {
+        					            api (player_api (_ .user .from (), player))
+        					        }]
+        				        ]));
 						})
                     }) ({})
 var default_api =	R .tap (function (_) {

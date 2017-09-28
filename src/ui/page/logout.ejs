@@ -1,9 +1,25 @@
 <script>
-    args .cycle__from .thru (tap, function () {
-        //log (api ())
-        inquire (api () .logout) 
-            .then (function () {
-                window .location .href = routes .login;
+    var _interaction = interaction (function (intent, state) {
+        var nav_interaction = interaction (noop);
+        
+        intent .thru (filter, R .pipe (
+            R .prop ('nav'), R .prop (0), R .equals ('prepare')
+        )) .thru (tap, function () {
+            //log (api ())
+            Promise .resolve () .then (function () {
+                if (api () .logout)
+                    return inquire (api () .logout) 
+                else {
+                    logs ('logout when already logged out');
+                }
             })
+            .then (function () {
+                nav_interaction .state (['logged_out']);
+            })
+        })
+        
+        nav_interaction .state .thru (map, R .applySpec ({
+            nav: R .identity
+        })) .thru (project, state);
     })
 </script>

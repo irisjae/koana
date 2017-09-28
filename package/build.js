@@ -532,9 +532,17 @@ time ('build', function () {
 					var tag_src = file (tag_path);
 					
 					//UNTIL MAKE REAL PROTO MECHANISM
-					if (tag_name .startsWith ('page-'))
-						tag_src = '<&custom-page>' + '\n' + '</&>' + '\n' + tag_src;
-	
+					if (tag_name .startsWith ('page-')) {
+						tag_src =   '<&custom-page>' + '\n' +
+						            '</&>' + '\n' +
+						            tag_src + '\n' +
+						            '<script>' + '\n' +
+						            '   if (typeof _interaction !== \'undefined\' && _interaction !== window ._interaction)' + '\n' +
+						            '       self .interaction = _interaction;' + '\n' +
+						            '   else' + '\n' +
+						            '       self .interaction = interaction (noop);' + '\n' +
+						            '</script>';
+					}	
 					return transform (tag_src, tag_name);
 				})
 			})
@@ -560,8 +568,7 @@ time ('build', function () {
 				});
 				return src;
 			})
-		})
-		    .unwrapped
+		}) .unwrapped
 	);
 	write (styles_dist) (
 		mapper (

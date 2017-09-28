@@ -1,12 +1,209 @@
 <script>
 	pre (function () {
+		ui = frame ('dashboard');
+
+		[] .forEach .call (ui .querySelectorAll ('#hint[for=image]'), function (_) {
+			_ .outerHTML = image_ify (_);
+		});
+		
 		def = serve (frame ('dashboard'));
 	})
 </script>
 <script>
-    args .cycle__from .thru (tap, function () {
-        /*if (! api () .player .from ()) {
-            window .location .href = routes .dashboard_create;
-        }*/
-    })
+    var _interaction = interaction_to_be (promise_of (function (is) {
+		self .on ('mount', function () {
+		    var dom = self .root;
+		    
+		    var nav_interaction = _nav_interaction_ ();
+	
+    			var go_dom = dom .querySelector ('#go[action=focus]');
+    			var go_stream = stream_from_click_on (go_dom);
+	
+    			var profile_dom = dom .querySelector ('#profile[action=side]');
+    			var profile_stream = stream_from_click_on (profile_dom);
+	
+    			var map_dom = dom .querySelector ('#courses[action=side]');
+    			var map_stream = stream_from_click_on (map_dom);
+    										
+    			var koders_dom = dom .querySelector ('#koders');		
+    			var left_dom = koders_dom .querySelector ('#prev');
+    			var right_dom = koders_dom .querySelector ('#next');
+    			var image_dom = koders_dom .querySelector ('img');
+    			
+    			var koder_interaction =	interaction_select_koders (
+    										left_dom, right_dom, image_dom,
+        									config .koder .choices
+    									);
+    										
+    			var chances_dom = dom .querySelector ('#koding-chances-remaining');		
+    			
+    			var chances_interaction = interaction_chances (chances_dom);
+	
+	        is (interaction_key_sum (
+	            _interaction_ (
+    	            {
+        			    go: go_stream,
+        			    profile: profile_stream,
+        			    map: map_stream,
+        			    
+        			    koder: koder_interaction,
+        			    chances: chances_interaction
+        	        },
+        	        {
+        	            nav: nav_interaction
+        	        }),
+        	   interaction_product ({
+        	       nav: nav_interaction
+        	   })
+	        ));
+		})
+	}))
+</script>
+<script>
+	var _nav_interaction_ = function () {
+	    return interaction (transition (function (intent, state) {
+	        if (intent [0] === 'prepare')
+	            return only_ (null);
+	        else
+    	        return reflect (none);
+	    }))
+	};
+</script>
+<script>
+    var _interaction_ = function (components, nav) {
+        var nav = unions .nav;
+        
+        var go = components .go;
+        var profile = components .profile;
+        var map = components .map;
+        
+        var koder = components .koder;
+        var chances = components .chances;
+        
+        var extension = interaction (transition (function (intent, license) {
+			if (intent [0] === 'player') {
+                return function (tenure) {
+                    inquire (api () .player, {
+                        token: intent [1] .token
+                    }) .then (function () {
+                        tenure .end (true);
+                    }) .then (function () {
+                        //PRIMITIVE REPLAY
+                        if (license ())
+                            extension .intent (license ())
+                    })
+                }
+			}
+			else if (intent [0] === 'chances') {
+                return function (tenure) {
+                    chances .intent (['chances', intent [1]]);
+                    tenure .end (true);
+                }
+			}
+			else if (intent [0] === 'reset') {
+			    return function (tenure) {
+			        loader ();
+			        if (! api () .user .from ()) {
+			            report ('not logged in trying to access dashboard');
+			            loader .stop ();
+			            nav .state (['unauthorized']);
+			            tenure .end (true);
+			        }
+			        else {
+			            var all_players = inquire (api () .all_players);
+			            var chances = inquire (api () .chances);
+			            
+			            Promise .all (
+			                [all_players .then (function (x) {
+        			            if (! x ._ .length) {
+			                        nav .state (['first_player']);
+                                    return Promise .reject ('no players');
+        			            }
+        			            else {
+                                    koder .intent (['data', x ._]);
+        			            }
+        			        }),
+    		                chances .then (function (x) {
+                                chances .intent (['chances', x ._]);
+    		                })]
+		                )
+    			        .catch (function () { })
+    			        .then (function () {
+		                    loader .stop ();
+                            tenure .end (true);
+    			        })
+    			        
+			        }
+			    }
+			}
+			else if (intent [0] === 'go') {
+                nav .state (['go']);
+                return reflect (none);
+			}
+			else if (intent [0] === 'profile') {
+                nav .state (['profile']);
+                return reflect (none);
+			}
+			else if (intent [0] === 'map') {
+                nav .state (['map']);
+                return reflect (none);
+			}
+			else {
+				return decline_ (intent);
+			}
+        }));
+
+        extension .intent (['reset']);
+        koder .state .from 
+            .thru (tap, function (x) {
+                extension .intent (['player', x]);
+            })
+        api .thru (map, R .prop ('chances')) .thru (filter, R .identity) .thru (tap, function (x) {
+            extension .intent (['chances', x ._]);
+        })
+        
+        go .thru (tap, function () {
+            extension .intent (['go']);
+        })
+        profile .thru (tap, function () {
+            extension .intent (['profile']);
+        })
+        map .thru (tap, function () {
+            extension .intent (['map']);
+        })
+        
+        return interaction_product ({
+            _: extension,
+
+            koder: koder,
+            chances: chances
+        })
+    }
+</script>
+<script>
+	var interaction_chances = function (pieces) {
+        var mark_nodes = [] .slice .call (dom .querySelectorAll ('[part]'));
+        var mark_on = R .pipe (
+            R .map (function (node) {
+                return [node .getAttribute ('id'), node];
+            }),
+            R .fromPairs
+        ) (mark_nodes);
+	    return interaction (transition (function (intent, state) {
+	        if (intent [0] === 'chances') {
+	            var mark = intent [0]
+        	            
+                mark_nodes .forEach (function (node) {
+                    node .style .visibility = 'hidden';
+                })
+                mark_on [mark] .forEach (function (node) {
+                    node .style .visibility = '';
+                });
+	            
+	            return only_ (mark);
+	        }
+	        else
+    	        return decline_ (intent);
+	    }))
+	};
 </script>

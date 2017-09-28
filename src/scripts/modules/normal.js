@@ -229,3 +229,16 @@ var mapper =	function (x) {
 var just_call = function (fn) {
     return function () { return fn () }
 }
+
+var tap_promise = function (fn) {
+    return function (x) {
+        return Promise .resolve (fn (x)) .then (R .always (x))
+    }
+}
+
+var decline_ = function (intent) {
+    var err = new Error ('unknown intent passed')
+    err .intent = intent;
+    report (err);
+    return reflect (none);
+}
