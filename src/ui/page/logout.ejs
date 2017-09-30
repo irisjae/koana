@@ -1,25 +1,34 @@
 <script>
-    var _interaction = interaction (function (intent, state) {
-        var nav_interaction = interaction (noop);
-        
-        intent .thru (filter, R .pipe (
-            R .prop ('nav'), R .prop (0), R .equals ('prepare')
-        )) .thru (tap, function () {
-            //log (api ())
-            Promise .resolve () .then (function () {
-                if (api () .logout)
-                    return inquire (api () .logout) 
-                else {
-                    logs ('logout when already logged out');
-                }
-            })
-            .then (function () {
-                nav_interaction .state (['logged_out']);
+	var _interaction, _nav;
+	ui .interaction (interaction_to_be (promise_of (function (is) {
+		_interaction = is;
+	})));
+	ui .nav (interaction_to_be (promise_of (function (is) {
+		_nav = is;
+	})));
+	
+    _interaction (interaction (function (intent, state) {
+        var nav_interaction = interaction (function (intent, state) {
+            intent .thru (filter, R .pipe (
+                R .propEq (0, 'prepare')
+            )) .thru (tap, function () {
+                //log (api ())
+                Promise .resolve () .then (function () {
+                    if (api () .logout)
+                        return inquire (api () .logout) 
+                    else {
+                        logs ('logout when already logged out');
+                    }
+                })
+                .then (function () {
+                    state (['logged_out']);
+                })
             })
         })
+        _nav (nav_interaction);
         
         nav_interaction .state .thru (map, R .applySpec ({
             nav: R .identity
         })) .thru (project, state);
-    })
+    }))
 </script>

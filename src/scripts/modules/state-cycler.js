@@ -117,9 +117,7 @@ var restoration =	localforage .keys ()
 var cycle_persisted =	function (key) {
 							return	as_cycler (function (cycle) {
 										var init = restoration
-													.then (function (initials) {
-														return initials [prefix_for_persistence + key]
-													});
+													.then (R .prop (prefix_for_persistence + key));
 										var persisting =	cycle .from
 																.thru (map, function (_val) {
 																	return	Promise .resolve (persisting && persisting ())
@@ -135,6 +133,12 @@ var cycle_persisted =	function (key) {
 														
 										return	{
 													init: init,
+													from: from (function (x) {
+													    cycle .from .thru (project, x);
+													    init .then (function (_) {
+													        _begins_with (_, x);
+													    })
+													}),
             										persisting: persisting,
 													persisted:	stream_pushes (function (push) {
 																init

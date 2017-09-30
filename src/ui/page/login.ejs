@@ -11,48 +11,55 @@
 </script>
 
 <script>
-	var _interaction = interaction_to_be (promise_of (function (is) {
-		self .on ('mount', function () {
-		    var dom = self .root;
-		    
-		    var nav_interaction = _nav_interaction_ ();
-
-			var login_dom = dom .querySelector ('#login[action=focus]');
-			var make_account_dom = dom .querySelector ('#make-account[action=side]');
-			
-			var login_stream = stream_from_click_on (login_dom);
-			var make_account_stream = stream_from_click_on (make_account_dom);
-										
-										
-			var email_dom = dom .querySelector ('#email');
-			var password_dom = dom .querySelector ('#password');
-			
-			var email_interaction =	interaction_placeholder (
-										email_dom .querySelector ('#placeholder'),
-										interaction_input (email_dom .querySelector ('input'))
-									);
-			var password_interaction =	interaction_placeholder (
-											password_dom .querySelector ('#placeholder'), 
-											interaction_input (password_dom .querySelector ('input'))
-										);
+	var _interaction, _nav;
+	ui .interaction (interaction_to_be (promise_of (function (is) {
+		_interaction = is;
+	})));
+	ui .nav (interaction_to_be (promise_of (function (is) {
+		_nav = is;
+	})));
 	
-			is (interaction_key_sum (
-				_interaction_ ({
-    					login: login_stream,
-    					make_account: make_account_stream,
-    					
-    					email: email_interaction,
-    					password: password_interaction
-    				}, 
-    				{
-    				    nav: nav_interaction
-    				}),
-    			interaction_product ({
-    			    nav: nav_interaction
-    			})
-			))
-		})
-	}))
+	self .on ('mount', function () {
+	    var dom = self .root;
+	    
+	    var nav_interaction = _nav_interaction_ ();
+	    _nav (nav_interaction);
+
+		var login_dom = dom .querySelector ('#login[action=focus]');
+		var make_account_dom = dom .querySelector ('#make-account[action=side]');
+		
+		var login_stream = stream_from_click_on (login_dom);
+		var make_account_stream = stream_from_click_on (make_account_dom);
+									
+									
+		var email_dom = dom .querySelector ('#email');
+		var password_dom = dom .querySelector ('#password');
+		
+		var email_interaction =	interaction_placeholder (
+									email_dom .querySelector ('#placeholder'),
+									interaction_input (email_dom .querySelector ('input'))
+								);
+		var password_interaction =	interaction_placeholder (
+										password_dom .querySelector ('#placeholder'), 
+										interaction_input (password_dom .querySelector ('input'))
+									);
+
+		_interaction (interaction_key_sum (
+			_interaction_ ({
+					login: login_stream,
+					make_account: make_account_stream,
+					
+					email: email_interaction,
+					password: password_interaction
+				}, 
+				{
+				    nav: nav_interaction
+				}),
+			interaction_product ({
+			    nav: nav_interaction
+			})
+		))
+	})
 	
 	
 	var _nav_interaction_ = function () {
@@ -91,14 +98,14 @@
 									loader .stop ();
 									if (res .error) {
 										toast ('There was a problem logging in');
+										tenure .end (true); 
 									}
 									else {
+										email .intent ({ _: ['reset'] });
+										password .intent ({ _: ['reset'] });
+										tenure .end (true); 
 										nav .state (['logged_in']); 
 									}
-								})
-								.then (function () {
-									tenure (null);
-									tenure .end (true); 
 								})
 							}
 						}

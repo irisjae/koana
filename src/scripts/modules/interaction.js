@@ -26,6 +26,10 @@ var transition = function (fn) {
 							.thru (map, function (first) {
 							    return fn (first, news (intent) .thru (takeUntil, news (last_segue)))
 							})
+							.thru (tap, function (tend) {
+							    if (typeof tend !== 'function')
+    							    throw new Error ('did not return tend function');
+							})
 			})
 			.thru (tap, function (x) {
 			    promise (x)
@@ -41,20 +45,11 @@ var transition = function (fn) {
 	}
 }
 
-var interaction_prop = function (k) {
-    return function (interaction) {
-    	return {
-    		intent: stream () .thru (tap, function (x) {
-    		    interaction .intent (R .assoc (k, x) ({}));
-    		}),
-    		state: interaction .state .thru (map, R .prop (k))
-    	}
-    }
-}
 var interaction_product =	function (interactions) {
 	return {
 		intent: stream () .thru (tap, R .forEachObjIndexed (function (x, k) {
-		    interactions [k] .intent (x);
+		    if (interactions [k])
+		        interactions [k] .intent (x);
 		})),
 		state: product (R .map (R .prop ('state')) (interactions))
 	}
@@ -62,7 +57,8 @@ var interaction_product =	function (interactions) {
 var interaction_product_array =	function (interactions) {
 	return {
 		intent: stream () .thru (tap, R .forEach (function (x, k) {
-		    interactions [k] .intent (x);
+		    if (interactions [k])
+		        interactions [k] .intent (x);
 		})),
 		state: array_product (R .map (R .prop ('state')) (interactions))
 	}
@@ -70,10 +66,10 @@ var interaction_product_array =	function (interactions) {
 var interaction_key_sum = 	function (i1, i2) {
 	return {
 		intent: stream () .thru (tap, R .forEachObjIndexed (function (x, k) {
-		    if (i1 .state () [k])
-    		    i1 .intent (R .assoc (k, x) ({}));
-		    else if (i2 .state () [k])
-    		    i2 .intent (R .assoc (k, x) ({}));
+		    if (k in i1 .state ())
+		        i1 .intent (R .assoc (k, x) ({}));
+		    else
+		        i2 .intent (R .assoc (k, x) ({}));
 		})),
 		state: key_sum (i1 .state) (i2 .state)
 	}
@@ -100,7 +96,7 @@ var interaction_to_be = function (interactor) {
         intents .forEach (function (x) {
             interaction .intent (x);
         })
-        interaction .intent .thru (project, i .intent);
+        news (i .intent) .thru (project, interaction .intent);
         interaction .state .thru (project, i .state);
     })
     return i;

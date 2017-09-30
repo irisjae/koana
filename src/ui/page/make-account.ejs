@@ -11,54 +11,62 @@
 </script>
 
 <script>
-	var _interaction = interaction_to_be (promise_of (function (is) {
-		self .on ('mount', function () {
-		    var dom = self .root;
-		    
-		    var nav_interaction = interaction (noop);
-		    
-			var make_account_dom = dom .querySelector ('#make-account[action=focus]');
-			var back_dom = dom .querySelector ('#back[action=nav]');
-			
-			var make_account_stream = stream_from_click_on (make_account_dom);
-			var back_stream = stream_from_click_on (back_dom);
-										
-										
-			var email_dom = dom .querySelector ('#email');
-			var password_dom = dom .querySelector ('#password');
-			var retype_password_dom = dom .querySelector ('#retype-password');
-			
-			var email_interaction =	interaction_placeholder (
-										email_dom .querySelector ('#placeholder'),
-										interaction_input (email_dom .querySelector ('input'))
-									);
-			var password_interaction =	interaction_placeholder (
-											password_dom .querySelector ('#placeholder'), 
-											interaction_input (password_dom .querySelector ('input'))
-										);
-			var retype_password_interaction =	interaction_placeholder (
-													retype_password_dom .querySelector ('#placeholder'), 
-													interaction_input (retype_password_dom .querySelector ('input'))
-												);
+	var _interaction, _nav;
+	ui .interaction (interaction_to_be (promise_of (function (is) {
+		_interaction = is;
+	})));
+	ui .nav (interaction_to_be (promise_of (function (is) {
+		_nav = is;
+	})));
 	
-			is (interaction_key_sum (
-			    _interaction_ ({
-    					make_account: make_account_stream,
-    					back: back_stream,
-    					
-    					email: email_interaction,
-    					password: password_interaction,
-    					retype_password: retype_password_interaction
-    				},
-    				{
-    				    nav: nav_interaction
-    				}),
-				interaction_product ({
+	
+	self .on ('mount', function () {
+	    var dom = self .root;
+	    
+	    var nav_interaction = interaction (noop);
+	    _nav (nav_interaction);
+	    
+		var make_account_dom = dom .querySelector ('#make-account[action=focus]');
+		var back_dom = dom .querySelector ('#back[action=nav]');
+		
+		var make_account_stream = stream_from_click_on (make_account_dom);
+		var back_stream = stream_from_click_on (back_dom);
+									
+									
+		var email_dom = dom .querySelector ('#email');
+		var password_dom = dom .querySelector ('#password');
+		var retype_password_dom = dom .querySelector ('#retype-password');
+		
+		var email_interaction =	interaction_placeholder (
+									email_dom .querySelector ('#placeholder'),
+									interaction_input (email_dom .querySelector ('input'))
+								);
+		var password_interaction =	interaction_placeholder (
+										password_dom .querySelector ('#placeholder'), 
+										interaction_input (password_dom .querySelector ('input'))
+									);
+		var retype_password_interaction =	interaction_placeholder (
+												retype_password_dom .querySelector ('#placeholder'), 
+												interaction_input (retype_password_dom .querySelector ('input'))
+											);
+
+		_interaction (interaction_key_sum (
+		    _interaction_ ({
+					make_account: make_account_stream,
+					back: back_stream,
+					
+					email: email_interaction,
+					password: password_interaction,
+					retype_password: retype_password_interaction
+				},
+				{
 				    nav: nav_interaction
-				})
-		    ))
-		})
-	}))
+				}),
+			interaction_product ({
+			    nav: nav_interaction
+			})
+	    ))
+	})
 	
 	var _nav_interaction_ = function () {
 	    return interaction (transition (function (intent, state) {
@@ -88,6 +96,10 @@
 							}
 							else if (password .state () ._ !== retype_password .state () ._) {
 								toast ('Please make sure your passwords match');
+								tenure .end (true);
+							}
+							else if (password .state () ._ .length < 8) {
+								toast ('Please make sure your password is at least 8 characters');
 								tenure .end (true);
 							}
 							else {

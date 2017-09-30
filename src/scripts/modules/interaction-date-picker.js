@@ -15,10 +15,10 @@ var interaction_date_picker = function (dom) {
         else if (intent [0] === 'reset') {
             dom .value = '';
             dom .dispatchEvent (new Event ('input'));
+            return only_ ('');
         }
 		else {
-			console .error ('unknown intent passed', intent);
-			return reflect (none)
+			return decline_ (intent);
 		}
     }));
     click (dom, function () {

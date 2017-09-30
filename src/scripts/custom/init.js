@@ -25,6 +25,12 @@ var report = from (function (_) {
 /*
 Use app
 */
-document .addEventListener ('deviceready', function () {
+Promise .all ([
+    promise_of (function (x) {
+        document .addEventListener ('deviceready', x);
+    }),
+    restoration
+])
+.then (function () {
 	riot .mount ('*');
 });

@@ -7,8 +7,7 @@ var interaction_input = function (dom) {
             dom .dispatchEvent (new Event ('input'));
         }
 		else {
-			console .error ('unknown intent passed', intent);
-			return reflect (none)
+			return decline_ (intent)
 		}
     }));
     dom .addEventListener ('input', function () {
@@ -55,8 +54,7 @@ var interaction_placeholder = function (dom, input) {
 			}
 		}
 		else {
-			console .error ('unknown intent passed', intent);
-			return reflect (none)
+			return decline_ (intent)
 		}
 	}));
 	

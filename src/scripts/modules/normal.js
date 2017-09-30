@@ -1,13 +1,13 @@
 var replace_all =	function (search, replacement) {
 						return	function (string) {
-								    var target = string;
-								    return target .split (search) .join (replacement);
+									var target = string;
+									return target .split (search) .join (replacement);
 								};
 					};
 var index =	function (test) {
 				return	function (array) {
 							for (var x = 0; x < array .length; x ++) {
-							    if (test (array [x])) return x;
+								if (test (array [x])) return x;
 							}
 							// not found, return fail value
 							return -1;
@@ -170,10 +170,10 @@ var parse =	function (json) {
 				return ! json || json === 'undefined' ? undefined : JSON .parse (json);
 			};
 var capitalize =	function (str) {
-					    return str .replace (/\w\S*/g, function (txt) { return txt .charAt (0) .toUpperCase () + txt .substr (1) .toLowerCase (); });
+						return str .replace (/\w\S*/g, function (txt) { return txt .charAt (0) .toUpperCase () + txt .substr (1) .toLowerCase (); });
 					}
 var to_uppercase =	function (str) {
-					    return str .toUpperCase ();
+						return str .toUpperCase ();
 					}
 
 var tap_ = function (fn) { return function (x) { fn .apply (this, arguments); return x; } };
@@ -202,19 +202,19 @@ var pack =	function (aliases) {
 			
 			
 var climb = function (n, scope) {
-            for (var i = 0; i < n; i ++) {
-              scope = scope .parent;
-            }
-            return scope;
-          }
-          
+			for (var i = 0; i < n; i ++) {
+			  scope = scope .parent;
+			}
+			return scope;
+		  }
+		  
 var promise_of = function (x) {
-    return new Promise (x)
+	return new Promise (x)
 }
 
 /*var _ael_ = {
-    passive: false,
-    capture: false
+	passive: false,
+	capture: false
 }*/
 
 
@@ -227,18 +227,28 @@ var mapper =	function (x) {
 							}
 				}
 var just_call = function (fn) {
-    return function () { return fn () }
+	return function () { return fn () }
 }
 
 var tap_promise = function (fn) {
-    return function (x) {
-        return Promise .resolve (fn (x)) .then (R .always (x))
-    }
+	return function (x) {
+		return Promise .resolve (fn (x)) .then (R .always (x))
+	}
 }
 
 var decline_ = function (intent) {
-    var err = new Error ('unknown intent passed')
-    err .intent = intent;
-    report (err);
-    return reflect (none);
+	var err = new Error ('unknown intent passed')
+	err .intent = intent;
+	report (err);
+	return reflect (none);
+}
+
+var controlled_on = function (_) {
+	return function (x) {
+		return R .assoc ('intent', R .__, x) (
+			R .tap (function (x) {
+				x .thru (map, R .assoc (_, R .__, {})) .thru (project, x .intent)
+			}) (stream ())
+		)
+	}
 }

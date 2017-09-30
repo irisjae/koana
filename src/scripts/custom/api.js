@@ -34,6 +34,7 @@ var _routing = {
         first_player: routes .dashboard_create,
         
         go: routes .categories,
+        add: routes .dashboard_create,
         profile: routes .profile,
         map: routes .map
     },
@@ -82,7 +83,7 @@ var __routing = R .pipe (
 var routing = R .pipe (function (name_wherefrom, role) {
     return __routing [name_wherefrom] [role];
 }, R .tap (function (x) {
-    if (! x)
+    if (! x || ! page_exists (page_name (x)))
         throw new Error ('route not found')
 }))
 

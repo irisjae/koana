@@ -32,7 +32,7 @@ module .exports =   function (ctx, next) {
                                         })
                                         .then (function (results) {
                                             return results .records .map (function (record) {
-                                                return R. merge (record ._fields .properties) ({
+                                                return R. merge (record ._fields [0] .properties) ({
                                                     token: tokenizer (record ._fields [0])
                                                 })
                                             })
