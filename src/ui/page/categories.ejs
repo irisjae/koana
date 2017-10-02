@@ -1,0 +1,188 @@
+<script>
+	pre (function () {
+		ui = frame ('categories');
+
+		var scroll_hints = ui .querySelectorAll ('#hint[for=scroll]');
+		[] .forEach .call (scroll_hints, fulfill_scroll);
+        
+
+        var category_title_dy, quiz_dx;
+        exemplify (ui .querySelectorAll ('#category[template]'), [function (categories) {
+            var areas = categories .map (function (category) {
+                return category .querySelector ('#hint');
+            });
+            category_title_dy = y_translation (areas [1]) - y_translation (areas [0]);
+        }, function (category) {
+    		var category_title = category .querySelector ('#title #hint[for=text]');
+                category_title .outerHTML = text_ify (category_title);
+    
+    		exemplify (category .querySelectorAll ('#quiz[template]'), [function (quizes) {
+                var areas = quizes .map (function (category) {
+                    return category .querySelector ('#hint[for=click]');
+                });
+                quiz_dx = x_translation (quizes [1]) - x_translation (quizes [0]);
+    		}, function (quiz) {
+                var name_area = quiz .querySelector ('#name #hint[for=text]');
+                    name_area .outerHTML = text_ify (name_area);
+                var icon_area = quiz .querySelector ('#icon #hint[for=image]');
+                    icon_area .outerHTML = image_ify (icon_area);
+    		}]);
+        }]);
+		
+		scripts .unshift (`
+		    var category_title_dy = ${category_title_dy};
+		    var quiz_dx = ${quiz_dx};
+	    `);
+    
+		def = serve (ui);
+	})
+</script>
+
+<script>
+	var _interaction, _nav;
+	ui .interaction (interaction_to_be (promise_of (function (is) {
+		_interaction = is;
+	})));
+	ui .nav (interaction_to_be (promise_of (function (is) {
+		_nav = is;
+	})));
+	
+	
+	self .on ('mount', function () {
+		var back_dom = self .root .querySelector ('[id="header"]') .querySelector ('[id="back"]');
+		var back_stream = stream_from_click_on (back_dom);
+		
+		
+
+	    
+	    var body = self .root .querySelector ('[id="body"]');
+		var body_interaction = scroll_interaction ('y') (body)
+
+		//detect when svg is properly loaded
+	    svg .addEventListener ('load', (x)=>console.log(x));
+	    
+		
+		_interaction (_interaction_ (self .root));
+
+
+//		        _interaction .intent (['load']);
+
+	})
+    
+    
+	var _interaction_ = function (components, unions) {
+        var back = components .back;
+        var body = components .body;
+        
+        var nav = unions .nav;
+             
+		back .thru (tap, function () {
+			nav .state (['back']);
+		})   
+        //find all categories  
+        
+        /*click (quiz, function () {
+            var quiz_info = api () .quiz .from ();
+            var today_date_string = function () {
+                return date_string (new Date ()) 
+            };
+            var consecutive_today = function () {
+                return quiz_info && quiz_info .date === today_date_string ();
+            }
+            if (consecutive_today () && quiz_info .length === 3) {
+                toast ('You have used up your three sets of practices today!');
+            }
+            else {
+                api () .quiz .to (R .cond ([
+                    [consecutive_today, R .pipe (
+                        R .converge (R .assoc, [R .prop ('length'), function () { return name }, R .identity]),
+                        R .converge (R .assoc, [R .always ('length'), R .compose (R .add (1), R .prop ('length')), R .identity]),
+                    )],
+                    [R .T, R. pipe (
+                        R .always ({
+                            length: 1,
+                            0: name
+                        }),
+                        R .converge (R .assoc, [R .always ('date'), today_date_string, R .identity])
+                    )]
+                ]) (quiz_info));
+                window .location .href = routes .quiz
+            }
+        });*/
+
+		var categories = stream ();
+	    
+	    nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function () {
+            loader ('Updating with new quizes...');
+            return inquire (api () .subcategories) .then (function (subcategories) {
+                body .insertBefore (make_categories_dom (subcategories), items .querySelector ('[id^="category-template-hint"][template]'));
+
+	            loader .stop ();
+	        })
+	    })
+
+	    
+	    return //interaction (transition (function (intent, license) {
+	}
+	
+
+
+
+    var make_categories_dom = function (data) {
+        var categories = document .createDocumentFragment ();
+        
+        var order = 0;
+        
+        mapper (data)
+            .map (R .forEachObjIndexed (function (subcategories, category) {
+                var category = make_category_dom (subcategories, category);
+                var _ = category .getAttribute ('transform');
+                category .setAttribute ('transform', (_  ? _ + ' ' : '' ) + 'translate(0 ' + (order ++ * category_title_dy) + ')')
+                
+                categories .insertBefore (category, null);
+            }))
+    
+        return categories;
+    }
+    var make_category_dom = function (subcategories, name) {
+        var category = svg .querySelector ('#category[template]') .cloneNode (true);
+            category .removeAttribute ('template');
+            var category_title = category .querySelector ('#title #hint[for=text]');
+                category_title .textContent = name;
+                
+            var items = category .querySelector ('#subcategories');
+                items .insertBefore (make_quizes_dom (subcategories), items .querySelector ('#quiz[template]'));
+
+        next_tick () .then (function () {
+            scroll_interaction ('x') (items);
+        })
+            
+        return category;
+    }
+    var make_quizes_dom = function (info) {
+        var subcategories = document .createDocumentFragment ();
+        
+        var order = 0;
+        info .forEach (function (info) {
+            var quiz = make_quiz_dom (info);
+            var _ = quiz .getAttribute ('transform');
+            quiz .setAttribute ('transform', (_  ? _ + ' ' : '' ) + 'translate(' + (order ++ * quiz_dx) + ' 0)')
+            subcategories .insertBefore (quiz, null);
+        })
+        
+        return subcategories;
+    }
+    var make_quiz_dom = function (info) {
+        var name = info [0];
+        var image = info [1];
+        var hyphenation = info [2];
+        
+        var quiz = svg .querySelector ('[id^="quiz-template-hint"][template]') .cloneNode (true);
+            quiz .removeAttribute ('template');
+            var quiz_name = quiz .querySelector ('[id^="name-area-hint"]');
+                quiz_name .textContent = hyphenation;
+            var quiz_image = quiz .querySelector ('[id^="icon-area-hint"]');
+                quiz_image .querySelector ('img') .setAttribute ('src', image);
+        return quiz;
+    }
+</script>

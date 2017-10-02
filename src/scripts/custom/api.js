@@ -41,6 +41,9 @@ var _routing = {
     dashboard_create: {
         back: routes .dashboard,
         done: routes .dashboard
+    },
+    categories: {
+        back: routes .dashboard
     }
 };
 
