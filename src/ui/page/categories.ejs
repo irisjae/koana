@@ -51,12 +51,9 @@
 	self .on ('mount', function () {
 		var back_dom = self .root .querySelector ('[id="header"]') .querySelector ('[id="back"]');
 		var back_stream = stream_from_click_on (back_dom);
-		
-		
 
 	    
-	    var body = self .root .querySelector ('[id="body"]');
-		var body_interaction = scroll_interaction ('y') (body)
+	    var body_dom = self .root .querySelector ('[id="body"]');
 
 		//detect when svg is properly loaded
 	    svg .addEventListener ('load', (x)=>console.log(x));
@@ -72,7 +69,6 @@
     
 	var _interaction_ = function (components, unions) {
         var back = components .back;
-        var body = components .body;
         
         var nav = unions .nav;
              
@@ -128,12 +124,147 @@
 
 
 
+	var categories_interaction = function (components) {
+		var dom = components .dom;
+		var categories = components .categories;
+
+		var scroll_interaction = scroll_interaction ('y') (dom)
+        
+        var _ = interaction (transition (function (intent, license) {
+        	if (intent [0] === 'data') {
+        		var data = intent [1];
+        		var old = intent [2];
+        		
+        		categories .intent (
+	        		R .range (0, data .length) .map (function (x) {
+		        		return ['data', data [x]];
+	        		}) .concat (
+	        			R .range (data .length, old .length) .map (function (x) {
+			        		return ['reset'];
+		        		}))
+    			);
+				return only_ (null);
+        	}
+        	else {
+        		return decline_ (intent);
+        	}
+        }));
+        
+        return interaction_product ({
+        	_: _,
+        	dom: {
+        		intent: none,
+        		state: stream (dom)
+        	},
+        	categories: categories_interactions
+        })
+	};
+	
+	//interaction_product ([] .map .call (dom .querySelector ('[list-item]'), interaction))
+	
+	var list_interaction = function (dom, interaction_of) {
+		var doms = [];
+		var interactions = stream ([]);
+		var visible_indexes = [];
+		var _ = interaction (transition (function (intent, license) {
+        	intent .forEachObjIndexed (function (intent, i) {
+        		if (intent [i] === 'data') {
+        			if (i >= doms .length) {
+        				R .range (doms .length, i + 1) .forEach (function () {
+        					var _dom = dom .cloneNode (true);
+        					var _interaction = interaction_of (_dom);
+        					doms .push (_dom);
+        					interactions (
+        						interactions () .concat ([_interaction]));
+        					dom .parentNode .append (_dom);
+        				})
+        			}
+        			interactions () [i] .intent (intent);
+        			mark_visible (i);
+        		}
+        		else if (intent [i] === 'reset') {
+        			interactions () [i] .intent (intent);
+        			unmark_visible (i);
+        		}
+				else {
+					return decline_ (intent)
+				}
+        	})
+        	return reflect (none);
+		}));
+		
+		//change to binary search
+		var mark_visible = function (i) {
+			var min = 0
+			while (min < visible_indexes .length && visible_indexes [min] < i) min ++;
+			visible_indexes .splice (min, 0, i);
+			doms [i] .style .visibility = '';
+		}		
+		var unmark_visible = function (i) {
+			var x = visible_indexes .indexOf (i);
+			if (x === -1) throw new Error ('visible index not found');
+			/*if (x === visible_indexes .length - 1)
+				R .range (visible_indexes [x - 1] + 1, i) .forEach ()*/
+			visible_indexes .splice (x, 1);
+			doms [i] .style .visibility = 'hidden';
+		}		
+		
+		return R .evolve ({
+			intent: R .always ([stream ()] .map (R .tap (function (i) { i .thru (tap, _ .intent) })) [0])
+		}) (interaction_flatten (interactions .thru (map, interaction_product_array)));
+	};
+	var category_interaction = function (components) {
+		var dy = components .dy;
+		var dom = components .dom;
+		var name = components .name;
+		var subcategories = components .subcategories;
+		
+        var category = make_category_dom (subcategories, category);
+        var _transform = category .getAttribute ('transform');
+        
+		var extension = interaction (transition (function (intent, license) {
+			if (intent [0] === 'data') {
+				var data = intent [1];
+				var order = intent [2];
+				
+		        dom .setAttribute ('transform', _transform + (_transform ? ' ' : '' ) + 'translate(0 ' + (order * dy) + ')');
+				name .textContent = data .name;
+				subcategories .intent (['data', data .subcategories]);
+				
+				return only_ ([data, order])
+			}
+			else if (intent [0] === 'reset') {
+				return only_ (null);
+			}
+			else
+				return decline_ (intent);
+		))
+		return interaction_product ({
+			_: extension,
+			subcategories: subcategories
+		})
+	};
+	
+	
+</script>
+
+
+
+
+
+
+
+
+
+
+<script>
+	
     var make_categories_dom = function (data) {
         var categories = document .createDocumentFragment ();
         
         var order = 0;
         
-        mapper (data)
+        [data]
             .map (R .forEachObjIndexed (function (subcategories, category) {
                 var category = make_category_dom (subcategories, category);
                 var _ = category .getAttribute ('transform');

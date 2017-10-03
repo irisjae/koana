@@ -244,11 +244,11 @@ var decline_ = function (intent) {
 }
 
 var controlled_on = function (_) {
-	return function (x) {
-		return R .assoc ('intent', R .__, x) (
-			R .tap (function (x) {
-				x .thru (map, R .assoc (_, R .__, {})) .thru (project, x .intent)
-			}) (stream ())
-		)
-	}
+	return R .evolve ({
+		intent: function (intent) {
+			return [stream ()] .map (R .tap (function (i) {
+					i .thru (map, R .assoc (_, R .__, {})) .thru (project, intent)
+				})) [0]
+		}
+	})
 }
