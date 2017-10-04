@@ -49,271 +49,178 @@
 	
 	
 	self .on ('mount', function () {
-		var back_dom = self .root .querySelector ('[id="header"]') .querySelector ('[id="back"]');
+		var dom = self .root;
+
+		var nav, nav_interaction = _nav_interaction_ ();
+		_nav (nav_interaction);
+		nav = nav_interaction;
+		
+		var back_dom = dom .querySelector ('#header') .querySelector ('#back');
 		var back_stream = stream_from_click_on (back_dom);
 
-	    
-	    var body_dom = self .root .querySelector ('[id="body"]');
+		var category_box_dom = dom .querySelector ('#categories[scroll]');
+		var category_scroll_interaction = scroll_interaction ('y') (category_box_dom);
 
+		var dom_for_category = function () { return category_dom_template .cloneNode (true); }
+			var category_dom_template = dom .querySelector ('#category[template]') .cloneNode (true);
+				category_dom_template .removeAttribute ('template');
+		var dom_for_category_title = function (category) { return category .querySelector ('#title #hint[for=text]') };
+		var dom_for_subcategory_box = function (category) { return category .querySelector ('#subcategories[scroll]') };
+		
+		var dom_for_subcategory = function () { return subcategory_dom_template .cloneNode (true); }
+			var subcategory_dom_template = dom .querySelector ('#quiz[template]') .cloneNode (true);
+				subcategory_dom_template .removeAttribute ('template');
+		var dom_for_name = function (category) { return category .querySelector ('#name #hint[for=text]') };
+		var dom_for_image = function (category) { return category .querySelector ('#icon #hint[for=image]') };
+		
+		var all_subcategory = function (dom) { return dom .querySelectorAll ('#subcategories[scroll]'); }
+		var all_subcategory_scroll_box = function (dom) { return dom .querySelectorAll ('#subcategories[scroll]'); }
+		
 		//detect when svg is properly loaded
+		var svg = dom .querySelector ('svg');
 	    svg .addEventListener ('load', (x)=>console.log(x));
-	    
 		
-		_interaction (_interaction_ (self .root));
-
-
-//		        _interaction .intent (['load']);
-
+		_interaction (_interaction_ (
+			category_box_dom,
+			dom_of_categories (create_document_fragment,
+				dom_of_category (dom_for_category,
+					dom_for_category_title,
+					dom_for_subcategory_box,
+					dom_of_subcategories (create_document_fragment,
+						dom_of_subcategory (dom_for_subcategory,
+							dom_for_name,
+							dom_for_image))))
+		) (	{
+				back: back_stream,
+				category_scroll: category_scroll_interaction,
+				categories: R .converge (function (subcategory_scroll_boxes, subcategories) {
+					[] .forEach .call (subcategories, function (_) {
+						var name = _ .getAttribute ('_name');
+						stream_from_click_on (_) .thru (tap, function () {
+							nav .state (['subcategory', name]);
+						})
+					});
+					return interaction_product_array ([] .map .call (subcategory_scroll_boxes, scroll_interaction ('x')))
+				}, [all_subcategory_scroll_box, all_subcategory])
+			},
+			{
+				nav: nav_interaction
+			}));
 	})
-    
-    
-	var _interaction_ = function (components, unions) {
-        var back = components .back;
-        
-        var nav = unions .nav;
-             
-		back .thru (tap, function () {
-			nav .state (['back']);
-		})   
-        //find all categories  
-        
-        /*click (quiz, function () {
-            var quiz_info = api () .quiz .from ();
-            var today_date_string = function () {
-                return date_string (new Date ()) 
-            };
-            var consecutive_today = function () {
-                return quiz_info && quiz_info .date === today_date_string ();
-            }
-            if (consecutive_today () && quiz_info .length === 3) {
-                toast ('You have used up your three sets of practices today!');
-            }
-            else {
-                api () .quiz .to (R .cond ([
-                    [consecutive_today, R .pipe (
-                        R .converge (R .assoc, [R .prop ('length'), function () { return name }, R .identity]),
-                        R .converge (R .assoc, [R .always ('length'), R .compose (R .add (1), R .prop ('length')), R .identity]),
-                    )],
-                    [R .T, R. pipe (
-                        R .always ({
-                            length: 1,
-                            0: name
-                        }),
-                        R .converge (R .assoc, [R .always ('date'), today_date_string, R .identity])
-                    )]
-                ]) (quiz_info));
-                window .location .href = routes .quiz
-            }
-        });*/
-
-		var categories = stream ();
-	    
-	    nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function () {
-            loader ('Updating with new quizes...');
-            return inquire (api () .subcategories) .then (function (subcategories) {
-                body .insertBefore (make_categories_dom (subcategories), items .querySelector ('[id^="category-template-hint"][template]'));
-
-	            loader .stop ();
-	        })
-	    })
-
-	    
-	    return //interaction (transition (function (intent, license) {
-	}
-	
-
-
-
-	var categories_interaction = function (components) {
-		var dom = components .dom;
-		var categories = components .categories;
-
-		var scroll_interaction = scroll_interaction ('y') (dom)
-        
-        var _ = interaction (transition (function (intent, license) {
-        	if (intent [0] === 'data') {
-        		var data = intent [1];
-        		var old = intent [2];
-        		
-        		categories .intent (
-	        		R .range (0, data .length) .map (function (x) {
-		        		return ['data', data [x]];
-	        		}) .concat (
-	        			R .range (data .length, old .length) .map (function (x) {
-			        		return ['reset'];
-		        		}))
-    			);
-				return only_ (null);
-        	}
-        	else {
-        		return decline_ (intent);
-        	}
-        }));
-        
-        return interaction_product ({
-        	_: _,
-        	dom: {
-        		intent: none,
-        		state: stream (dom)
-        	},
-        	categories: categories_interactions
-        })
-	};
-	
-	//interaction_product ([] .map .call (dom .querySelector ('[list-item]'), interaction))
-	
-	var list_interaction = function (dom, interaction_of) {
-		var doms = [];
-		var interactions = stream ([]);
-		var visible_indexes = [];
-		var _ = interaction (transition (function (intent, license) {
-        	intent .forEachObjIndexed (function (intent, i) {
-        		if (intent [i] === 'data') {
-        			if (i >= doms .length) {
-        				R .range (doms .length, i + 1) .forEach (function () {
-        					var _dom = dom .cloneNode (true);
-        					var _interaction = interaction_of (_dom);
-        					doms .push (_dom);
-        					interactions (
-        						interactions () .concat ([_interaction]));
-        					dom .parentNode .append (_dom);
-        				})
-        			}
-        			interactions () [i] .intent (intent);
-        			mark_visible (i);
-        		}
-        		else if (intent [i] === 'reset') {
-        			interactions () [i] .intent (intent);
-        			unmark_visible (i);
-        		}
-				else {
-					return decline_ (intent)
-				}
-        	})
-        	return reflect (none);
-		}));
-		
-		//change to binary search
-		var mark_visible = function (i) {
-			var min = 0
-			while (min < visible_indexes .length && visible_indexes [min] < i) min ++;
-			visible_indexes .splice (min, 0, i);
-			doms [i] .style .visibility = '';
-		}		
-		var unmark_visible = function (i) {
-			var x = visible_indexes .indexOf (i);
-			if (x === -1) throw new Error ('visible index not found');
-			/*if (x === visible_indexes .length - 1)
-				R .range (visible_indexes [x - 1] + 1, i) .forEach ()*/
-			visible_indexes .splice (x, 1);
-			doms [i] .style .visibility = 'hidden';
-		}		
-		
-		return R .evolve ({
-			intent: R .always ([stream ()] .map (R .tap (function (i) { i .thru (tap, _ .intent) })) [0])
-		}) (interaction_flatten (interactions .thru (map, interaction_product_array)));
-	};
-	var category_interaction = function (components) {
-		var dy = components .dy;
-		var dom = components .dom;
-		var name = components .name;
-		var subcategories = components .subcategories;
-		
-        var category = make_category_dom (subcategories, category);
-        var _transform = category .getAttribute ('transform');
-        
-		var extension = interaction (transition (function (intent, license) {
-			if (intent [0] === 'data') {
-				var data = intent [1];
-				var order = intent [2];
-				
-		        dom .setAttribute ('transform', _transform + (_transform ? ' ' : '' ) + 'translate(0 ' + (order * dy) + ')');
-				name .textContent = data .name;
-				subcategories .intent (['data', data .subcategories]);
-				
-				return only_ ([data, order])
-			}
-			else if (intent [0] === 'reset') {
-				return only_ (null);
-			}
-			else
-				return decline_ (intent);
-		))
-		return interaction_product ({
-			_: extension,
-			subcategories: subcategories
-		})
-	};
-	
-	
 </script>
-
-
-
-
-
-
-
-
-
-
 <script>
-	
-    var make_categories_dom = function (data) {
-        var categories = document .createDocumentFragment ();
-        
-        var order = 0;
-        
-        [data]
-            .map (R .forEachObjIndexed (function (subcategories, category) {
-                var category = make_category_dom (subcategories, category);
-                var _ = category .getAttribute ('transform');
-                category .setAttribute ('transform', (_  ? _ + ' ' : '' ) + 'translate(0 ' + (order ++ * category_title_dy) + ')')
-                
-                categories .insertBefore (category, null);
-            }))
+    var dom_of_categories = function (dom_, dom_of_category) {
+    	return function (data) {
+        	var _ = dom_ ();
+	        var order = 0;
+	        [data] .map (R .forEachObjIndexed (function (subcategories, category) {
+	            _ .appendChild (
+	            	layout_ (
+	            		'y', order ++ * category_title_dy,
+	            		dom_of_category (subcategories, category)
+	        		));
+	        }))
+	        return _;
+    	}
+    }
+    //dom_: var category = svg .querySelector ('#category[template]') .cloneNode (true); category .removeAttribute ('template');
+    //dom_of_title: category .querySelector ('#title #hint[for=text]')
+    //dom_of_subcategories: category .querySelector ('#subcategories')
+    var dom_of_category = function (dom_, dom_of_title, dom_of_subcategories_box,  dom_of_subcategories) {
+    	return function (subcategories, name) {
+        	var _ = dom_ ();
+            dom_of_title (_) .textContent = name;
+            dom_of_subcategories_box (_) .appendChild (dom_of_subcategories (subcategories));
+	        return _;
+	    }
+    }
     
-        return categories;
+    var dom_of_subcategories = function (dom_, dom_of_subcategory) {
+		return function (data) {
+        	var _ = dom_ ();
+	        var order = 0;
+	        data .forEach (function (subcategory) {
+	            _ .appendChild (
+	            	layout_ (
+	            		'x', order ++ * quiz_dx,
+	            		dom_of_subcategory (subcategory)));
+	        })
+	        return _;
+	    }
     }
-    var make_category_dom = function (subcategories, name) {
-        var category = svg .querySelector ('#category[template]') .cloneNode (true);
-            category .removeAttribute ('template');
-            var category_title = category .querySelector ('#title #hint[for=text]');
-                category_title .textContent = name;
-                
-            var items = category .querySelector ('#subcategories');
-                items .insertBefore (make_quizes_dom (subcategories), items .querySelector ('#quiz[template]'));
-
-        next_tick () .then (function () {
-            scroll_interaction ('x') (items);
-        })
-            
-        return category;
+    //dom_: var quiz = svg .querySelector ('[id^="quiz-template-hint"][template]') .cloneNode (true); quiz .removeAttribute ('template');
+    //dom_of_name: quiz .querySelector ('[id^="name-area-hint"]')
+    //dom_of_image: quiz .querySelector ('[id^="icon-area-hint"]');
+    var dom_of_subcategory = function (dom_, dom_of_name, dom_of_image) {
+    	return function (data) {
+	        var name = data [0];
+	        var image = data [1];
+	        var hyphenation = data [2];
+	        
+	        var _ = dom_ ();
+	        	_ .setAttribute ('_name', name);
+	            dom_of_name (_) .textContent = hyphenation;
+	            dom_of_image (_) .querySelector ('img') .setAttribute ('src', image);
+	        return _;
+	    }
     }
-    var make_quizes_dom = function (info) {
-        var subcategories = document .createDocumentFragment ();
-        
-        var order = 0;
-        info .forEach (function (info) {
-            var quiz = make_quiz_dom (info);
-            var _ = quiz .getAttribute ('transform');
-            quiz .setAttribute ('transform', (_  ? _ + ' ' : '' ) + 'translate(' + (order ++ * quiz_dx) + ' 0)')
-            subcategories .insertBefore (quiz, null);
-        })
-        
-        return subcategories;
-    }
-    var make_quiz_dom = function (info) {
-        var name = info [0];
-        var image = info [1];
-        var hyphenation = info [2];
-        
-        var quiz = svg .querySelector ('[id^="quiz-template-hint"][template]') .cloneNode (true);
-            quiz .removeAttribute ('template');
-            var quiz_name = quiz .querySelector ('[id^="name-area-hint"]');
-                quiz_name .textContent = hyphenation;
-            var quiz_image = quiz .querySelector ('[id^="icon-area-hint"]');
-                quiz_image .querySelector ('img') .setAttribute ('src', image);
-        return quiz;
-    }
+    
+    var create_document_fragment = function () { return document .createDocumentFragment () };
+</script>
+<script>
+	var _nav_interaction_ = function () {
+		return interaction (transition (function (intent, state) {
+			if (intent [0] === 'prepare')
+				return only_ (null);
+			else
+				return reflect (none);
+		}))
+	};
+</script>
+<script>
+	//dom_of_categories_box: items .querySelector ('[id^="category-template-hint"][template]')
+	var _interaction_ = function (dom_of_categories_box, dom_of_categories) {
+		return function (components, unions) {
+	        var back = components .back;
+	        var category_scroll = components .category_scroll;
+	        var categories = components .categories;
+	        
+	        var nav = unions .nav;
+		    
+		    var interactions_of_categories = stream ();
+		    
+		    var extension = interaction (transition (function (intent, license) {
+		    	if (intent [0] === 'update') {
+		    		return function (tenure) {
+			            loader ('Updating with new quizes...');
+			            while (dom_of_categories_box .firstChild) dom_of_categories_box .removeChild (dom_of_categories_box .firstChild);
+			            return inquire (api () .subcategories) .then (function (subcategories) {
+			                dom_of_categories_box .appendChild (dom_of_categories (subcategories));
+			            	interactions_of_categories (
+			            		categories (dom_of_categories_box));
+				            loader .stop ();
+				            tenure (subcategories);
+				            tenure .end (true);
+				        })
+		    		}
+		    	}
+		    	else
+		    		return decline_ (intent);
+		    }));
+	             
+			back .thru (tap, function () {
+				nav .state (['back']);
+			})    
+	
+		    nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function (x) {
+		    	extension .intent (['update']);
+		    })
+		    
+		    return interaction_product ({
+		    	_: extension,
+		    	category_scroll: category_scroll,
+		    	categories: interaction_flatten (interactions_of_categories)
+		    })
+		}
+	}
 </script>

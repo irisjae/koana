@@ -251,4 +251,15 @@ var controlled_on = function (_) {
 				})) [0]
 		}
 	})
-}
+};
+
+var layout_ = function (direction, amount, dom) {
+    var _ = dom .getAttribute ('transform');
+    if (direction === 'x')
+        dom .setAttribute ('transform', (_  ? _ + ' ' : '' ) + 'translate(' + (+amount) + ' 0)')
+    else if (direction === 'y')
+        dom .setAttribute ('transform', (_  ? _ + ' ' : '' ) + 'translate(0 ' + (+amount) + ')')
+    else
+    	throw new Error ('unknown direction')
+    return dom;
+};

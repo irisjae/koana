@@ -228,7 +228,7 @@ var exemplify = function (instances, processing) {
 	})
 	if (processing && ! processing .apply) processing [1] (x);
 	else if (processing) processing (x);
-	[] .forEach .call (x .querySelectorAll ('[template=""]'), function (y) {
+	[] .forEach .call (x .querySelectorAll ('[example]'), function (y) {
 		y .outerHTML = '';
 	});
 	return x;

@@ -109,7 +109,7 @@
 		var extension = interaction (transition (function (intent, license) {
 			if (intent [0] === 'player') {
 				return function (tenure) {
-					inquire (api () .player, {
+					inquire (api () .player, intent [1] && {
 						token: intent [1] .token
 					}) .then (function () {
 						tenure .end (true);
@@ -144,7 +144,7 @@
 		koder .state 
 			.thru (filter, R .pipe (just_call (nav .intent), R .cond ([[ R .identity, R .propEq (0, 'prepare')]])))
 			.thru (tap, function (x) {
-				extension .intent (['player', x]);
+				extension .intent (['player', x .koder]);
 			})
 			
 		go .thru (tap, function () {
