@@ -1,3 +1,5 @@
+var debug = require ('api/config') .debug;
+
 require ('koa-qs') (new (require ('koa')) ())
 	.use (require ('koa-compress') ())
 	.use (require ('koa-cors') ())
@@ -12,6 +14,8 @@ require ('koa-qs') (new (require ('koa')) ())
 						ctx .body =	{
 										error:	err .message
 									}
+						if (debug)
+							ctx .body .stack = err .stack;
 					});
 	})
 	.use (require ('koa-morgan') ('combined'))

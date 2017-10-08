@@ -15,7 +15,9 @@ var routes = {
     dashboard: '#dashboard',
     dashboard_create: '#dashboard/create',
     categories: '#categories',
-    quiz: '#quiz'
+    quiz: '#quiz',
+    answer: '#answer',
+    excerpt: '#excerpt',
 }
 var _routing = {
     login: {
@@ -43,7 +45,16 @@ var _routing = {
         done: routes .dashboard
     },
     categories: {
-        back: routes .dashboard
+        back: routes .dashboard,
+        subcategory: routes .quiz
+    },
+    quiz: {
+        back: routes .categories,
+        start: routes .answer
+    },
+    answer: {
+        next: routes .answer,
+        done: routes .dashboard
     }
 };
 
@@ -91,7 +102,7 @@ var routing = R .pipe (function (name_wherefrom, role) {
 }))
 
 						
-var user_api = function (user) {
+var user_api = R .memoize (function (user) {
     return R .tap (function (_) {
         var prefix = 'user:' + user .token;
         
@@ -100,7 +111,7 @@ var user_api = function (user) {
 							method: R .always ('POST'),
 							headers: R .pipe (
 							    R .applySpec ({
-    							    user: R .pipe (R .always (stringify (user)), btoa)
+    							    user: R .pipe (R .always (stringify (user)), Base64 .encode)
 								}),
 								R .merge ({
 								    'Content-Type': 'application/json',
@@ -113,7 +124,7 @@ var user_api = function (user) {
     							method: R .always ('POST'),
     							headers: R .pipe (
 								    R .applySpec ({
-        							    user: R .pipe (R .always (stringify (user)), btoa)
+        							    user: R .pipe (R .always (stringify (user)), Base64 .encode)
     								}),
     								R .merge ({
     								    'Content-Type': 'application/json',
@@ -127,7 +138,7 @@ var user_api = function (user) {
     								method: R .always ('GET'),
     								headers:  R .pipe (
         							    R .applySpec ({
-            							    user: R .pipe (R .always (stringify (user)), btoa)
+            							    user: R .pipe (R .always (stringify (user)), Base64 .encode)
         								}),
         								R .merge ({
         								    'Content-Type': 'application/json',
@@ -143,7 +154,7 @@ var user_api = function (user) {
 								method: R .always ('GET'),
 								headers:  R .pipe (
     							    R .applySpec ({
-        							    user: R .pipe (R .always (stringify (user)), btoa)
+        							    user: R .pipe (R .always (stringify (user)), Base64 .encode)
     								}),
     								R .merge ({
     								    'Content-Type': 'application/json',
@@ -160,9 +171,9 @@ var user_api = function (user) {
     	    _ .user .to (undefined);
     	})
     }) (global_api);
-};
+});
 
-var player_api = function (user, player) {
+var player_api = R .memoize (function (user, player) {
     return R .tap (function (_) {
         var prefix = 'user:' + user .token + '/player:' + player .token;
         
@@ -180,33 +191,53 @@ var player_api = function (user, player) {
 								path: R .always (backend_path + '/set/request'),
 								method: R .always ('POST'),
 								headers: R .pipe (
-								    R .converge (R .merge, [
-        							    R .always ({
-            							    user: R .pipe (stringify, btoa) (user),
-            							    player: R .pipe (stringify, btoa) (player)
-        								}),
-    								    R .applySpec ({
-    								        subcategory: R .compose (
-    								            R .pipe (stringify, btoa), just_call (_ .quiz .from)
-								            )
-    							        })
-								    ]),
+								    R .applySpec ({
+								        subcategory: R .compose (
+								            R .pipe (stringify, Base64 .encode), just_call (_ .quiz .from)
+							            )
+							        }),
+    							    R .merge ({
+        							    user: R .pipe (stringify, Base64 .encode) (user),
+        							    player: R .pipe (stringify, Base64 .encode) (player)
+    								}),
     								R .merge ({
     								    'Content-Type': 'application/json',
     								})
 							    ),
 								body: stringify
 							}), cycle_from_network, R .prop ('json')) ();
-        _ .take_set .from .thru (tap, function (x) {
+        _ .take_set .from .thru (filter, no_errors) .thru (tap, function (x) {
+            _ .set .to (x);
+        })
+    	_ .current_set =	cycle_by_translate (R .applySpec ({
+								path: R .always (backend_path + '/set/current'),
+								method: R .always ('GET'),
+								headers: R .pipe (
+    							    R .always ({
+        							    user: R .pipe (stringify, Base64 .encode) (user),
+        							    player: R .pipe (stringify, Base64 .encode) (player)
+    								}),
+    								R .merge ({
+    								    'Content-Type': 'application/json',
+    								})
+							    ),
+								body: stringify
+							}), cycle_from_network, R .prop ('json')) ();
+        _ .current_set .from .thru (filter, no_errors) .thru (tap, function (x) {
             _ .set .to (x);
         })
     	_ .give_set =	cycle_by_translate (R .applySpec ({
 							path: R .always (backend_path + '/set/report'),
 							method: R .always ('POST'),
 							headers: R .pipe (
-							    R .always ({
-    							    user: R .pipe (stringify, btoa) (user),
-    							    player: R .pipe (stringify, btoa) (player)
+							    R .applySpec ({
+							        set: R .compose (
+							            R .pipe (stringify, Base64 .encode), just_call (_ .set .from)
+						            )
+						        }),
+							    R .merge ({
+    							    user: R .pipe (stringify, Base64 .encode) (user),
+    							    player: R .pipe (stringify, Base64 .encode) (player)
 								}),
 								R .merge ({
 								    'Content-Type': 'application/json',
@@ -214,11 +245,33 @@ var player_api = function (user, player) {
 						    ),
 							body: stringify
 						}), cycle_from_network, R .prop ('json')) ();    
-    	_ .give_set .from .thru (tap, function () {
+    	_ .give_set .from .thru (filter, no_errors) .thru (tap, function () {
+    	    _ .set .to (undefined);
+    	})
+    	_ .give_up_set =	cycle_by_translate (R .applySpec ({
+    							path: R .always (backend_path + '/set/relinquish'),
+    							method: R .always ('POST'),
+    							headers: R .pipe (
+								    R .applySpec ({
+								        set: R .compose (
+								            R .pipe (stringify, Base64 .encode), R .pick (['token']), just_call (_ .set .from)
+							            )
+							        }),
+    							    R .merge ({
+        							    user: R .pipe (stringify, Base64 .encode) (user),
+        							    player: R .pipe (stringify, Base64 .encode) (player)
+    								}),
+    								R .merge ({
+    								    'Content-Type': 'application/json',
+    								})
+    						    ),
+    							body: stringify
+    						}), cycle_from_network, R .prop ('json')) ();    
+    	_ .give_up_set .from .thru (filter, no_errors) .thru (tap, function () {
     	    _ .set .to (undefined);
     	})
     }) (user_api (user));
-};
+});
                 
 var global_api =    R .tap (function (_) {
 						_ .user = cycle_persisted ('user') (re_cycle ());

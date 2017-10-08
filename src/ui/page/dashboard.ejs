@@ -163,15 +163,17 @@
 
 		api
 			.thru (map, R .prop ('user')) .thru (filter, R .identity)
-			.thru (map, R .prop ('from')) .thru (switchLatest) .thru (filter, R .not)
+			.thru (map, R .prop ('from')) .thru (dropRepeats) .thru (switchLatest)
+			.thru (filter, R .not)
 			.thru (tap, function () {
 				koder .intent (['data', []]);
 				chances .intent (['chances', 0]);
 			})
 
 		api
-			.thru (map, R .prop ('chances')) .thru (filter, R .identity)
-			.thru (map, R .prop ('from')) .thru (switchLatest) .thru (filter, R .identity)
+			.thru (filter, R .has ('chances')) .thru (map, R .prop ('chances'))
+			.thru (map, R .prop ('from')) .thru (dropRepeats) .thru (switchLatest)
+			.thru (filter, no_errors)
 			.thru (tap, function (x) {
 				chances .intent (['chances', x ._]);
 			});
@@ -211,8 +213,8 @@
 					inquire (api () .chances) .then (function (x) {
 						if (x .error)
 							return Promise .reject (x .error);
-						else
-							chances .intent (['chances', x ._]);
+						//else
+							//chances .intent (['chances', x ._]);
 					})]
 				)
 				.then (function () {

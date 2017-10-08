@@ -263,3 +263,4 @@ var layout_ = function (direction, amount, dom) {
     	throw new Error ('unknown direction')
     return dom;
 };
+var create_document_fragment = function () { return document .createDocumentFragment () };

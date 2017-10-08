@@ -24,11 +24,11 @@ module .exports = function (ctx, next) {
                         .then (function (results) {
                             var now = new Date ();
                             var today = new Date (now .getFullYear (), now .getMonth (), now .getDate ());
-                            var timestamp = today / 1000;
+							var today_timestamp = today / 1000;
                             
-                            var latest_quizes = results .records [0] ._fields [0] .properties .latest_quizes || [];;
+                            var latest_quizes = results .records [0] ._fields [0] .properties .latest_quizes || [];
                             return 6 - latest_quizes .filter (function (date) {
-                                    return date > today;
+                                    return date > today_timestamp;
                             }) .length;
                         })
                         .then (function (_) {

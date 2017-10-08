@@ -37,7 +37,6 @@
 		def = serve (ui);
 	})
 </script>
-
 <script>
 	var _interaction, _nav;
 	ui .interaction (interaction_to_be (promise_of (function (is) {
@@ -123,9 +122,6 @@
 	        return _;
     	}
     }
-    //dom_: var category = svg .querySelector ('#category[template]') .cloneNode (true); category .removeAttribute ('template');
-    //dom_of_title: category .querySelector ('#title #hint[for=text]')
-    //dom_of_subcategories: category .querySelector ('#subcategories')
     var dom_of_category = function (dom_, dom_of_title, dom_of_subcategories_box,  dom_of_subcategories) {
     	return function (subcategories, name) {
         	var _ = dom_ ();
@@ -148,9 +144,6 @@
 	        return _;
 	    }
     }
-    //dom_: var quiz = svg .querySelector ('[id^="quiz-template-hint"][template]') .cloneNode (true); quiz .removeAttribute ('template');
-    //dom_of_name: quiz .querySelector ('[id^="name-area-hint"]')
-    //dom_of_image: quiz .querySelector ('[id^="icon-area-hint"]');
     var dom_of_subcategory = function (dom_, dom_of_name, dom_of_image) {
     	return function (data) {
 	        var name = data [0];
@@ -164,8 +157,6 @@
 	        return _;
 	    }
     }
-    
-    var create_document_fragment = function () { return document .createDocumentFragment () };
 </script>
 <script>
 	var _nav_interaction_ = function () {
@@ -178,7 +169,6 @@
 	};
 </script>
 <script>
-	//dom_of_categories_box: items .querySelector ('[id^="category-template-hint"][template]')
 	var _interaction_ = function (dom_of_categories_box, dom_of_categories) {
 		return function (components, unions) {
 	        var back = components .back;

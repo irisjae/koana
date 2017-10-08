@@ -114,47 +114,47 @@ var restoration =	localforage .keys ()
 											}))
 						})
 						.catch (constant ({}))
-var cycle_persisted =	function (key) {
+var cycle_persisted =	R .memoize (function (key) {
+							var init = restoration
+										.then (R .prop (prefix_for_persistence + key));
+							var persisting =	{
+							                        progress: Promise .resolve (),
+                    							    in: stream (),
+                    							    out: stream ()
+                    							};
+							init
+								.then (function (value) {
+									if (value !== undefined)
+										begins_with (value, persisting .out)
+								})
+                    		persisting .in
+								.thru (tap, function (_val) {
+									persisting .progress = persisting .progress .then (function () {
+										if (_val === undefined)
+											return localforage .removeItem (prefix_for_persistence + key)
+										else
+											return localforage .setItem (prefix_for_persistence + key, _val)
+									})
+									.catch (report)
+									.then (function () {
+									    persisting .out (_val);
+									})
+								});
 							return	as_cycler (function (cycle) {
-										var init = restoration
-													.then (R .prop (prefix_for_persistence + key));
-										var persisting =	cycle .from
-																.thru (map, function (_val) {
-																	return	Promise .resolve (persisting && persisting ())
-																				.then (function () {//log (_val)
-																					/*if (_val === undefined)
-																						return localforage .removeItem (prefix_for_persistence + key)
-																					else*/
-																						return localforage .setItem (prefix_for_persistence + key, _val)
-																				})
-																				.catch (noop)//todo: catch sth
-																				.then (constant (_val))
-																});
-														
 										return	{
 													init: init,
 													from: from (function (x) {
-													    cycle .from .thru (project, x);
-													    init .then (function (_) {
+													    Promise .race (
+													        [init, promise (persisting .out) .then (R .prop ('_'))]
+												        ) .then (function (_) {
 													        _begins_with (_, x);
-													    })
+													    });
+													    cycle .from .thru (tap, persisting .in) .thru (project, x);
 													}),
-            										persisting: persisting,
-													persisted:	stream_pushes (function (push) {
-																init
-																	.then (function (value) {
-																		if (value)
-																			begins_with (value, push)
-																	})
-																persisting
-																	.thru (tap, function (persist) {
-																		persist
-																			.then (push)
-																	})
-															})
+            										persisting: persisting
 												}
 									})
-						}
+						})
 var re_cycle =  function () {
     var x = stream ();
     return {

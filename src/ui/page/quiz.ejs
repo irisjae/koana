@@ -1,0 +1,62 @@
+<script>
+	pre (function () {
+		ui = frame ('quiz');
+
+		def = serve (ui);
+	})
+</script>
+<script>
+	var _interaction, _nav;
+	ui .interaction (interaction_to_be (promise_of (function (is) {
+		_interaction = is;
+	})));
+	ui .nav (interaction_to_be (promise_of (function (is) {
+		_nav = is;
+	})));
+	
+	
+	self .on ('mount', function () {
+		var dom = self .root;
+
+		var nav, nav_interaction = _nav_interaction_ ();
+		_nav (nav_interaction);
+		nav = nav_interaction;
+		
+		var back_dom = dom .querySelector ('#back');
+		var back_stream = stream_from_click_on (back_dom);
+		
+		_interaction (
+		    _interaction_ (
+		        {
+    				back: back_stream
+    			},
+    			{
+    				nav: nav_interaction
+    			})
+		);
+	})
+</script>
+<script>
+	var _nav_interaction_ = function () {
+		return interaction (transition (function (intent, state) {
+			if (intent [0] === 'prepare')
+				return only_ (null);
+			else
+				return reflect (none);
+		}))
+	};
+</script>
+<script>
+	var _interaction_ = function (components, unions) {
+        var back = components .back;
+        
+        var nav = unions .nav;
+	    
+		back .thru (tap, function () {
+			nav .state (['back']);
+		})    
+	    
+	    return interaction_product ({
+	    })
+	}
+</script>
