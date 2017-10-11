@@ -72,7 +72,7 @@
 		var dom_for_name = function (category) { return category .querySelector ('#name #hint[for=text]') };
 		var dom_for_image = function (category) { return category .querySelector ('#icon #hint[for=image]') };
 		
-		var all_subcategory = function (dom) { return dom .querySelectorAll ('#subcategories[scroll]'); }
+		var all_subcategory = function (dom) { return dom .querySelectorAll ('#quiz:not([template])'); }
 		var all_subcategory_scroll_box = function (dom) { return dom .querySelectorAll ('#subcategories[scroll]'); }
 		
 		//detect when svg is properly loaded
@@ -152,7 +152,7 @@
 	        
 	        var _ = dom_ ();
 	        	_ .setAttribute ('_name', name);
-	            dom_of_name (_) .textContent = hyphenation;
+	            dom_of_name (_) .querySelector ('[text]') .textContent = hyphenation;
 	            dom_of_image (_) .querySelector ('img') .setAttribute ('src', image);
 	        return _;
 	    }

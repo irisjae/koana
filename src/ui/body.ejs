@@ -91,14 +91,12 @@
 													id: page_label
 												})),
 											R .pipe (
-												R .prop (0),
 												R .applySpec ({
-													intent: R .identity
+													intent: R .head
 												})),
 											R .pipe (
-												R .prop (1),
 												R .applySpec ({
-													args: R .identity
+													args: R .tail
 												}))
 										])]),
 									just_call (extension .state)
@@ -114,7 +112,7 @@
 				}
 				
 				if (nav_of (curr)) {
-					nav_of (curr) .intent (['prepare', curr .intent, curr .args]);
+					nav_of (curr) .intent (['prepare', curr .intent] .concat (curr .args || []));
 				}
 				if (! license ()/* || curr .id === license () [1] .id*/) {
 					if (last_state !== curr) {

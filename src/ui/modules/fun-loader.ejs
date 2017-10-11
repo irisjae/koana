@@ -1,0 +1,15 @@
+<script>
+	pre (function () {
+		def = serve ({cloneNode: R .always ({ outerHTML: fun_loader_ify ()})})
+	})
+</script>
+<script>
+	self .on ('mount', function () {
+		var dom = self .root;
+		
+		var loader = dom .querySelector ('circle[loader]');
+		var loads = dom .querySelectorAll ('circle');
+		
+		self ._interaction = interaction_fun_loader (loader, loads);
+	})
+</script>

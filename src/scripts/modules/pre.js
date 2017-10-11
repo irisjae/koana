@@ -5,12 +5,15 @@ var frame = function (x) {
 	//console .log (x .outerHTML)
 	return x;
 }
-var serve = function () {
+var serve = function (x) {
 	return '<' + _name + '>' + '\n' +
 		indent (
-			[] .map .call (arguments, function (x) {
-				return x .outerHTML
-			}) .join ('\n')
+			[x .cloneNode (true)] .map (R .tap (function (x) {
+				//when debugging
+				/*[] .forEach .call (x .querySelectorAll ('[example]'), function (_) {
+					_ .outerHTML = '';
+				})*/
+			})) [0] .outerHTML
 		) + '\n' +
 	'</' + _name + '>';
 }
@@ -143,6 +146,66 @@ var image_ify = function (hint, src) {
 		'</positioner>' +
 	'</foreignObject>';
 }
+var fun_loader_ify = function (hint) {
+	if (hint) {
+		var use_hint = hint .querySelector ('use');
+		var bounding_box = bound_rectangle (use_hint)
+		
+		var match = use_hint .getAttribute ('transform') .match (/translate\((-?\d+(?:\.\d+)?) (-?\d+(?:\.\d+)?)\)/);
+		var x = match [1];
+		var y = match [2];
+		
+		return '<svg viewBox="-20 -20 140 140" ' +
+				[] .map .call (hint .attributes, function (attr) {
+					return attr .nodeName + '="' + attr .nodeValue + '"'
+				}) .join (' ') + ' ' +
+				'x="' + x + '" ' +
+				'y="' + y + '" ' +
+				'width="' + (bounding_box .x_max - bounding_box .x_min) + '" ' +
+				'height="' + (bounding_box .y_max - bounding_box .y_min) + '" ' +
+			'>' +
+				'<g filter="url(#968cf0c5-f88b-458d-afae-646d01b91ab9)" >' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(0 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(45 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(90 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(135 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(180 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(225 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(270 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(315 50 50)" />' +
+					'<circle loader cx="50" cy="0" r="10" transform="" />' +
+				'</g>' +
+				'<defs>' +
+				    '<filter id="968cf0c5-f88b-458d-afae-646d01b91ab9">' +
+						'<feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />' +
+						'<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" result="goo" />' +
+						'<feBlend in2="goo" in="SourceGraphic" result="mix" />' +
+				    '</filter>' +
+				'</defs>' +
+			'</svg>'
+	}
+	else 
+		return '<svg viewBox="-20 -20 140 140">' +
+				'<g filter="url(#968cf0c5-f88b-458d-afae-646d01b91ab9)" >' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(0 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(45 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(90 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(135 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(180 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(225 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(270 50 50)" />' +
+					'<circle cx="50" cy="0" r="10" transform="rotate(315 50 50)" />' +
+					'<circle loader cx="50" cy="0" r="10" transform="" />' +
+				'</g>' +
+				'<defs>' +
+				    '<filter id="968cf0c5-f88b-458d-afae-646d01b91ab9">' +
+						'<feGaussianBlur in="SourceGraphic" result="blur" stdDeviation="10" />' +
+						'<feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 21 -7" result="goo" />' +
+						'<feBlend in2="goo" in="SourceGraphic" result="mix" />' +
+				    '</filter>' +
+				'</defs>' +
+			'</svg>'
+}
 var fulfill_scroll = function (scroll) {
 	var hinted = scroll .parentElement;
 	
@@ -228,9 +291,9 @@ var exemplify = function (instances, processing) {
 	})
 	if (processing && ! processing .apply) processing [1] (x);
 	else if (processing) processing (x);
-	[] .forEach .call (x .querySelectorAll ('[example]'), function (y) {
+	/*[] .forEach .call (x .querySelectorAll ('[example]'), function (y) {
 		y .outerHTML = '';
-	});
+	});*/
 	return x;
 }
 

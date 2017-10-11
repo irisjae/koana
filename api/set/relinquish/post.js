@@ -5,7 +5,6 @@ var detokenizer = require ('api/detokenizer');
 module .exports = function (ctx, next) {
     var user = { id: detokenizer (decode (ctx .request .headers .user) .token) };
     var player = { id: detokenizer (decode (ctx .request .headers .player) .token) };
-    var set_ = { id: detokenizer (decode (ctx .request .headers .set) .token) };
     var latest_quizes;
     return  use_db (function (session) {
                 return  Promise .resolve ()
@@ -42,12 +41,10 @@ module .exports = function (ctx, next) {
                         .then (function () {
                             return  session .run (
                                         'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
-                                        'MATCH (set:Set) WHERE ID (set) = {set} .id ' +
-                                        'MATCH (set)<-[:to]-(:does)-[:_]->(player) ' +
+                                        'MATCH (set:Set)<-[:to]-(:does)-[:_]->(player) ' +
                                         'RETURN set',
                                         {
-                                            player: player,
-                                            set: set_
+                                            player: player
                                         });
                         })
                         .then (function (results) {
@@ -66,13 +63,11 @@ module .exports = function (ctx, next) {
                         .then (function () {
                             return  session .run (
                                         'MATCH (player:Player) WHERE ID (player) = {player} .id ' +
-                                        'MATCH (set:Set) WHERE ID (set) = {set} .id ' +
-                                        'MATCH (set)<-[w:in]-(u:is)-[q:_]->(:Question) ' +
-                                        'MATCH (set)<-[x:to]-(y:does)-[z:_]->(player) ' +
+                                        'MATCH (set:Set)<-[x:to]-(y:does)-[z:_]->(player) ' +
+                                        'OPTIONAL MATCH (set)<-[w:in]-(u:is)-[q:_]->(:Question) ' +
                                         'DELETE set, x, y, z, w, u, q',
                                         {
-                                            player: player,
-                                            set: set_
+                                            player: player
                                         });
                         })
                         .then (function (questions) {

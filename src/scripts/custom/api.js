@@ -21,24 +21,26 @@ var routes = {
 }
 var _routing = {
     login: {
-        logged_in: routes .dashboard,
-        need_account: routes .make_account
+        need_account: routes .make_account,
+        
+        logged_in: routes .dashboard
     },
     logout: {
         logged_out: routes .login
     },
     make_account: {
-        logged_in: routes .dashboard,
-        back: routes .login
+        back: routes .login,
+        
+        logged_in: routes .dashboard
     },
     dashboard: {
-        unauthorized: routes .login,
-        first_player: routes .dashboard_create,
-        
         go: routes .categories,
         add: routes .dashboard_create,
         profile: routes .profile,
-        map: routes .map
+        map: routes .map,
+        
+        unauthorized: routes .login,
+        first_player: routes .dashboard_create
     },
     dashboard_create: {
         back: routes .dashboard,
@@ -50,7 +52,9 @@ var _routing = {
     },
     quiz: {
         back: routes .categories,
-        start: routes .answer
+        start: routes .answer,
+        
+        unsolicited: routes .dashboard
     },
     answer: {
         next: routes .answer,
@@ -252,12 +256,7 @@ var player_api = R .memoize (function (user, player) {
     							path: R .always (backend_path + '/set/relinquish'),
     							method: R .always ('POST'),
     							headers: R .pipe (
-								    R .applySpec ({
-								        set: R .compose (
-								            R .pipe (stringify, Base64 .encode), R .pick (['token']), just_call (_ .set .from)
-							            )
-							        }),
-    							    R .merge ({
+    							    R .always ({
         							    user: R .pipe (stringify, Base64 .encode) (user),
         							    player: R .pipe (stringify, Base64 .encode) (player)
     								}),
