@@ -74,7 +74,7 @@
 									having (nav_data .params) ({
 										parent: self
 									})) [0]);
-					nav_of (curr) .state
+					nav_of (curr) && nav_of (curr) .state
 						.thru (dropRepeats)
 						.thru (filter, R .identity)
 						.thru (tap, 

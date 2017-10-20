@@ -1,6 +1,6 @@
 <script>
 	pre (function () {
-		ui = frame ('quiz');
+		var ui = frame ('quiz');
 
 		[] .forEach .call (ui .querySelectorAll ('#hint[for=fun-loader]'), function (_) {
 			_ .outerHTML = fun_loader_ify (_);
@@ -216,7 +216,7 @@
             }
             else if (intent [0] === 'reset') {
                 return function (tenure) {
-                    wait (1000 * Math .max (2 - loading .time (), 0)) .then (function () {
+                    wait (1000 * Math .max (4 - loading .time (), 0)) .then (function () {
                         loading .pause ();
                         reseting .play (0);
                         loaded_dom .style .visibility = '';

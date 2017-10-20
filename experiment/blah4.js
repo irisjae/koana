@@ -1,33 +1,33 @@
 var names_from_location_age = {
     'Cyberport': {
-        'ALL AGE (5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)'],
-        'KIDS AGE (5-7)': ['Computational Thinking (Age 5-7)'],
-        'JUNIOR AGE (7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
-        'TEENS AGE (11-15)': ['KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)']
+        'ALL COURSES (AGE 5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)'],
+        'KIDS (AGE 5-7)': ['Computational Thinking (Age 5-7)'],
+        'JUNIOR (AGE 7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
+        'TEENS (AGE 11-15)': ['KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)']
     },
     'Lai Chi Kok': {
-        'ALL AGE (5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)'],
-        'KIDS AGE (5-7)': ['Computational Thinking (Age 5-7)'],
-        'JUNIOR AGE (7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
-        'TEENS AGE (11-15)': ['KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)']
+        'ALL COURSES (AGE 5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)'],
+        'KIDS (AGE 5-7)': ['Computational Thinking (Age 5-7)'],
+        'JUNIOR (AGE 7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
+        'TEENS (AGE 11-15)': ['KK Coder : Foundation (Age 11-15)', 'KK Coder : Application (Age 11-15)' ,'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)', 'KK Coder: Certification (Age 11+)']
     },
     'Kwun Tong': {
-        'ALL AGE (5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
-        'KIDS AGE (5-7)': ['Computational Thinking (Age 5-7)'],
-        'JUNIOR AGE (7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
-        'TEENS AGE (11-15)': ['KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)']
+        'ALL COURSES (AGE 5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
+        'KIDS (AGE 5-7)': ['Computational Thinking (Age 5-7)'],
+        'JUNIOR (AGE 7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)'],
+        'TEENS (AGE 11-15)': ['KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)', 'Robotics (Age 7-15)']
     },
     'Science Park': {
-        'ALL AGE (5-15)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)'],
-        'KIDS AGE (5-7)': [],
-        'JUNIOR AGE (7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)'],
-        'TEENS AGE (11-15)': ['KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)']
+        'ALL COURSES (AGE 5-15)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)'],
+        'KIDS (AGE 5-7)': [],
+        'JUNIOR (AGE 7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)'],
+        'TEENS (AGE 11-15)': ['KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)']
     },
     'Tin Hau': {
-        'ALL AGE (5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)'],
-        'KIDS AGE (5-7)': ['Computational Thinking (Age 5-7)'],
-        'JUNIOR AGE (7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)'],
-        'TEENS AGE (11-15)': ['KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)']
+        'ALL COURSES (AGE 5-15)': ['Computational Thinking (Age 5-7)', 'Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)'],
+        'KIDS (AGE 5-7)': ['Computational Thinking (Age 5-7)'],
+        'JUNIOR (AGE 7-11)': ['Coding for Math (Age 7-11)' , 'KK Coder : Foundation (Age 7-11)', 'Minecraft Coding (Age 7-15)'],
+        'TEENS (AGE 11-15)': ['KK Coder : Foundation (Age 11-15)','Minecraft Coding (Age 7-15)']
     }
 };
 document .addEventListener ('DOMContentLoaded', function () {
@@ -38,7 +38,7 @@ document .addEventListener ('DOMContentLoaded', function () {
     
     var decks = {};
     decks .location = localStorage .getItem ('kk-summer-daily-location') || 'Cyberport';
-    decks .age = localStorage .getItem ('kk-summer-daily-age') || 'ALL AGE (5-15)';
+    decks .age = localStorage .getItem ('kk-summer-daily-age') || 'ALL COURSES (AGE 5-15)';
     
     var template_init = 'Cyberport';
     var template_nodes = [];
@@ -290,6 +290,17 @@ document .addEventListener ('DOMContentLoaded', function () {
                     button .classList .remove ('ui-tabs-active')
             })
         });
+        
+    if (window .location .hash) {
+        update_templates = decks .location;
+    	decks .location = 'Cyberport';
+    	decks .age = 'ALL COURSES (AGE 5-15)';
+    	update_ui ();
+    	var anchor = document .querySelector (window .location .hash);
+    	if (anchor) {
+    		setTimeout (function () {anchor .scrollIntoView (); window .scrollBy (0, -100);}, 500);
+    	}
+    }
         
     window .decks_scope = function () {};
 }, false);

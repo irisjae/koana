@@ -28,6 +28,17 @@
 		var nav_interaction = _nav_interaction_ ();
 		_nav (nav_interaction);
 		
+		var step_dom = [] .slice .call (dom .querySelectorAll ('[step]'));
+	    var step_cases = [step_dom] .map (R .pipe (
+	        R .chain (function (node) {
+	            return node .getAttribute ('step') .split (',') .map (function (x) {
+	                return [node, x]
+	            });
+	        }),
+	        R .groupBy (R .prop (1)),
+	        R .map (R .map (R .prop (0)))
+	    )) [0];
+		
 		//TODO: general rule for getting isolated fragments of stepped dom
 		dom = _dom .querySelector ('#dialog[step="1"]');
 
@@ -91,7 +102,7 @@
 		_interaction (interaction_key_sum (
 			_interaction_ (
 				{
-					step: interaction_step (dom),
+					step: interaction_case (step_cases),
 					1: _interaction_of_step_ [1] ({
 						back: back_stream,
 						done: done_stream,

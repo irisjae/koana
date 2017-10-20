@@ -113,7 +113,10 @@ var restoration =	localforage .keys ()
 												return [ cache_label, localforage .getItem (cache_label) ]
 											}))
 						})
-						.catch (constant ({}))
+						.catch (R .pipe (
+						    function (x) {setTimeout (function () { throw x }, 0)},
+						    constant ({}))
+					    )
 var cycle_persisted =	R .memoize (function (key) {
 							var init = restoration
 										.then (R .prop (prefix_for_persistence + key));
