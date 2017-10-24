@@ -1,15 +1,19 @@
 <script>
 	pre (function () {
-		var pages =	files ('.ejs') (tags_src)
+		var pages_src = require ('./config') .paths .pages .src;
+		
+		//console .log (files ('.ejs') (pages_src));
+		
+		var pages =	files ('.ejs') (pages_src)
 						.map (function (tag_path) {
-							var tag_relative_path = tag_path .slice (tags_src .length + 1);
+							var tag_relative_path = tag_path .slice (pages_src .length + 1);
 							var tag_name =	tag_relative_path
 												.split ('/') .join ('-')
 												.split ('.') [0];
-							if (tag_name .startsWith ('page-'))
-								return tag_name .slice ('page-' .length)
+							return tag_name
 						})
 						.filter (R .identity);
+		//console .log (pages);
 		scripts .unshift (
 			`var all_pages = ${JSON .stringify (pages)};`
 		);
@@ -29,10 +33,14 @@
 							return path .slice (path .indexOf ('#') + 1, path .indexOf ('/#') === -1 ? undefined : path .indexOf ('/#'))
 						}
 	window .page_exists =	function (page_name) {
-								return all_pages .indexOf (page_name .split ('/') .join ('-')) !== -1;
+								page_name = page_name .split ('/') .join ('-');
+								return uis [page_name] || all_pages .indexOf (page_name) !== -1;
 							};
 
 
+	var ui_ = function (page_name) {
+		return (window .uis || {}) [replace_all ('/', '-') (trim_trailing_slash (page_name))]
+	};
 	var tag_label =	function (page_name) {
 						return 'page-' + replace_all ('/', '-') (trim_trailing_slash (page_name));
 					};
@@ -66,14 +74,20 @@
 					curr = retaining (nav_data) (Object .getPrototypeOf (curr))
 				}
 				else {
-					var _tag_label = tag_label (nav_data .name);
-					curr = 	retaining (nav_data) (
-								riot .mount (
-									document .createElement (_tag_label),
-									_tag_label,
-									having (nav_data .params) ({
-										parent: self
-									})) [0]);
+					if (ui_ (nav_data .name)) {
+						var nav = interaction (noop);
+						curr = retaining (nav_data) (R .assoc ('nav', nav) (ui_ (nav_data .name) ({}, { nav: nav })))
+					}
+					else {
+						var _tag_label = tag_label (nav_data .name);
+						curr = 	retaining (nav_data) (
+									riot .mount (
+										document .createElement (_tag_label),
+										_tag_label,
+										having (nav_data .params) ({
+											parent: self
+										})) [0]);
+					}
 					nav_of (curr) && nav_of (curr) .state
 						.thru (dropRepeats)
 						.thru (filter, R .identity)
@@ -123,12 +137,12 @@
 						else
 							silent_replace_hash (curr .id);
 						
-						self .root .insertBefore (curr .root, self .root .firstElementChild);
+						self .root .insertBefore (curr .state && curr .state () .dom || curr .root, self .root .firstElementChild);
 						if (last_state) {
-							self .root .removeChild (last_state .root);
+							self .root .removeChild (last_state .state && last_state .state () .dom || last_state .root);
 						}
 						
-						log ('mounted page time ' + (new Date () - _time) + 'ms', curr);	
+						log ('render page time ' + (new Date () - _time) + 'ms', curr);	
 					}
 					var last_loaded = curr;
 				}
@@ -177,7 +191,9 @@
 		params: page_params,
 		id: page_label
 	}))
+	//.thru (tap, _debugger)
 	.thru (filter, R .pipe (R .prop ('name'), page_exists))
+	//.thru (tap, _debugger)
 	.thru (tap,
 		R .converge (extension .intent,
 			[R .juxt (
@@ -199,7 +215,14 @@
 		interaction_product ({
 			_: extension
 		}),
-		interaction_flatten (page_cache .thru (map, R .map (R .prop ('interaction'))) .thru (map, interaction_product))
+		interaction_flatten (
+			page_cache /*.thru (tap, log) .thru (tap, _debugger)*/ .thru (map,  
+				R .map (
+					R .cond ([
+						[R .hasIn ('state'), R .identity],
+						[R .T, R .prop ('interaction')]
+					])
+				)) .thru (map, interaction_product))
 	)
 </script>
 <script>

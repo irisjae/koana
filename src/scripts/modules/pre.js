@@ -1,21 +1,28 @@
+var path = require ('path');
+var frames_src = require ('./config') .paths .frames .src;
+var file = require ('./util') .file;
+
+var time = require ('./util') .time;
+
+var frame_string = function (_) {
+	return file (path .join (frames_src, _ + '.svg'));
+}					
+
+
 var frame = function (x) {
-	x = frag (frame_string (x)) .children [0];
+	x = /*time ('parse ' + x, () =>*/ frag (frame_string (x))/*)*/ .children [0];
 	recitify (x);
 	//uniqify (x);
 	//console .log (x .outerHTML)
 	return x;
 }
 var serve = function (x) {
-	return '<' + _name + '>' + '\n' +
-		indent (
-			[x .cloneNode (true)] .map (R .tap (function (x) {
-				//when debugging
-				/*[] .forEach .call (x .querySelectorAll ('[example]'), function (_) {
-					_ .outerHTML = '';
-				})*/
-			})) [0] .outerHTML
-		) + '\n' +
-	'</' + _name + '>';
+	return [x .cloneNode (true)] .map (R .tap (function (x) {
+		//when debugging
+		/*[] .forEach .call (x .querySelectorAll ('[example]'), function (_) {
+			_ .outerHTML = '';
+		})*/
+	})) [0];
 }
 var frag = function (html) {
 	var container = document .createElement ('template');

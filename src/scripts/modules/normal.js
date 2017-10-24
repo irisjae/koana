@@ -82,38 +82,6 @@ var wait =	function (ms, val) {
 							setTimeout (resolve .bind (null, val), ms);
 						});
 			};
-var value =	(function () {
-				var trim_first_dot =	function (string) {//debugger;
-																string = string + '';
-																if (string [0] === '.')
-																	return string .slice (1);
-																else
-																	return string;
-															};
-			
-				return	function (/*property_name*/) {
-							var property_names = [] .slice .call (arguments);
-							return	function (object) {
-										var value = object;
-										
-										for (var property_name of property_names) {
-											if (! property_name)
-												continue;
-											property_name = trim_first_dot (property_name) .replace (/\s/g, '');
-											if (! property_name)
-												continue;
-												
-											for (var property_bit of property_name .split ('.') .filter (function (truthy) { return truthy; })) {
-												if (! value)
-													return value;
-												value = value [property_bit];
-											}
-										}
-										
-										return value;
-									};
-						};
-			}) ();
 			
 var noop = function () {};
 var json_equal =	function (a, b) {
@@ -218,14 +186,6 @@ var promise_of = function (x) {
 }*/
 
 
-var mapper =	function (x) {
-					return	{
-								unwrapped:	x,
-								map: function (fn) {
-									return mapper (fn (x));
-								}
-							}
-				}
 var just_call = function (fn) {
 	return function () { return fn () }
 }
@@ -264,3 +224,41 @@ var layout_ = function (direction, amount, dom) {
     return dom;
 };
 var create_document_fragment = function () { return document .createDocumentFragment () };
+var frag = function (html) {
+	var container = document .createElement ('template');
+	container .innerHTML = html;
+	return container .content;
+}; 
+
+var filterObjIndexed = R .curry (function (fn, obj) {
+	var x = {};
+	R .forEachObjIndexed (function (value, key) {
+		if (fn (value, key))
+			x [key] = value;
+	}) (obj);
+	return x;
+});
+
+//TODO: expand to include queryselectorall
+var dom_tree = function (selector_tree, root) {
+	if (R .is (String) (selector_tree)) {
+		return root .querySelector (selector_tree)
+	}
+	else {
+		root = selector_tree ._ ? selector_tree ._ instanceof Node ? selector_tree ._ : root .querySelector (selector_tree ._) : root;
+		return [selector_tree]
+			.map (filterObjIndexed (function (x, key) {
+				return key !== '_'
+			}))
+			.map (R .map (function (subtree) {
+				return dom_tree (subtree, root);
+			}))
+			.map (function (x) {
+				if (selector_tree ._)
+					return R .assoc ('_') (root) (x)
+				else
+					return x;
+			})
+		[0]
+	}
+};

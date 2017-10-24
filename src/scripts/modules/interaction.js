@@ -1,4 +1,4 @@
-var interaction =	function (coupling) {
+var interaction = function (coupling) {
 	var intent = stream ();
 	var state = stream ();
 	

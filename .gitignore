@@ -8,5 +8,8 @@
 # cordova platforms
 /platforms/*/
 
+# dev database logs
+/database/dev/logs/
+
 # test database
 /database/test/
