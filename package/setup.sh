@@ -59,11 +59,11 @@ fi
 echo
 echo
 echo checking cordova...
-if npm list -g cordova; then
+if npm list -g cordova@7.0.1; then
     echo cordova already installed
 else
     echo trying install cordova...
-    npm install -g cordova
+    npm install -g cordova@7.0.1
     if cordova platform | grep -z "Installed.*browser.*Available"; then
         echo platform browser installed, removing outdated...
         cordova platform rm browser
