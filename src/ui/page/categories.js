@@ -122,30 +122,34 @@
 		    		return decline_ (intent);
 		    }));
 	             
-			back .thru (tap, function () {
-				nav .state (['back']);
-			})    
+			[back]
+				.forEach (tap (function () {
+					nav .state (['back']);
+				})); 
 	
-		    nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function (x) {
-		    	extension .intent (['update']);
-		    })
+		    [nav .intent]
+			    .map (filter (function (x) {
+					return R .head (x) === 'prepare'
+			    }))
+			    .forEach (tap (function (x) {
+			    	extension .intent (['update']);
+			    }));
 		    
-		    return interaction_product ({
+		    return {
 		    	_: extension,
 		    	category_scroll: category_scroll,
-		    	categories: interaction_flatten (interactions_of_categories),
+		    	categories: interactions_of_categories,
 		    	dom: {
 		    		intent: none,
 		    		state: stream (dom)
 		    	}
-		    })
+		    }
 		}
 	}
 
 	window .uis = R .assoc (
 		'categories', function (components, unions) {
 			var nav = unions .nav;
-			
 			
 			var dom = ui_info .dom .cloneNode (true);
 		
@@ -174,7 +178,10 @@
 			var svg = dom;
 		    svg .addEventListener ('load', (x)=>console.log(x));
 			
-			return interaction_ (
+			return R .merge (R .__, {
+				nav: nav,
+				dom: dom
+			}) (interaction_ (
 				category_box_dom,
 				dom_of_categories (create_document_fragment,
 					dom_of_category (dom_for_category,
@@ -184,24 +191,26 @@
 							dom_of_subcategory (dom_for_subcategory,
 								dom_for_name,
 								dom_for_image))))
-			) (	{
+			) (
+				{
 					back: back_stream,
 					category_scroll: category_scroll_interaction,
 					categories: R .converge (function (subcategory_scroll_boxes, subcategories) {
 						[] .forEach .call (subcategories, function (_) {
 							var name = _ .getAttribute ('_name');
-							stream_from_click_on (_) .thru (tap, function () {
-								nav .state (['subcategory', name]);
-							})
+							[stream_from_click_on (_)]
+								.forEach (tap (function () {
+									nav .state (['subcategory', name]);
+								}));
 						});
-						return interaction_product_array ([] .map .call (subcategory_scroll_boxes, scroll_interaction ('x')))
+						return [] .map .call (subcategory_scroll_boxes, scroll_interaction ('x'))
 					}, [all_subcategory_scroll_box, all_subcategory]),
 					dom: dom
 				},
 				{
 					nav: nav
 				}
-			);
+			));
 		}
 	) (window .uis)	
 } ();

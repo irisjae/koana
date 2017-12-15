@@ -61,102 +61,106 @@
 			}
 		}));
 		
-		koder .state 
-			.thru (filter, R .pipe (just_call (nav .intent), R .cond ([[ R .identity, R .propEq (0, 'prepare')]])))
-			.thru (tap, function (x) {
+		[koder .state]
+			.map (filter (R .pipe (just_call (nav .intent), R .cond ([[ R .identity, R .propEq (0, 'prepare')]]))))
+			.forEach (tap (function (x) {
 				extension .intent (['player', x .koder]);
-			})
+			}));
 			
-		go .thru (tap, function () {
+		[go] .forEach (tap (function () {
 			extension .intent (['go']);
-		})
-		add .thru (tap, function () {
+		}));
+		[add] .forEach (tap (function () {
 			extension .intent (['add']);
-		})
-		profile .thru (tap, function () {
+		}));
+		[profile] .forEach (tap (function () {
 			extension .intent (['profile']);
-		})
-		courses .thru (tap, function () {
+		}));
+		[courses] .forEach (tap (function () {
 			extension .intent (['courses']);
-		})
+		}));
 
 
-		api
-			.thru (map, R .prop ('user')) .thru (filter, R .identity)
-			.thru (map, R .prop ('from')) .thru (dropRepeats) .thru (switchLatest)
-			.thru (filter, R .not)
-			.thru (tap, function () {
+		[api]
+			.map (map (R .prop ('user'))) .map (filter (R .identity))
+			.map (map (R .prop ('from'))) .map (dropRepeats) .map (switchLatest)
+			.map (filter (R .not))
+			.forEach (tap (function () {
 				koder .intent (['data', []]);
 				chances .intent (['chances', 0]);
-			})
+			}));
 
-		api
-			.thru (filter, R .has ('chances')) .thru (map, R .prop ('chances'))
-			.thru (map, R .prop ('from')) .thru (dropRepeats) .thru (switchLatest)
-			.thru (filter, no_errors)
-			.thru (tap, function (x) {
+		[api]
+			.map (filter (R .has ('chances'))) .map (map (R .prop ('chances')))
+			.map (map (R .prop ('from'))) .map (dropRepeats) .map (switchLatest)
+			.map (filter (no_errors))
+			.forEach (tap (function (x) {
 				chances .intent (['chances', x ._]);
-			});
-		nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function () {
-			loader ();
-			if (! api () .user .from ()) {
-				report ('not logged in trying to access dashboard');
-				loader .stop ();
-				nav .state (['unauthorized']);
-			}
-			else {
-				Promise .all (
-					[inquire (api () .all_players) .then (function (x) {
-						if (x .error)
-							return Promise .reject (x .error);
-						else if (! x ._ .length) {
-							return Promise .reject ('no players');
-						}
-						else {
-							var choices =	[config .koder .choices]
-												.map (R .map (
-														R .juxt (
-															[R .prop ('name'), R .identity])))
-												.map (R .fromPairs)
-													[0];
-							koder .intent (['data',
-								x ._ .map (
-									R .converge (R .merge, 
-										[
-											R .pipe (
-												R .prop ('koder_archetype'),
-												R .flip (R .prop) (choices)),
-											R .identity
-										]))]);
-						}
-					}),
-					inquire (api () .chances) .then (function (x) {
-						if (x .error)
-							return Promise .reject (x .error);
-						//else
-							//chances .intent (['chances', x ._]);
-					})]
-				)
-				.then (function () {
+			}));
+		[nav .intent]
+			.map (filter (function (x) {
+				return R .head (x) === 'prepare'
+			}))
+			.forEach (tap (function () {
+				loader ();
+				if (! api () .user .from ()) {
+					report ('not logged in trying to access dashboard');
 					loader .stop ();
-				})
-				.catch (function (e) {
-					loader .stop ();
-					if (e === 'no players')
-						nav .state (['first_player']);
-					else
-						toast ('There was a problem connecting to the server')
-				})
-				
-			}
-		});
+					nav .state (['unauthorized']);
+				}
+				else {
+					Promise .all (
+						[inquire (api () .all_players) .then (function (x) {
+							if (x .error)
+								return Promise .reject (x .error);
+							else if (! x ._ .length) {
+								return Promise .reject ('no players');
+							}
+							else {
+								var choices =	[config .koder .choices]
+													.map (R .map (
+															R .juxt (
+																[R .prop ('name'), R .identity])))
+													.map (R .fromPairs)
+														[0];
+								koder .intent (['data',
+									x ._ .map (
+										R .converge (R .merge, 
+											[
+												R .pipe (
+													R .prop ('koder_archetype'),
+													R .flip (R .prop) (choices)),
+												R .identity
+											]))]);
+							}
+						}),
+						inquire (api () .chances) .then (function (x) {
+							if (x .error)
+								return Promise .reject (x .error);
+							//else
+								//chances .intent (['chances', x ._]);
+						})]
+					)
+					.then (function () {
+						loader .stop ();
+					})
+					.catch (function (e) {
+						loader .stop ();
+						if (e === 'no players')
+							nav .state (['first_player']);
+						else
+							toast ('There was a problem connecting to the server')
+					})
+					
+				}
+			}));
 		
-		return interaction_product ({
+		return {
 			_: extension,
 
 			koder: koder,
 			chances: chances
-		})
+		}
 	}
 
 
@@ -228,28 +232,18 @@
 			
 			var chances_interaction = interaction_chances (chances_dom);
 	
-			return interaction_key_sum (
-				interaction_ (
-					{
-						go: go_stream,
-						add: add_stream,
-						profile: profile_stream,
-						courses: courses_stream,
-						
-						koder: koder_interaction,
-						chances: chances_interaction
-					},
-					{
-						nav: nav
-					}),
-				interaction_product ({
-					nav: nav,
-					dom: {
-						intent: none,
-						state: stream (dom)
-					}
-				})
-			);
+			return R .merge (R .__, {
+				nav: nav,
+				dom: dom 
+			}) (interaction_ ({
+				go: go_stream,
+				add: add_stream,
+				profile: profile_stream,
+				courses: courses_stream,
+				
+				koder: koder_interaction,
+				chances: chances_interaction
+			}, { nav: nav }));
 		}
 	) (window .uis);
 } ();

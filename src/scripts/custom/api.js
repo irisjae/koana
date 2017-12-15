@@ -1,9 +1,3 @@
-/*
-	global stateful,
-	global stringify,
-	global R
-*/
-
 var frontend_path = window .location .protocol + '//briansark-mumenrider.c9users.io';
 var backend_path = window .location .protocol + '//briansark-mumenrider.c9users.io/api';	
 
@@ -81,29 +75,32 @@ var api = stream ();
 var promised_api = promise (api);
 
 var no_errors = R .cond ([
-                    [ R .compose (R .not, R .is (Object)), R .F ],
-                    [ R .T, R .pipe (R .prop ('error'), R .not) ]
+                    [ R .compose (R .not, R .is (Object)), 
+                    	R .F 
+                	],
+                    [ R .T,
+                    	R .compose (R .not, R .prop ('error'))
+                	]
                 ]);
 
 var logs = stream ();
-
-var __routing = R .pipe (
-    R .map (function (x) {
-        return x .slice (1)
-    }),
-    R .invert,
-    R .map (
-        R .pipe (
-            R .map (R .flip (R .prop) (_routing)),
-            R .mergeAll)
-    )
-) (routes);
-var routing = R .pipe (function (name_wherefrom, role) {
-    return __routing [name_wherefrom] [role];
-}, R .tap (function (x) {
-    if (! x || ! page_exists (page_name (x)))
-        throw new Error ('route not found')
-}))
+var __routing = [routes]
+    .map (R .map (window .page_name))
+    .map (R .invert)
+    .map (R .map (
+		R .map (R .prop (R .__, _routing))
+    ))
+    .map (R .map (R .mergeAll))
+[0];
+var routing = R .pipe (
+	function (name_wherefrom, role) {
+	    return __routing [name_wherefrom] [role];
+	}, 
+	R .tap (function (x) {
+	    if (! x || ! window .page_exists (window .page_name (x)))
+	        throw new Error ('route not found')
+	})
+);
 
 						
 var user_api = R .memoize (function (user) {
@@ -170,10 +167,10 @@ var user_api = R .memoize (function (user) {
 						) ();
 	
     	_ .logout = re_cycle ();
-    	_ .logout .from .thru (tap, function () {
+    	[_ .logout .from] .forEach (tap (function () {
     	    _ .player .to (undefined);
     	    _ .user .to (undefined);
-    	})
+    	}))
     }) (global_api);
 });
 
@@ -210,9 +207,9 @@ var player_api = R .memoize (function (user, player) {
 							    ),
 								body: stringify
 							}), cycle_from_network, R .prop ('json')) ();
-        _ .take_set .from .thru (filter, no_errors) .thru (tap, function (x) {
+        [_ .take_set .from] .map (filter (no_errors)) .forEach (tap (function (x) {
             _ .set .to (x);
-        })
+        }))
     	_ .current_set =	cycle_by_translate (R .applySpec ({
 								path: R .always (backend_path + '/set/current'),
 								method: R .always ('GET'),
@@ -227,9 +224,9 @@ var player_api = R .memoize (function (user, player) {
 							    ),
 								body: stringify
 							}), cycle_from_network, R .prop ('json')) ();
-        _ .current_set .from .thru (filter, no_errors) .thru (tap, function (x) {
+        [_ .current_set .from] .map (filter (no_errors)) .forEach (tap (function (x) {
             _ .set .to (x);
-        })
+        }))
     	_ .give_set =	cycle_by_translate (R .applySpec ({
 							path: R .always (backend_path + '/set/report'),
 							method: R .always ('POST'),
@@ -249,9 +246,9 @@ var player_api = R .memoize (function (user, player) {
 						    ),
 							body: stringify
 						}), cycle_from_network, R .prop ('json')) ();    
-    	_ .give_set .from .thru (filter, no_errors) .thru (tap, function () {
+    	[_ .give_set .from] .map (filter (no_errors)) .forEach (tap (function () {
     	    _ .set .to (undefined);
-    	})
+    	}));
     	_ .give_up_set =	cycle_by_translate (R .applySpec ({
     							path: R .always (backend_path + '/set/relinquish'),
     							method: R .always ('POST'),
@@ -266,9 +263,9 @@ var player_api = R .memoize (function (user, player) {
     						    ),
     							body: stringify
     						}), cycle_from_network, R .prop ('json')) ();    
-    	_ .give_up_set .from .thru (filter, no_errors) .thru (tap, function () {
+    	[_ .give_up_set .from] .map (filter (no_errors)) .forEach (tap (function () {
     	    _ .set .to (undefined);
-    	})
+    	}))
     }) (user_api (user));
 });
                 
@@ -277,23 +274,23 @@ var global_api =    R .tap (function (_) {
 						_ .player =	cycle_persisted ('player') (re_cycle ());
 									
 						promised_api .then (function () {
-    						_ .user .from .thru (tap, R .cond ([
+    						[_ .user .from] .forEach (tap (R .cond ([
     					        [R .not, function () {
     					            api (default_api)
     					        }],
     					        [R .T, function (user) {
     					            api (user_api (user))
     					        }]
-    				        ]));
-    				        mechanism (just_call (_ .player .from), [_ .player .from, _ .user .from .thru (filter, R .identity)])
-    						    .thru (tap, R .cond ([
+    				        ])));
+    				        [mechanism (just_call (_ .player .from), [_ .player .from, [_ .user .from] .map (filter (R .identity)) [0]])]
+    						    .forEach (tap (R .cond ([
         					        [R .not, function () {
         					            api (user_api (_ .user .from ()))
         					        }],
         					        [R .T, function (player) {
         					            api (player_api (_ .user .from (), player))
         					        }]
-        				        ]));
+        				        ])));
 						})
                     }) ({})
 var default_api =	R .tap (function (_) {
@@ -310,10 +307,12 @@ var default_api =	R .tap (function (_) {
 										body: stringify
 									}), cycle_from_network, R .prop ('json')) ();
     										
-    					mergeAll ([
+    					[mergeAll ([
     					    _ .register .from,
     					    _ .login .from
-                        ]) .thru (filter, no_errors) .thru (tap, _ .user .to)
+                        ])]
+                        	.map (filter (no_errors))
+                        	.forEach (tap (_ .user .to));
 					}) (global_api);
 
 api (default_api);

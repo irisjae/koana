@@ -335,7 +335,7 @@ function streamToString() {
  * Create a stream with no dependencies and no value
  * @return {Function} a flyd stream
  */
-function createStream() {
+function createStream() {s .x = new Error () .stack;
   function s(n) {
     if (arguments.length === 0) return s.val
     updateStreamValue(s, n)
@@ -347,7 +347,6 @@ function createStream() {
   s.listeners = [];
   s.end = undefined;
   s.map = boundMap;
-  /*fluent api*/s.thru = function (func, args) { return func .apply (s, [] .concat .call (args || [], [s])); };
   s.ap = ap;
   s.of = flyd.stream;
   s.toString = streamToString;

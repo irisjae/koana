@@ -10,22 +10,20 @@ var interaction_input = function (dom) {
 			return decline_ (intent)
 		}
     }));
+	_ .intent (['input', dom .value]);
     dom .addEventListener ('input', function () {
         _ .intent (['input', dom .value]);
-    })
-    return interaction_product ({
-        _: _,
-        dom: {
-            intent: none,
-            state: stream (dom)
-        }
     });
+    return {
+        _: _,
+        dom: dom 
+    };
 }
 
 var interaction_placeholder = function (dom, input) {
 	dom .style .transition = 'all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms'; 
 	var extension = interaction (transition (function (intent, license) {
-	    //license .thru (tap, logged_with ('what the fuck?'))
+	    //[license] .forEach (tap (logged_with ('what the fuck?')))
 	    
 		if (intent [0] === 'appear') {
 			return function (tenure) {
@@ -49,7 +47,7 @@ var interaction_placeholder = function (dom, input) {
 		}
 		else if (intent [0] === 'reset') {
 			return function (tenure) {
-				input .intent (['reset']);
+				input ._ .intent (['reset']);
 				tenure .end (true);
 			}
 		}
@@ -60,20 +58,20 @@ var interaction_placeholder = function (dom, input) {
 	
 	extension .state ('off');
 	
-	input .state .thru (map, function (x) {
-	    return !! x ._;
-	}) .thru (dropRepeats) .thru (tap, function (x) {
-	    if (x)
-	        extension .intent (['disappear'])
-        else
-	        extension .intent (['appear'])
-	})
+	[input ._ .state]
+		.map (map (function (x) {
+		    return !! x;
+		}))
+		.map (dropRepeats) 
+		.forEach (tap (function (x) {
+		    if (x)
+		        extension .intent (['disappear'])
+	        else
+		        extension .intent (['appear'])
+		}))
 	
-	return interaction_key_sum (input, interaction_product ({
-		placeholder_dom: {
-			intent: none,
-			state: stream (dom)
-		},
+	return R .merge (input, {
+		placeholder_dom: dom,
 		placeholding: extension
-	}))
+	})
 }

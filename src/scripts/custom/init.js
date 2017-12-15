@@ -1,7 +1,7 @@
 /*
 Errors
 */
-var report = from (function (_) {
+window .report = [from (function (_) {
 	riot .util .tmpl .errorHandler = 	function (err) {
 	                                        err ._origin = 'riot-tmpl';
 	                                        _ (err);
@@ -17,10 +17,16 @@ var report = from (function (_) {
                             err ._origin = 'window';
                             _ (err);
 						};
-}) .thru (tap, function (e) {
+})] .map (tap (function (e) {
     console .error (e);
-})
+})) [0];
 
+Promise.config({
+    // Enables all warnings except forgotten return statements.
+    warnings: {
+        wForgottenReturn: false
+    }
+});
 
 /*
 Use app
@@ -32,5 +38,5 @@ Promise .all ([
     restoration
 ])
 .then (function () {
-	riot .mount ('*');
+	window .ui_ = master_ui ();
 });

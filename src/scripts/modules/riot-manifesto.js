@@ -42,29 +42,31 @@ riot .mixin ({
 });
 
 var ref_diff =	function (name, ref_diffs) {
-					return	ref_diffs
-								.thru (spread)
-								.thru (filter, function (diff) {
+					return	[ref_diffs]
+								.map (spread)
+								.map (filter (function (diff) {
 									return diff .type === 'add' && diff .ref === name;
-								})
-								.thru (map, function (diff) {
+								}))
+								.map (map (function (diff) {
 									return diff .node;
-								});
+								}))
+							[0];
 				};
 var ref_set_diff =	function (name, ref_diffs) {//TODO: add hashmap from node id (is there such a thing?) to index, so becomes O(1)
 						var refs = [];
-						return	ref_diffs
-									.thru (tap, function (diffs) {
+						return	[ref_diffs]
+									.map (tap (function (diffs) {
 										diffs .forEach (function (diff) {
 											if (diff .type === 'add')
 												refs .push (diff .node);
 											if (diff .type === 'remove')
 												refs .splice (refs .indexOf (diff .node), 1);
 										})
-									})
-									.thru (map, function () {
+									}))
+									.map (map (function () {
 										return refs .slice ();
-									});
+									}))
+								[0];
 					};	
 var diff_refs =	function (refs) {
 					var last_refs = {};

@@ -1,3 +1,4 @@
+var R = require ('ramda');
 var path = require ('path');
 var fs = require ('fs-extra');
 
@@ -30,7 +31,6 @@ module .exports = {
 				}
 				return x;
 			},
-			
 	files:	function (extension) {
 				return	function (dir) {
 							var results = [];
@@ -45,5 +45,19 @@ module .exports = {
 							});
 							return results;
 						}
-			}
+			},
+	prepare:	function (path) {
+					[path]	
+						.map (R .split ('/'))
+						.map (function (x) {
+							if (R .contains ('.') (R .last (x)))
+								return x .slice (0, -1)
+							else
+								return x
+						})
+						.map (R .join ('/'))
+						.forEach (function (x) {
+							fs .ensureDirSync (x);
+						})
+				}	
 };

@@ -17,12 +17,16 @@ var frame = function (x) {
 	return x;
 }
 var serve = function (x) {
-	return [x .cloneNode (true)] .map (R .tap (function (x) {
-		//when debugging
-		/*[] .forEach .call (x .querySelectorAll ('[example]'), function (_) {
-			_ .outerHTML = '';
-		})*/
-	})) [0];
+	return [x .cloneNode (true)] 
+		.map (R .tap (function (x) {
+			x .setAttribute ('page', '');
+		}))
+		.map (R .tap (function (x) {
+			//when debugging
+			/*[] .forEach .call (x .querySelectorAll ('[example]'), function (_) {
+				_ .outerHTML = '';
+			})*/
+		})) [0];
 }
 var frag = function (html) {
 	var container = document .createElement ('template');

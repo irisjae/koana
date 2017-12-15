@@ -92,12 +92,14 @@ var interaction_select_koders = function (options, data) {
     })   
     _ .intent (['shift', 0, _ .state ()]);
     
-    stream_from_click_on (left_dom) .thru (tap, function () {
-        _ .intent (['shift', -1, _ .state ()])
-    });
-    stream_from_click_on (right_dom) .thru (tap, function () {
-        _ .intent (['shift', +1, _ .state ()])
-    });
+    [stream_from_click_on (left_dom)]
+		.forEach (tap (function () {
+		    _ .intent (['shift', -1, _ .state ()])
+		}));
+    [stream_from_click_on (right_dom)]
+		.forEach (tap (function () {
+		    _ .intent (['shift', +1, _ .state ()])
+		}));
     
     return _;
 }

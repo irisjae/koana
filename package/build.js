@@ -21,6 +21,7 @@ var time = require ('./build/util') .time;
 var file = require ('./build/util') .file;
 var files = require ('./build/util') .files;
 var write = require ('./build/util') .write;
+var prepare = require ('./build/util') .prepare;
 
 var riot_tags = require ('./build/riot');
 var uis = require ('./build/uis');
@@ -31,11 +32,20 @@ var uis = require ('./build/uis');
 
 //build
 time ('build', function () {
+	[
+		primary_dist,
+		uis_dist,
+		uis_hydrators_dist,
+		scripts_dist,
+		tags_dist,
+		styles_dist
+	]
+	.forEach (prepare);
+	
 	fs .readdirSync (scripts_dist) .forEach (function (file) {
 		const file_path = path .resolve (scripts_dist, file);
-		const file_info = fs .statSync (file_path);
 		
-		fs .unlinkSync (file_path)
+		fs .unlinkSync (file_path);
 	});
 	fs .copySync (primary_src, primary_dist);
 	files ('.js') (scripts_src)

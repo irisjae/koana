@@ -7,19 +7,16 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-crosswalk-webview": {
+        "cordova-plugin-dialogs": {
             "PACKAGE_NAME": "com.kingdom.koding"
         },
-        "cordova-plugin-dialogs": {
+        "cordova-plugin-spinner-dialog": {
             "PACKAGE_NAME": "com.kingdom.koding"
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.kingdom.koding"
         },
         "cordova-plugin-x-toast": {
-            "PACKAGE_NAME": "com.kingdom.koding"
-        },
-        "cordova-plugin-spinner-dialog": {
             "PACKAGE_NAME": "com.kingdom.koding"
         }
     },

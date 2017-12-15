@@ -122,30 +122,31 @@ var scroll_interaction = function (direction) {
         
         _ .state (max [direction]);
 
-		drags (svg) .thru (filter, function (drag) {
-		    var drag_start = svg .createSVGPoint ();
-		    drag_start .x = drag () .x0;
-		    drag_start .y = drag () .y0;
-		    drag_start = drag_start .matrixTransform (dom .getScreenCTM () .inverse ())
-		    
-		    var _max = ugly_max ();
-		    return min .x <= drag_start .x && drag_start .x <= _max .x &&
-                min .y <= drag_start .y && drag_start .y <= _max .y
-	    }) .thru (switchLatest) .thru (map, function (e) {
-		    return {
-		        x: e .dx,
-		        y: e .dy
-		    }
-		}) .thru (tap, function (x) {
-		    _ .intent (['drag', x, _ .state ()]);
-		})
+		[drags (svg)]
+			.map (filter (function (drag) {
+			    var drag_start = svg .createSVGPoint ();
+			    drag_start .x = drag () .x0;
+			    drag_start .y = drag () .y0;
+			    drag_start = drag_start .matrixTransform (dom .getScreenCTM () .inverse ())
+			    
+			    var _max = ugly_max ();
+			    return min .x <= drag_start .x && drag_start .x <= _max .x &&
+	                min .y <= drag_start .y && drag_start .y <= _max .y
+		    }))
+		    .map (switchLatest) 
+		    .map (map (function (e) {
+			    return {
+			        x: e .dx,
+			        y: e .dy
+			    }
+			}))
+			.forEach (tap (function (x) {
+			    _ .intent (['drag', x, _ .state ()]);
+			}))
         
-        return interaction_product ({
+        return {
             _: _,
-            dom: {
-                intent: stream (),
-                state: stream (dom)
-            }
-        });
+            dom: dom 
+        };
 	}
 }

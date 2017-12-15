@@ -199,19 +199,9 @@ var tap_promise = function (fn) {
 var decline_ = function (intent) {
 	var err = new Error ('unknown intent passed')
 	err .intent = intent;
-	report (err);
+	window .report (err);
 	return reflect (none);
 }
-
-var controlled_on = function (_) {
-	return R .evolve ({
-		intent: function (intent) {
-			return [stream ()] .map (R .tap (function (i) {
-					i .thru (map, R .assoc (_, R .__, {})) .thru (project, intent)
-				})) [0]
-		}
-	})
-};
 
 var layout_ = function (direction, amount, dom) {
     var _ = dom .getAttribute ('transform');

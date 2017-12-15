@@ -146,23 +146,23 @@ var transform = function (src, name) {
 								+ '\nself ._yield_off = function () { /*log ("' + name + ' yield exit");*/ self ._yielding = false; self ._yield_level--; return ""; };'
 							: '')
 						+ (yield_tag
-							? '\nvar _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy) /*.thru (tap, function (how) { log (self .root .localName, "cons refs", how);})*/;'
+							? '\nvar _refs = [mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ])] .map (map (consistentfy)) /*.map (tap (function (how) { log (self .root .localName, "cons refs", how);}))*/ [0];'
 								+ '\nvar yield_scope = self .parent;'
 								+ '\nwhile (yield_scope && yield_scope ._yield_levels) yield_scope = climb (yield_scope ._yield_levels, yield_scope);'
 								//+ '\nlog (self .root .localName, "located father", yield_scope);'
-								+ '\nif (yield_scope && yield_scope .yielded_diff) _refs .thru (map, yield_refs) .thru (diff_refs) .thru (tap, yield_scope .yielded_diff);'
+								+ '\nif (yield_scope && yield_scope .yielded_diff) [_refs] .map (map (yield_refs)) .map (diff_refs) .forEach (tap (yield_scope .yielded_diff));'
 							: '')
 						+ (refs || yield_tag
 							? '\nvar self_diff = stream ();'
 								+ '\nvar yielded_diff = stream ();'
-								+ '\nself .yielded_diff = yielded_diff/* .thru (tap, function (how) { log (self .root .localName, "recieved", how);})*/;'
+								+ '\nself .yielded_diff = [yielded_diff]/* .map (tap (function (how) { log (self .root .localName, "recieved", how);}))*/ [0];'
 								+ '\nvar diffs = mergeAll ([ self_diff, yielded_diff ]);'
 								+ '\nvar ref = function (name) { return ref_diff (name, diffs) };'
 								+ '\nvar ref_set = function (name) { return ref_set_diff (name, diffs) };'
 								+ (! yield_tag
-									? '\nvar _refs = mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ]) .thru (map, consistentfy) /*.thru (tap, function (how) { log (self .root .localName, "cons refs", how);})*/;'
+									? '\nvar _refs = [mergeAll ([ from (function (when) { self .on ("mount", function () { when (self .refs); }); }), from (function (when) { self .on ("updated", function () { when (self .refs); }); }) ])] .map (map (consistentfy)) /*.map (tap (function (how) { log (self .root .localName, "cons refs", how);}))*/ [0];'
 									: '')
-								+ '\n_refs .thru (map, self_refs) .thru (diff_refs) .thru (tap, self_diff);'
+								+ '\n[_refs] .map (map (self_refs)) .map (diff_refs) .forEach (tap (self_diff));'
 							: '')
 						+ (scripts .length
 							? '\nvar known_as = function (what) { return function (how) { log (self .root .localName, what, how);} };'

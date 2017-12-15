@@ -24,11 +24,8 @@ var interaction_date_picker = function (dom) {
     click (dom, function () {
         _ .intent (['pick']);
     });
-    return interaction_product ({
+    return {
         _: _,
-        dom: {
-            intent: none,
-            state: stream (dom)
-        }
-    });
+        dom: dom
+    };
 }

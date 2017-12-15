@@ -1,6 +1,8 @@
 var set_nodes_visibility = function (value) {
     return R .cond ([
-        [R .is (NodeList), R .forEach (function (node) {
+        [function (x) {
+        	return R .is (NodeList) (x) || R .is (Array) (x)
+        }, R .forEach (function (node) {
             node .style .visibility = value;
         })],
         [R .T, function (node) {

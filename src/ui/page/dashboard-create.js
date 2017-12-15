@@ -38,11 +38,11 @@
 				else {
 					return function (tenure) {
 						var _ = {
-							name: steps [1] .state () .name ._,
-							school_name: steps [1] .state () .school ._,
-							date_of_birth: steps [1] .state () .date_of_birth ._,
-							koder_archetype: steps [2] .state () .koder .name,
-							koder_name: steps [3] .state () .koder_name ._,
+							name: steps [1] .name ._ .state (),
+							school_name: steps [1] .school ._ .state (),
+							date_of_birth: steps [1] .date_of_birth ._ .state (),
+							koder_archetype: steps [2] .koder .state () .koder .name,
+							koder_name: steps [3] .koder_name ._ .state (),
 						};
 						loader ();
 						inquire (api () .add_player, _)
@@ -68,7 +68,7 @@
 							})
 							.then (function () {
 								R .forEachObjIndexed (function (x) {
-									x .intent ({ _: ['reset'] });
+									x ._ .intent (['reset']);
 								}) (steps);
 								step .intent ([step .state (), 1]);
 								tenure .end (true);
@@ -79,24 +79,30 @@
 			else {
 				return decline_ (intent);
 			}
-		}))
+		}));
 		
 		R .forEachObjIndexed (function (x, i) {
 			i = +i;
-			x .state .thru (filter, R .propEq ('_', 'done')) .thru (tap, function () {
-				extension .intent (['step', i]);
-			})
-		}) (steps)
+			[x ._ .state] 
+				.map (filter (R .equals ('done'))) 
+				.forEach (tap (function () {
+					extension .intent (['step', i]);
+				}))
+		}) (steps);
 		
-		nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function () {
-			extension .intent (['step', 'start'])
-		});
+		[nav .intent]
+			.map (filter (function (x) {
+				return R .head (x) === 'prepare'
+			}))
+			.forEach (tap (function () {
+				extension .intent (['step', 'start'])
+			}));
 		
-		return interaction_product (R .merge (components) ({
+		return R .merge (components) ({
 			_: extension,
 			
 			stepper: extension
-		}))
+		})
 	}
 
 	var _interaction_of_step_ = {
@@ -114,15 +120,15 @@
 			
 			var extension = interaction (transition (function (intent, license) {
 				if (intent [0] === 'done') {
-					if (! name .state () ._) {
+					if (! name ._ .state ()) {
 						toast ('Please fill in your name')
 						return reflect (none);
 					}
-					else if (! school .state () ._) {
+					else if (! school ._ .state ()) {
 						toast ('Please fill in your school name')
 						return reflect (none);
 					}
-					else if (! date_of_birth .state () ._) {
+					else if (! date_of_birth ._ .state ()) {
 						toast ('Please fill in your date of birth')
 						return reflect (none);
 					}
@@ -131,9 +137,9 @@
 					}
 				}
 				else if (intent [0] === 'reset') {
-					name .intent ({ _: ['reset'] });
-					school .intent ({ _: ['reset'] });
-					date_of_birth .intent ({ _: ['reset'] });
+					name ._ .intent (['reset']);
+					school ._ .intent (['reset']);
+					date_of_birth ._ .intent (['reset']);
 					return only_ (null);
 				}
 				else if (intent [0] === 'back') {
@@ -147,46 +153,52 @@
 			
 			extension .state (null);
 			
-			back .thru (tap, function () {
-				extension .intent (['back']);
-			})
-			done .thru (tap, function () {
-				extension .intent (['done']);
-			})
+			[back]
+				.forEach (tap (function () {
+					extension .intent (['back']);
+				}));
+			[done]
+				.forEach (tap (function () {
+					extension .intent (['done']);
+				}));
 			
 			var adders = [] .filter .call (variable, function (x) {
 				return x .getAttribute ('intent') === 'add';
-			}) 
+			});
 			var unadders = [] .filter .call (variable, function (x) {
 				return x .getAttribute ('intent') !== 'add';
-			}) 
-			nav .intent .thru (filter, R .propEq (0, 'prepare')) .thru (tap, function (x) {
-				if (x [1] === 'add') {
-					adders .forEach (function (x) {
-						x .style .visibility = '';
-					});
-					unadders .forEach (function (x) {
-						x .style .visibility = 'hidden';
-					});
-				}
-				else {
-					unadders .forEach (function (x) {
-						x .style .visibility = '';
-					});
-					adders .forEach (function (x) {
-						x .style .visibility = 'hidden';
-					});
-				}
-			})
+			}); 
+			[nav .intent] 
+				.map (filter (function (x) {
+					return R .head (x) === 'prepare'
+				})) 
+				.forEach (tap (function (x) {
+					if (x [1] === 'add') {
+						adders .forEach (function (x) {
+							x .style .visibility = '';
+						});
+						unadders .forEach (function (x) {
+							x .style .visibility = 'hidden';
+						});
+					}
+					else {
+						unadders .forEach (function (x) {
+							x .style .visibility = '';
+						});
+						adders .forEach (function (x) {
+							x .style .visibility = 'hidden';
+						});
+					}
+				}));
 
 			
-			return interaction_product ({
+			return {
 				_: extension,
 				
 				name: name,
 				school: school,
 				date_of_birth: date_of_birth
-			})
+			}
 		},
 		2: function (components) {
 			var go = components .go;
@@ -208,13 +220,16 @@
 			
 			extension .state (null);
 			
-			go .thru (tap, function () {
-				extension .intent (['go']);
-			})
+			[go]
+				.forEach (tap (function () {
+					extension .intent (['go']);
+				}));
 			
-			return interaction_key_sum (koder, interaction_product ({
-				_: extension
-			}))
+			return {
+				_: extension,
+				
+				koder: koder
+			}
 		},
 		3: function (components) {
 			var all_done = components .all_done;
@@ -223,7 +238,7 @@
 			
 			var extension = interaction (transition (function (intent, license) {
 				if (intent [0] === 'done') {
-					if (! koder_name .state () ._) {
+					if (! koder_name ._ .state ()) {
 						toast ('Please give a name to your Koder!')
 						return reflect (none);
 					}
@@ -232,7 +247,7 @@
 					}
 				}
 				else if (intent [0] === 'reset') {
-					koder_name .intent ({ _: ['reset'] });
+					koder_name ._ .intent (['reset']);
 					return only_ (null);
 				}
 				else {
@@ -242,22 +257,26 @@
 			
 			extension .state (null);
 			
-			all_done .thru (tap, function () {
-				extension .intent (['done']);
-			})
+			[all_done]
+				.forEach (tap (function () {
+					extension .intent (['done']);
+				}));
 			
-			return interaction_product ({
+			return {
 				_: extension,
 				
 				koder_name: koder_name
-			})
+			}
 		}
 	}
 
 
 	window .uis = R .assoc (
 		'dashboard-create', function (components, unions) {
-			var dom, _dom = ui_info .dom .cloneNode (true);
+			var nav = unions .nav;
+			
+			var dom, _dom;
+			_dom = dom = ui_info .dom .cloneNode (true);
 			
 			var step_dom = [] .slice .call (dom .querySelectorAll ('[step]'));
 		    var step_cases = [step_dom] .map (R .pipe (
@@ -330,40 +349,33 @@
 	
 			dom = _dom;
 			
-			return interaction_key_sum (
-				interaction_ (
-					{
-						step: interaction_case (step_cases),
-						1: _interaction_of_step_ [1] ({
-							back: back_stream,
-							done: done_stream,
-							
-							variable: variable_dom,
-							
-							name: name_interaction,
-							school: school_name_interaction,
-							date_of_birth: date_of_birth_interaction
-						},
-						{
-							nav: nav_interaction
-						}),
-						2: _interaction_of_step_ [2] ({
-							go: go_stream,
-							koder: koder_interaction
-						}),
-						3: _interaction_of_step_ [3] ({
-							all_done: all_done_stream,
-							koder_name: koder_name_interaction
-						})
-					},
-					{
-						nav: nav_interaction,
-						dom: {
-							intent: none,
-							state: stream (dom)
-						}
-					})
-			);			
+			return R .merge (R .__, {
+				nav: nav,
+				dom: dom
+			}) (interaction_ ({
+				step: interaction_case (step_cases),
+				1: _interaction_of_step_ [1] ({
+					back: back_stream,
+					done: done_stream,
+					
+					variable: variable_dom,
+					
+					name: name_interaction,
+					school: school_name_interaction,
+					date_of_birth: date_of_birth_interaction
+				},
+				{
+					nav: nav
+				}),
+				2: _interaction_of_step_ [2] ({
+					go: go_stream,
+					koder: koder_interaction
+				}),
+				3: _interaction_of_step_ [3] ({
+					all_done: all_done_stream,
+					koder_name: koder_name_interaction
+				})
+			}, { nav: nav }));
 		}
 	) (window .uis)
 } ();
